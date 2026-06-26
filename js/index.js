@@ -54,11 +54,7 @@ btnXemThem.addEventListener("click", function () {
 });
 const cards = document.querySelectorAll(".khungtruyenrieng");
 
-cards.forEach(function (card) {
-  card.addEventListener("click", function () {
-    alert("Bạn đã chọn truyện này");
-  });
-});// bỏ function này đi
+
 
 const sections = document.querySelectorAll(".hidden");
 
