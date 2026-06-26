@@ -1,7 +1,6 @@
 window.onload = function () {
-    const navs = document.querySelectorAll(".div_main");
-    const navTop = navs[0];
-    const navBottom = navs[1];
+    const navTop = document.querySelector(".div_main.top");
+    const navBottom = document.querySelector(".div_main.bottom");
     let lastScroll = 0;
     const btnScrollTop = document.getElementById("btnScrollTop");
     const loveBtns = document.querySelectorAll(".love");
@@ -85,13 +84,7 @@ window.onload = function () {
 
     window.addEventListener("scroll", function () {
         const currentScroll = window.scrollY;
-
-
-        if (currentScroll > 200) {
-            btnScrollTop.style.display = "block";
-        } else {
-            btnScrollTop.style.display = "none";
-        }
+        const bottomTop = navBottom.offsetTop;
 
         if (currentScroll <= 100) {
             navTop.classList.remove("fixed-top");
@@ -99,8 +92,6 @@ window.onload = function () {
             lastScroll = currentScroll;
             return;
         }
-
-        const bottomTop = navBottom.offsetTop;
 
         if (currentScroll + window.innerHeight >= bottomTop) {
             navTop.classList.remove("fixed-top");
@@ -113,11 +104,31 @@ window.onload = function () {
             navTop.classList.remove("fixed-top");
             navTop.classList.add("fixed-bottom");
         } else {
-
             navTop.classList.remove("fixed-bottom");
             navTop.classList.add("fixed-top");
         }
 
         lastScroll = currentScroll;
     });
-}; 
+};
+function toggleFavorite(title, link, image, btn) {
+    let favorites =
+        JSON.parse(localStorage.getItem("favorites")) || [];
+
+    let index = favorites.findIndex(
+        item => item.link === link
+    );
+
+    if (index === -1) {
+        favorites.push({ title, link, image });
+        btn.innerHTML = "❤️";
+    } else {
+        favorites.splice(index, 1);
+        btn.innerHTML = "🤍";
+    }
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+}

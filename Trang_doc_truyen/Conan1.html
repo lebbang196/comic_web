@@ -61,7 +61,7 @@
     </header>
 
     <main>
-        <div class="div_main">
+        <div class="div_main top">
             <nav class="navigation--main">
                 <a class="home a-main" href="/index.html">&#8962;</a> | <a class="menus a-main" href="">☰</a> |
                 <nav class="nav_inline a-main">
@@ -147,7 +147,7 @@
             <img src="https://sv1.otruyencdn.com/uploads/20231223/8a48ed9d52ed400d0afcce78e2f8c47e/chapter_1/page_35.jpg"
                 alt="Thám Tử Conan Chap 1 - Page 35">
         </section>
-        <div class="div_main">
+        <div class="div_main bottom">
             <nav class="navigation--main">
                 <a class="home a-main" href="/index.html">&#8962; </a> | <a class="menus a-main
                 " href="">☰</a> |
@@ -157,7 +157,8 @@
                     <a class="arrow-box a-main" href="">&rarr; </a>
                 </nav>
             </nav>
-            | <a class="love a-main" href=""> yêu thích</a>
+            | <button class="love a-main"
+                onclick="toggleFavorite('Conan Chap 1', 'conan1.html','img/conan1.jpg', this)">yêu thích</button>
             <!-- sài button để lưu vô danh sách yêu thích -->
             <!-- yêu thích -->
         </div>
@@ -172,15 +173,18 @@
             <div id="commentList">
             </div>
         </section>
+        <nav>
+            <button id="btnScrollTop" title="Lên đầu trang">
+                <i class="fa-solid fa-arrow-up">top</i> <!-- chỉnh lại button -->
+            </button>
+        </nav>
     </main>
 
     <footer>
         <!-- chuyển về đầu trang nằm ngoài cùng bên trái luôn luôn hiện-->
         <!-- chỉnh theo nhóm-->
     </footer>
-    <button id="btnScrollTop" title="Lên đầu trang">
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
+
     <script src="/Trang_doc_truyen/doctruyen.js"></script>
 </body>
 

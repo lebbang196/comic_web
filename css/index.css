@@ -46,12 +46,12 @@ header {
   position: relative;
 }
 
-.theloai>a {
+/* .theloai>a {
   font-weight: 500;
   color: white;
   text-decoration: none;
   transition: 0.3s;
-}
+} */
 
 .theloai>a:hover {
   color: #93c5fd;
@@ -349,16 +349,16 @@ footer {
   margin-bottom: 0;
 }
 
-.hidden {
+/* .hidden {
   opacity: 0;
   transform: translateY(50px);
   transition: 0.8s;
-}
+} */
 
-.show {
+/* .show {
   opacity: 1;
   transform: translateY(0);
-}
+} */
 
 /* Đồng Bộ Hóa */
 /* Tablet */
