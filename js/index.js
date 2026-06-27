@@ -15,21 +15,68 @@ nutQuayLai.addEventListener("click", function () {
   });
 });
 const search = document.getElementById("inputsearch");
+const khungKetQua = document.getElementById("khungKetQua");
+const ketquatimkiem = document.getElementById("ketquatimkiem");
+const sapramat = document.getElementById("sapramat");
+const decu = document.getElementById("decu");
+const phobien = document.getElementById("phobien");
+const moiramat = document.getElementById("moiramat");
+const theloai = document.getElementById("theloai");
 
-search.addEventListener("keyup", function () {
-  let tukhoa = search.value.toLowerCase();
+search.addEventListener("input", function () {
+  const tukhoa = search.value.toLowerCase().trim();
 
-  let danhsach = document.querySelectorAll(".khungtruyenrieng");
+  khungKetQua.innerHTML = "";
+
+  if (tukhoa === "") {
+    ketquatimkiem.style.display = "none";
+    theloai.style.display = "block";
+    phobien.style.display = "block";
+    moiramat.style.display = "block";
+    sapramat.style.display = "block";
+    decu.style.display = "block";
+
+    return;
+  }
+
+  ketquatimkiem.style.display = "block";
+
+  sapramat.style.display = "none";
+  decu.style.display = "none";
+  theloai.style.display = "none";
+  phobien.style.display = "none";
+  moiramat.style.display = "none";
+
+  const danhsach = document.querySelectorAll("#decu .khungtruyenrieng");
+
+  const daThem = [];
 
   danhsach.forEach(function (truyen) {
-    let tentruyen = truyen.querySelector("h3").textContent.toLowerCase();
+    const ten = truyen.querySelector("h3").textContent.trim();
 
-    if (tentruyen.includes(tukhoa)) {
-      truyen.style.display = "block";
-    } else {
-      truyen.style.display = "none";
+    if (ten.toLowerCase().includes(tukhoa) && !daThem.includes(ten)) {
+      daThem.push(ten);
+
+      const clone = truyen.cloneNode(true);
+
+      khungKetQua.appendChild(clone);
     }
   });
+
+  // ĐẶT Ở ĐÂY
+  if (khungKetQua.children.length === 0) {
+    khungKetQua.innerHTML = `
+      <p style="
+        color:white;
+        font-size:20px;
+        text-align:center;
+        width:100%;
+        padding:40px;
+      ">
+        Không tìm thấy truyện phù hợp
+      </p>
+    `;
+  }
 });
 const btnXemThem = document.getElementById("btnXemThem");
 
@@ -53,8 +100,6 @@ btnXemThem.addEventListener("click", function () {
   }
 });
 const cards = document.querySelectorAll(".khungtruyenrieng");
-
-
 
 const sections = document.querySelectorAll(".hidden");
 
