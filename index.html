@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Comic_web</title>
-    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/index.css" />
   </head>
-
   <body>
     <header>
       <div class="logo">
@@ -63,7 +61,7 @@
       </div>
     </section>
 
-    <section class="section" class="section hidden">
+    <section class="section" class="section hidden" id="theloai">
       <div>
         <h2>📚 Các Thể Loại Truyện Phổ Biến</h2>
         <div class="list">
@@ -75,12 +73,11 @@
           <div>Adventure</div>
           <div>School Life</div>
           <div>Horror</div>
-          <!-- tại sao ở đây toàn là div không vậy -->
         </div>
       </div>
     </section>
 
-    <section class="section" class="section hidden">
+    <section class="section" class="section hidden" id="phobien">
       <div>
         <h2>🔥Truyện Phổ Biến</h2>
       </div>
@@ -141,7 +138,7 @@
           <a href=".....">
             <img
               src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx182300-IYkq5KrkQq1V.jpg"
-              alt="wisria"
+              alt="wistoria"
             />
             <h3>Wistoria Bản Hùng Ca Kiếm Và Pháp Trượng</h3>
           </a>
@@ -192,7 +189,7 @@
       </div>
     </section>
 
-    <section class="section" class="section hidden">
+    <section class="section" class="section hidden" id="moiramat">
       <div>
         <h2>✨Truyện Mới Ra Mắt</h2>
       </div>
@@ -279,7 +276,7 @@
       </div>
     </section>
 
-    <section class="section" class="section hidden">
+    <section class="section" class="section hidden" id="sapramat">
       <div>
         <h2>⌛Truyện Sắp Ra Mắt</h2>
       </div>
@@ -315,7 +312,7 @@
       </div>
     </section>
 
-    <section class="section" class="section hidden">
+    <section class="section" class="section hidden" id="decu">
       <div>
         <h2>⭐Truyện Đề Cử</h2>
       </div>
@@ -540,7 +537,10 @@
       </div>
     </section>
     <button class="quaylai">⬆</button>
-
+    <section class="section" id="ketquatimkiem" style="display: none">
+      <h2>🔍 Kết Quả Tìm Kiếm</h2>
+      <div class="khungtruyen" id="khungKetQua"></div>
+    </section>
     <footer>
       <div class="footer">
         <div class="footer_content">
