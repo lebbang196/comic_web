@@ -1,0 +1,713 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.breadcrumb {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  padding: 10px 6%;
+}
+/* Bố cục chính truyện*/
+.chitiet-hero {
+  padding-top: 20px;
+}
+/*Chia 2 cột */
+.chitiet-container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+/* Khu vực cột 1*/
+.chitiet-cover-col {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.chitiet-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(134, 98, 242, 0.4);
+}
+.chitiet-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.chitiet-cover img:hover {
+  transform: scale(1.03);
+}
+/*tên khác*/
+.chitiet-alias {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+  color: rgb(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+.chitiet-alias strong {
+  color: rgb(79, 57, 143);
+}
+
+.chitiet-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-doc {
+  display: block;
+  padding: 13px 20px;
+  border-radius: 40px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+.btn-doc-primary {
+  background: rgb(134, 98, 242);
+  color: white;
+}
+.btn-doc-primary:hover {
+  background: rgb(110, 75, 210);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(134, 98, 242, 0.4);
+}
+.btn-doc-secondary {
+  background: rgb(202, 199, 199);
+  color: rgb(58, 58, 80);
+}
+.btn-doc-secondary:hover {
+  background: rgb(134, 98, 242);
+  color: white;
+  transform: translateY(-2px);
+}
+.btn-doc-outline {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+.btn-doc-outline:hover {
+  background: rgba(134, 98, 242, 0.3);
+  border-color: rgb(134, 98, 242);
+}
+.btn-doc-outline.dang-theo-doi {
+  background: rgba(134, 98, 242, 0.2);
+  border-color: rgb(134, 98, 242);
+  color: rgb(255, 255, 255);
+}
+/*Khu vục cột 2*/
+.chitiet-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.chitiet-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+}
+.chitiet-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chitiet-stars {
+  color: gold;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+.chitiet-diem {
+  font-size: 20px;
+  font-weight: 700;
+  color: gold;
+}
+.chitiet-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chitiet-meta-dong {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+}
+
+.meta-label {
+  color: rgb(248, 248, 248);
+  min-width: 90px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.meta-value {
+  color: #eee;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: rgba(134, 98, 242, 0.2);
+  border: 1px solid rgba(134, 98, 242, 0.4);
+  color: rgb(196, 181, 253, 0.9);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tag:hover {
+  background: rgb(134, 98, 242);
+  color: white;
+}
+
+.tinh-trang-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tinh-trang-badge.dang-ra {
+  background: rgba(62, 207, 142, 0.15);
+  color: rgba(11, 242, 69, 0.9);
+  border: 1px solid #3ecf8e;
+}
+
+.tinh-trang-badge.hoan-thanh {
+  background: rgba(134, 98, 242, 0.15);
+  color: rgb(196, 181, 253, 0.9);
+  border: 1px solid rgb(134, 98, 242);
+}
+
+.chitiet-stats {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(248, 248, 248, 0.9);
+}
+
+.chitiet-mota {
+  font-size: 14px;
+  color: rgb(248, 248, 248);
+  line-height: 1.8;
+  text-align: justify;
+}
+.synopsis-hidden {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.danh-gia-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.danh-gia-label {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.star-pick {
+  font-size: 26px;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.star-pick.active {
+  color: gold;
+}
+
+.star-pick:hover {
+  transform: scale(1.2);
+}
+/* Khu vực chap*/
+.chapter-section {
+  background: #1d1d1d;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chapter-header h2 {
+  font-size: 1.4rem;
+  color: white;
+}
+
+.chapter-dem {
+  font-size: 14px;
+  color: #aaa;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.chapter-filter {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #aaa;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: rgb(134, 98, 242);
+  color: white;
+  border-color: rgb(134, 98, 242);
+}
+.chapter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chapter-item:hover {
+  background: rgba(134, 98, 242, 0.2);
+  border-color: rgba(134, 98, 242, 0.4);
+}
+
+.chapter-so {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(134, 98, 242);
+}
+
+.chapter-ngay {
+  font-size: 12px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.chapter-moi-badge {
+  background: rgba(134, 98, 242, 0.3);
+  color: #c4b5fd;
+  border: 1px solid rgba(134, 98, 242, 0.5);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.chapter-xemthem {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.chapter-xemthem button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chapter-xemthem button:hover {
+  background: rgb(134, 98, 242);
+}
+/* khu vực truyện LQ*/
+#sectionLQuan {
+  border-radius: 20px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#sectionLQuan h2 {
+  font-size: 1.4rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.lien-quan-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.lien-quan-card {
+  background: rgb(202, 199, 199);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+  text-decoration: none;
+  display: block;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lien-quan-card:hover {
+  transform: scale(1.03);
+}
+
+.lien-quan-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.lien-quan-placeholder {
+  width: 100%;
+  height: 200px;
+  background: rgb(90, 78, 121);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.lien-quan-info {
+  padding: 12px;
+}
+
+.lien-quan-ten {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1c1c24;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lien-quan-tacgia {
+  font-size: 12px;
+  color: #555;
+}
+/*Khu bình luận*/
+#binh-luan-section {
+  border-radius: 20px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#binh-luan-section h2 {
+  font-size: 1.4rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.bl-form {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bl-form input,
+.bl-form textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 10px 14px;
+  outline: none;
+  transition: 0.2s;
+  width: 100%;
+}
+
+.bl-form input::placeholder,
+.bl-form textarea::placeholder {
+  color: #777;
+}
+
+.bl-form input:focus,
+.bl-form textarea:focus {
+  border-color: rgb(134, 98, 242);
+}
+
+.bl-form textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.bl-form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bl-gui-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  background: rgb(134, 98, 242);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bl-gui-btn:hover {
+  background: rgb(110, 75, 210);
+  transform: translateY(-2px);
+}
+
+.binh-luan-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.binh-luan-item:last-child {
+  border-bottom: none;
+}
+
+.bl-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(134, 98, 242, 0.3);
+  border: 2px solid rgba(134, 98, 242, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #c4b5fd;
+  flex-shrink: 0;
+}
+
+.bl-noidung {
+  flex: 1;
+}
+
+.bl-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.bl-meta strong {
+  color: white;
+  font-size: 14px;
+}
+
+.bl-stars {
+  color: gold;
+  font-size: 13px;
+}
+
+.bl-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.bl-noidung p {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.footer-copy {
+  text-align: center;
+  padding: 20px;
+  color: #cbd5e1;
+  border-top: 1px solid rgba(134, 98, 242, 0.3);
+  font-size: 14px;
+}
+
+.section-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.section-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .chitiet-container {
+    grid-template-columns: 220px 1fr;
+    gap: 25px;
+  }
+
+  .lien-quan-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chitiet-title {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+  .logo {
+    margin-right: 10px;
+  }
+  .logo img {
+    width: 55px;
+    height: 55px;
+  }
+  .menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .chitiet-container {
+    grid-template-columns: 1fr;
+  }
+
+  .chitiet-cover-col {
+    max-width: 280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .chitiet-title {
+    font-size: 1.6rem;
+  }
+
+  .chapter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lien-quan-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .social {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 15px 4%;
+  }
+
+  .chapter-section,
+  #sectionLienQuan,
+  #binh-luan-section {
+    padding: 15px;
+  }
+
+  .chitiet-title {
+    font-size: 1.4rem;
+  }
+
+  .chitiet-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .chitiet-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .chitiet-btns .btn-doc-outline {
+    grid-column: 1 / -1;
+  }
+
+  .chapter-ten {
+    max-width: 100px;
+  }
+
+  nav a,
+  .menu a {
+    font-size: 13px;
+  }
+
+  .lienquan-grid {
+    grid-template-columns: 1fr;
+  }
+}
