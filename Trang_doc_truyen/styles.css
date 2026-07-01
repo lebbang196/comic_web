@@ -16,13 +16,15 @@
         opacity 0.3s;
 }
 
+
 header {
-    position: static;
+    position: static !important;
 }
 
 body {
-    padding-top: 0;
+    padding-top: 0 !important;
 }
+
 
 #btnScrollTop i {
     color: #f2f0f0;
@@ -185,7 +187,7 @@ main {
 
 .fixed-top {
     position: fixed;
-    top: 80px;
+    top: 0;
     /* thấp hơn header */
     left: 50%;
     transform: translateX(-50%);
@@ -367,78 +369,92 @@ main {
     border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-    @media (max-width: 768px) {
-        .div_main {
-            gap: 6px;
-            padding: 6px 10px;
-            flex-wrap: nowrap;
-            border-radius: 8px;
-            overflow: visible;
-            /* đổi dòng này */
-        }
-
-        .navigation--main {
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
+@media (max-width: 600px) {
+    .div_main {
+        gap: 6px;
+        padding: 6px 10px;
+        flex-wrap: nowrap;
+        border-radius: 8px;
+        overflow: visible;
+        /* đổi dòng này */
     }
 
-    .home,
-    .menus,
-    .love,
-    .check__line {
-        min-width: 35px;
-        height: 35px;
-        padding: 0 10px;
-        font-size: 14px;
-    }
-
-    .arrow-box {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
-
-    .nav_inline {
-        padding: 4px 8px;
-        gap: 5px;
-    }
-
-    .fixed-top,
-    .fixed-bottom {
-        width: 100%;
-        max-width: 100%;
-        left: 0;
-        transform: none;
-        border-radius: 0;
+    .navigation--main {
+        gap: 6px;
+        flex-wrap: nowrap;
     }
 }
 
+.home,
+.menus,
+.love,
+.check__line {
+    min-width: 35px;
+    height: 35px;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.arrow-box {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+}
+
+.nav_inline {
+    padding: 4px 8px;
+    gap: 5px;
+}
+
+.fixed-top,
+.fixed-bottom {
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+}
+
+
 @media (max-width: 480px) {
+    .div_main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2px;
+        padding: 1px;
+    }
+
+    .navigation--main {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2px;
+
+
+    }
 
     .home,
     .menus,
     .arrow-box {
-        width: 30px;
-        height: 30px;
-        min-width: 30px;
-        font-size: 10px;
-    }
-
-
-    .love,
-    .check__line {
-        width: 80px;
-        height: 40px;
         min-width: 40px;
-        font-size: 12px;
+        height: 40px;
+        font-size: 9px;
+        padding: 0 8px;
+        margin: 2px;
     }
 
-    .div_main {
-        padding: 4px 2px;
-        gap: 1px;
-        margin: 0%;
-        justify-content: space-between;
+    .check__line,
+    .love {
+        min-width: 40px;
+        height: 40px;
+        font-size: 12px;
+        padding: 0 1px;
+    }
+
+    .love {
+        white-space: nowrap;
+        /* khong cho noi dung xuong dong */
     }
 }
