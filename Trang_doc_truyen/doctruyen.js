@@ -103,11 +103,17 @@ window.onload = function () {
         if (currentScroll > lastScroll) {
             navTop.classList.remove("fixed-top");
             navTop.classList.add("fixed-bottom");
+
+            document.querySelectorAll(".check__line")
+                .forEach(btn => btn.classList.add("open-up"));
+
         } else {
             navTop.classList.remove("fixed-bottom");
             navTop.classList.add("fixed-top");
-        }
 
+            document.querySelectorAll(".check__line")
+                .forEach(btn => btn.classList.remove("open-up"));
+        }
         lastScroll = currentScroll;
     });
 };
@@ -132,3 +138,58 @@ function toggleFavorite(title, link, image, btn) {
         JSON.stringify(favorites)
     );
 }
+document.querySelectorAll(".check__line").forEach(btn => {
+    const menu = btn.querySelector(".chapter-list");
+
+    if (!menu) return;
+
+    let timer;
+
+    btn.addEventListener("mouseenter", () => {
+        clearTimeout(timer);
+        menu.classList.add("show");
+
+        requestAnimationFrame(() => {
+            const rect = menu.getBoundingClientRect();
+
+            // Nếu mở lên bị đụng mép trên
+            if (rect.top < 10) {
+                btn.classList.remove("open-up");
+            }
+            // Nếu mở xuống bị đụng mép dưới
+            else if (rect.bottom > window.innerHeight - 10) {
+                btn.classList.add("open-up");
+            }
+        });
+    });
+
+    btn.addEventListener("mouseleave", () => {
+        timer = setTimeout(() => {
+            if (!btn.classList.contains("active")) {
+                menu.classList.remove("show");
+            }
+        }, 1000);
+    });
+
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        btn.classList.toggle("active");
+
+        if (btn.classList.contains("active")) {
+            menu.classList.add("show");
+        } else {
+            menu.classList.remove("show");
+        }
+    });
+});
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".check__line").forEach(btn => {
+        btn.classList.remove("active");
+
+        const menu = btn.querySelector(".chapter-list");
+        if (menu) {
+            menu.classList.remove("show");
+        }
+    });
+});
