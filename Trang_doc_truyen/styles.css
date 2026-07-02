@@ -10,7 +10,6 @@
     outline: none;
     cursor: pointer;
     padding: 0;
-
     transition:
         transform 0.3s,
         opacity 0.3s;
