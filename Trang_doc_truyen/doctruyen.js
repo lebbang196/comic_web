@@ -86,6 +86,12 @@ window.onload = function () {
         const currentScroll = window.scrollY;
         const bottomTop = navBottom.offsetTop;
 
+        if (window.scrollY > 300) {
+            btnScrollTop.style.display = "flex";
+        } else {
+            btnScrollTop.style.display = "none";
+        }
+
         if (currentScroll <= 100) {
             navTop.classList.remove("fixed-top");
             navTop.classList.remove("fixed-bottom");
