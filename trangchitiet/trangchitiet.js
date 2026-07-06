@@ -10,12 +10,17 @@ if (!truyen) {
     "<h1 style='color:white;text-align:center;margin-top:100px'>Không tìm thấy truyện</h1>";
   throw new Error("Không tìm thấy truyện");
 }
+function layClassTinhTrang(tinhTrang) {
+  if (tinhTrang === "Đang Ra") return "dang-ra";
+  if (tinhTrang === "Hoàn Thành") return "hoan-thanh";
+  return "sap-ra-mat";
+}
 function renderHero() {
   const hero = document.getElementById("chitiet-hero");
-
-  // Lấy ra số của chapter mới nhất một cách an toàn
-  const soChapterMoiNhat = Math.max(...truyen.danhSachChapter.map((c) => c.so));
-
+  const coChapter = truyen.danhSachChapter.length > 0;
+  const soChapterMoiNhat = coChapter
+    ? Math.max(...truyen.danhSachChapter.map((c) => c.so))
+    : null;
   hero.innerHTML = `
     <div class="chitiet-container">
 
@@ -29,25 +34,34 @@ function renderHero() {
         </div>
         <div class="chitiet-btns">
 
-          <a
-            class="btn-doc btn-doc-primary"
-            href="./trangdoc.html?id=${truyen.id}&chapter=${truyen.danhSachChapter[0].so}">
-            📖 Đọc từ đầu
-          </a>
-           
-          <!-- ĐÃ SỬA: Thay taoChapter.so bằng biến an toàn mới -->
-          <a
-            class="btn-doc btn-doc-secondary"
-            href="./trangdoc.html?id=${truyen.id}&chapter=${soChapterMoiNhat}">
-            ⚡ Đọc chap mới
-          </a>
-
+          ${
+            coChapter
+              ? `
+            <a
+              class="btn-doc btn-doc-primary"
+              href="./trangdoc.html?id=${truyen.id}&chapter=${truyen.danhSachChapter[0].so}">
+              📖 Đọc từ đầu
+            </a>
+ 
+            <a
+              class="btn-doc btn-doc-secondary"
+              href="./trangdoc.html?id=${truyen.id}&chapter=${soChapterMoiNhat}">
+              ⚡ Đọc chap mới
+            </a>
+          `
+              : `
+            <span class="btn-doc btn-doc-secondary" style="opacity:.5; cursor:not-allowed;">
+              ⏳ Sắp ra mắt
+            </span>
+          `
+          }
+ 
           <button id="btnTheodoi" class="btn-doc btn-doc-outline">
             🔔 Theo Dõi
           </button>
         </div>
       </div>
-
+ 
       <div class="chitiet-info-col">
         <h1 class="chitiet-title">${truyen.ten}</h1>
         <div class="chitiet-rating">
@@ -56,34 +70,32 @@ function renderHero() {
           </span>
           <span class="chitiet-diem">${truyen.diemDanhGia}</span>
         </div>
-
+ 
         <div class="chitiet-meta">
           <div class="chitiet-meta-dong">
             <span class="meta-label">Tác giả</span>
             <span class="meta-value">${truyen.tacGia}</span>
           </div>
-
+ 
           <div class="chitiet-meta-dong">
             <span class="meta-label">Tình trạng</span>
             <span class="meta-value">
-              <span class="tinh-trang-badge ${
-                truyen.tinhTrang === "Đang Ra" ? "dang-ra" : "hoan-thanh"
-              }">
+              <span class="tinh-trang-badge ${layClassTinhTrang(truyen.tinhTrang)}">
                 ${truyen.tinhTrang}
               </span>
             </span>
           </div>
         </div>
-
+ 
         <div class="tag-list">
           ${truyen.theLoai.map((t) => `<span class="tag">${t}</span>`).join("")}
         </div>
-
+ 
         <div class="chitiet-stats">
           <div class="stat-item">👁 ${truyen.luotXem}</div>
           <div class="stat-item">❤ ${truyen.luotTheo}</div>
         </div>
-
+ 
         <div class="chitiet-mota">
           <div id="synopsisText" class="${synopsisMoRong ? "" : "synopsis-hidden"}">
             ${truyen.moTa}
@@ -93,15 +105,30 @@ function renderHero() {
             ${synopsisMoRong ? "▲ Thu gọn" : "▼ Xem thêm"}
           </button>
         </div>
-
+ 
       </div>
-
+ 
     </div>
   `;
   ganNutTheoDoi();
 }
+
 function renderChapter() {
   const section = document.getElementById("chapter-section");
+
+  // Truyện chưa có chapter nào (Sắp Ra Mắt) -> hiện thông báo và dừng lại
+  if (truyen.danhSachChapter.length === 0) {
+    section.innerHTML = `
+      <div class="chapter-header">
+        <h2>Danh sách chapter <span class="chapter-dem">(0)</span></h2>
+      </div>
+      <p style="color:#aaa; text-align:center; padding: 20px 0;">
+        Truyện chưa phát hành chapter nào. Vui lòng quay lại sau!
+      </p>
+    `;
+    return;
+  }
+
   let ds = [...truyen.danhSachChapter];
   ds.sort((a, b) => (thuTuChapter === "desc" ? b.so - a.so : a.so - b.so));
   const dsHienThi = chapterMoRong ? ds : ds.slice(0, 10);
@@ -111,7 +138,7 @@ function renderChapter() {
         Danh sách chapter
         <span class="chapter-dem">(${truyen.danhSachChapter.length})</span>
       </h2>
-
+ 
       <div class="chapter-filter">
         <button class="filter-btn ${thuTuChapter === "desc" ? "active" : ""}" onclick="doiThuTu('desc')">
           Mới nhất
@@ -121,7 +148,7 @@ function renderChapter() {
         </button>
       </div>
     </div>
-
+ 
     <div class="chapter-grid">
       ${dsHienThi
         .map(
@@ -139,7 +166,7 @@ function renderChapter() {
         )
         .join("")}
     </div>
-
+ 
     ${
       ds.length > 10
         ? `

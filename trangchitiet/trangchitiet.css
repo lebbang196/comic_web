@@ -195,8 +195,13 @@ body {
 
 .tinh-trang-badge.hoan-thanh {
   background: rgba(134, 98, 242, 0.15);
-  color: rgb(196, 181, 253, 0.9);
-  border: 1px solid rgb(134, 98, 242);
+  color: rgb(182, 169, 241);
+  border: 1px solid rgb(196, 181, 253);
+}
+.tinh-trang-badge.sap-ra-mat {
+  background: rgba(250, 204, 21, 0.15);
+  color: rgb(250, 204, 21);
+  border: 1px solid rgb(250, 204, 21);
 }
 
 .chitiet-stats {
