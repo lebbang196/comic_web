@@ -118,7 +118,7 @@ const danhSachTruyen = [
     tacGia: "Yuki Tabata",
     tinhTrang: "Hoàn Thành",
     theLoai: ["Action"],
-    luotXem: "9,800,000",
+    luotXem: "19,800,000",
     luotTheo: "540,000",
     diemDanhGia: 4.6,
     anhBia: "https://dicasgeeks.com.br/wp-content/uploads/2019/11/capa.jpg",
@@ -141,7 +141,7 @@ const danhSachTruyen = [
     tacGia: "Osamu Nishi",
     tinhTrang: "Đang Ra",
     theLoai: ["Comedy", "Drama", "Fantasy", "Manga", "School Life", "Shounen"],
-    luotXem: "6,300,000",
+    luotXem: "11,300,000",
     luotTheo: "310,000",
     diemDanhGia: 4.5,
     anhBia:

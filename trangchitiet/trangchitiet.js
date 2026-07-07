@@ -1,26 +1,43 @@
+function layThamSoURL(tenThamSo) {
+  const chuoiTruyVan = window.location.search.substring(1);
+  if (!chuoiTruyVan) return null;
+
+  const cacCapKeyValue = chuoiTruyVan.split("&");
+  for (let i = 0; i < cacCapKeyValue.length; i++) {
+    const cap = cacCapKeyValue[i].split("=");
+    if (decodeURIComponent(cap[0]) === tenThamSo) {
+      return cap[1] ? decodeURIComponent(cap[1]) : "";
+    }
+  }
+  return null;
+}
+
 let dangTheoDoi = false;
 let synopsisMoRong = false;
 let thuTuChapter = "desc";
 let chapterMoRong = false;
-const params = new URLSearchParams(window.location.search);
-const idTruyen = parseInt(params.get("id")) || 1;
+
+const idTruyen = parseInt(layThamSoURL("id")) || 1;
 const truyen = layTruyenTheoId(idTruyen);
 if (!truyen) {
   document.body.innerHTML =
     "<h1 style='color:white;text-align:center;margin-top:100px'>Không tìm thấy truyện</h1>";
   throw new Error("Không tìm thấy truyện");
 }
+
 function layClassTinhTrang(tinhTrang) {
   if (tinhTrang === "Đang Ra") return "dang-ra";
   if (tinhTrang === "Hoàn Thành") return "hoan-thanh";
   return "sap-ra-mat";
 }
+
 function renderHero() {
   const hero = document.getElementById("chitiet-hero");
   const coChapter = truyen.danhSachChapter.length > 0;
   const soChapterMoiNhat = coChapter
     ? Math.max(...truyen.danhSachChapter.map((c) => c.so))
     : null;
+
   hero.innerHTML = `
     <div class="chitiet-container">
 
@@ -42,7 +59,7 @@ function renderHero() {
               href="./trangdoc.html?id=${truyen.id}&chapter=${truyen.danhSachChapter[0].so}">
               📖 Đọc từ đầu
             </a>
- 
+
             <a
               class="btn-doc btn-doc-secondary"
               href="./trangdoc.html?id=${truyen.id}&chapter=${soChapterMoiNhat}">
@@ -55,13 +72,13 @@ function renderHero() {
             </span>
           `
           }
- 
+
           <button id="btnTheodoi" class="btn-doc btn-doc-outline">
             🔔 Theo Dõi
           </button>
         </div>
       </div>
- 
+
       <div class="chitiet-info-col">
         <h1 class="chitiet-title">${truyen.ten}</h1>
         <div class="chitiet-rating">
@@ -70,13 +87,13 @@ function renderHero() {
           </span>
           <span class="chitiet-diem">${truyen.diemDanhGia}</span>
         </div>
- 
+
         <div class="chitiet-meta">
           <div class="chitiet-meta-dong">
             <span class="meta-label">Tác giả</span>
             <span class="meta-value">${truyen.tacGia}</span>
           </div>
- 
+
           <div class="chitiet-meta-dong">
             <span class="meta-label">Tình trạng</span>
             <span class="meta-value">
@@ -86,16 +103,16 @@ function renderHero() {
             </span>
           </div>
         </div>
- 
+
         <div class="tag-list">
           ${truyen.theLoai.map((t) => `<span class="tag">${t}</span>`).join("")}
         </div>
- 
+
         <div class="chitiet-stats">
           <div class="stat-item">👁 ${truyen.luotXem}</div>
           <div class="stat-item">❤ ${truyen.luotTheo}</div>
         </div>
- 
+
         <div class="chitiet-mota">
           <div id="synopsisText" class="${synopsisMoRong ? "" : "synopsis-hidden"}">
             ${truyen.moTa}
@@ -105,9 +122,9 @@ function renderHero() {
             ${synopsisMoRong ? "▲ Thu gọn" : "▼ Xem thêm"}
           </button>
         </div>
- 
+
       </div>
- 
+
     </div>
   `;
   ganNutTheoDoi();
@@ -116,7 +133,6 @@ function renderHero() {
 function renderChapter() {
   const section = document.getElementById("chapter-section");
 
-  // Truyện chưa có chapter nào (Sắp Ra Mắt) -> hiện thông báo và dừng lại
   if (truyen.danhSachChapter.length === 0) {
     section.innerHTML = `
       <div class="chapter-header">
@@ -138,7 +154,7 @@ function renderChapter() {
         Danh sách chapter
         <span class="chapter-dem">(${truyen.danhSachChapter.length})</span>
       </h2>
- 
+
       <div class="chapter-filter">
         <button class="filter-btn ${thuTuChapter === "desc" ? "active" : ""}" onclick="doiThuTu('desc')">
           Mới nhất
@@ -148,7 +164,7 @@ function renderChapter() {
         </button>
       </div>
     </div>
- 
+
     <div class="chapter-grid">
       ${dsHienThi
         .map(
@@ -166,7 +182,7 @@ function renderChapter() {
         )
         .join("")}
     </div>
- 
+
     ${
       ds.length > 10
         ? `
@@ -336,7 +352,7 @@ function guiBinhLuan() {
   truyen.binhLuan.unshift({
     ten: ten,
     kyTuDau: ten.charAt(0).toUpperCase(),
-    sao: saoDangChon || 5, // nếu chưa chọn sao thì mặc định 5 sao
+    sao: saoDangChon || 5,
     thoiGian: "Vừa xong",
     noiDung: noiDung,
   });
@@ -345,22 +361,26 @@ function guiBinhLuan() {
   renderBinhLuan();
 }
 
+function phanTuDaVaoKhungNhin(el) {
+  const viTri = el.getBoundingClientRect();
+  return viTri.top < window.innerHeight * 0.9;
+}
+
 function ganHieuUngScroll() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("section-show");
-          entry.target.classList.remove("section-hidden");
-        }
-      });
-    },
-    { threshold: 0.1 },
-  );
-  ["sectionLQuan", "sectionBLuan"].forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) observer.observe(el);
-  });
+  const cacIdCanHieuUng = ["sectionLQuan", "sectionBLuan"];
+
+  function kiemTraVaHienThi() {
+    cacIdCanHieuUng.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && phanTuDaVaoKhungNhin(el)) {
+        el.classList.add("section-show");
+        el.classList.remove("section-hidden");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", kiemTraVaHienThi);
+  kiemTraVaHienThi();
 }
 
 function ganNutQuayLai() {

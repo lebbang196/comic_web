@@ -1,0 +1,273 @@
+.breadcrumb {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  padding: 10px 6%;
+}
+
+.xh-tab-chon {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.xh-tab-nut {
+  padding: 10px 22px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.xh-tab-nut.active,
+.xh-tab-nut:hover {
+  background: rgb(134, 98, 242);
+  color: white;
+  border-color: rgb(134, 98, 242);
+}
+
+.xh-top3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.xh-top3-the {
+  position: relative;
+  background: rgb(202, 199, 199);
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s;
+}
+
+.xh-top3-the:hover {
+  transform: scale(1.03);
+}
+
+.xh-top3-the img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.xh-hang-so {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+  color: #1c1c24;
+}
+
+.xh-top3-the.hang-1 .xh-hang-so {
+  background: gold;
+}
+
+.xh-top3-the.hang-2 .xh-hang-so {
+  background: silver;
+}
+
+.xh-top3-the.hang-3 .xh-hang-so {
+  background: #cd7f32;
+}
+
+.xh-top3-info {
+  padding: 12px 15px;
+}
+
+.xh-top3-ten {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1c1c24;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.xh-top3-chiso {
+  font-size: 13px;
+  color: rgb(134, 98, 242);
+  font-weight: 700;
+}
+
+.xh-danh-sach {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.xh-hang-muc {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 10px 15px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.xh-hang-muc:hover {
+  background: rgba(134, 98, 242, 0.2);
+}
+
+.xh-hang-muc .xh-hang-so-nho {
+  width: 32px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #888;
+}
+
+.xh-hang-muc img {
+  width: 55px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.xh-hang-muc-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.xh-hang-muc-ten {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xh-hang-muc-tacgia {
+  font-size: 13px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xh-hang-muc-chiso {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(196, 181, 253);
+}
+
+.xh-xem-them {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.xh-xem-them button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.xh-xem-them button:hover {
+  background: rgb(134, 98, 242);
+}
+
+@media (max-width: 1024px) {
+  .xh-top3 {
+    gap: 15px;
+  }
+
+  .xh-top3-the img {
+    height: 230px;
+  }
+
+  .xh-hang-muc-tacgia {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .xh-tab-nut {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .xh-top3 {
+    grid-template-columns: 1fr;
+  }
+
+  .xh-top3-the img {
+    height: 220px;
+  }
+
+  .xh-hang-muc-tacgia {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .xh-tab-chon {
+    gap: 6px;
+  }
+
+  .xh-tab-nut {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .xh-hang-so {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  .xh-top3-ten {
+    font-size: 13px;
+  }
+
+  .xh-hang-muc {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+
+  .xh-hang-muc img {
+    width: 42px;
+    height: 58px;
+  }
+
+  .xh-hang-muc-ten {
+    font-size: 13px;
+  }
+
+  .xh-hang-muc-chiso {
+    font-size: 12px;
+  }
+}
