@@ -105,7 +105,8 @@ function renderChapter() {
   chapterDanhSach.innerHTML = dsHienThi
     .map(
       (chapter) => `
-      <a class="chapter-item" href="./trangdoc.html?id=${truyen.id}&chapter=${chapter.so}">
+      <a class="chapter-item"
+        href="./doctruyen.html?id=${truyen.id}&chapter=${chapter.so}">
         <div class="chapter-so">
           Chapter ${chapter.so}
           ${chapter.isMoi ? `<span class="chapter-moi-badge">MỚI</span>` : ""}
