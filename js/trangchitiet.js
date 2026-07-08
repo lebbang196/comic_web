@@ -62,8 +62,11 @@ function renderHero() {
   const btnDocDau = document.getElementById("btnDocDau");
   const btnDocMoi = document.getElementById("btnDocMoi");
   if (coChapter) {
-    btnDocDau.href = `./trangdoc.html?id=${truyen.id}&chapter=${truyen.danhSachChapter[0].so}`;
-    btnDocMoi.href = `./trangdoc.html?id=${truyen.id}&chapter=${soChapterMoiNhat}`;
+    btnDocDau.href =
+      `./doctruyen.html?id=${truyen.id}&chapter=${Math.min(...truyen.danhSachChapter.map(ch => ch.so))}`;
+
+    btnDocMoi.href =
+      `./doctruyen.html?id=${truyen.id}&chapter=${Math.max(...truyen.danhSachChapter.map(ch => ch.so))}`;
   } else {
     btnDocDau.removeAttribute("href");
     btnDocDau.textContent = "⏳ Sắp ra mắt";
@@ -102,7 +105,8 @@ function renderChapter() {
   chapterDanhSach.innerHTML = dsHienThi
     .map(
       (chapter) => `
-      <a class="chapter-item" href="./trangdoc.html?id=${truyen.id}&chapter=${chapter.so}">
+      <a class="chapter-item"
+        href="./doctruyen.html?id=${truyen.id}&chapter=${chapter.so}">
         <div class="chapter-so">
           Chapter ${chapter.so}
           ${chapter.isMoi ? `<span class="chapter-moi-badge">MỚI</span>` : ""}

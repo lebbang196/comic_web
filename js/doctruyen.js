@@ -3,32 +3,7 @@ window.onload = function () {
     const navBottom = document.querySelector(".div_main.bottom");
     let lastScroll = 0;
     const btnScrollTop = document.getElementById("btnScrollTop");
-    const loveBtns = document.querySelectorAll(".love");
-    const storyId = "fav_" + window.location.pathname + "_" + document.title;
 
-    function updateLoveUI(loved) {
-        loveBtns.forEach(btn => {
-            if (loved) {
-                btn.classList.add("is-loved");
-                btn.innerHTML = '<i class="fa-solid fa-heart" style="color: #ef4444;"></i> Đã thích';
-            } else {
-                btn.classList.remove("is-loved");
-                btn.innerHTML = '<i class="fa-regular fa-heart"></i> Yêu thích';
-            }
-        });
-    }
-
-    let isLoved = localStorage.getItem(storyId) === "true";
-    updateLoveUI(isLoved);
-
-    loveBtns.forEach(btn => {
-        btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            isLoved = !isLoved;
-            localStorage.setItem(storyId, isLoved);
-            updateLoveUI(isLoved);
-        });
-    });
     const commentForm = document.getElementById("commentForm");
     const commentInput = document.getElementById("commentInput");
     const commentList = document.getElementById("commentList");
@@ -47,9 +22,9 @@ window.onload = function () {
             const div = document.createElement("div");
             div.className = "comment-item";
             div.innerHTML = `
-          <span class="comment-time">${item.time}</span>
-          <p class="comment-text">${item.text}</p>
-        `;
+        <span class="comment-time">${item.time}</span>
+        <p class="comment-text">${item.text}</p>
+            `;
             commentList.appendChild(div);
         });
     }
@@ -123,27 +98,6 @@ window.onload = function () {
         lastScroll = currentScroll;
     });
 };
-function toggleFavorite(title, link, image, btn) {
-    let favorites =
-        JSON.parse(localStorage.getItem("favorites")) || [];
-
-    let index = favorites.findIndex(
-        item => item.link === link
-    );
-
-    if (index === -1) {
-        favorites.push({ title, link, image });
-        btn.innerHTML = "❤️";
-    } else {
-        favorites.splice(index, 1);
-        btn.innerHTML = "🤍";
-    }
-
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
-}
 document.querySelectorAll(".check__line").forEach(btn => {
     const menu = btn.querySelector(".chapter-list");
 
@@ -198,4 +152,114 @@ document.addEventListener("click", () => {
             menu.classList.remove("show");
         }
     });
+});
+
+
+// Lấy tham số URL
+const params = new URLSearchParams(window.location.search);
+
+const id = Number(params.get("id"));
+const chapter = Number(params.get("chapter")) || 1;
+
+// Tìm chapter
+const chap = chapters.find(item =>
+    item.id === id &&
+    item.chapter === chapter
+);
+
+const truyen = danhSachTruyen.find(item =>
+    item.id === id
+);
+if (!truyen) {
+    throw new Error("Không tìm thấy truyện");
+}
+
+// Yêu thích
+const loveBtns = document.querySelectorAll(".love");
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+const link = `/trangchitiet/trangchitiet.html?id=${truyen.id}`;
+
+function updateLoveButton() {
+    const isLoved = favorites.some(item => item.link === link);
+
+    loveBtns.forEach(btn => {
+        if (isLoved) {
+            btn.innerHTML = `
+            <i class="fa-solid fa-heart"></i>
+            Đã thích
+            `;
+            btn.classList.add("is-loved");
+        } else {
+            btn.innerHTML = `
+            <i class="fa-regular fa-heart"></i>
+            Yêu thích
+            `;
+            btn.classList.remove("is-loved");
+        }
+    });
+}
+updateLoveButton();
+
+loveBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        const index = favorites.findIndex(item => item.link === link);
+
+        if (index === -1) {
+            favorites.push({
+                title: truyen.ten,
+                image: truyen.anhBia,
+                link: link
+            });
+        } else {
+            favorites.splice(index, 1);
+        }
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+
+        updateLoveButton();
+    });
+});
+
+if (!chap) {
+    document.getElementById("reader").innerHTML =
+        "<h2>Không tìm thấy chapter!</h2>";
+    throw new Error("Không tìm thấy chapter");
+}
+
+// Hiện tên
+document.querySelectorAll(".chapter-name").forEach(el => {
+    el.textContent = `Chapter ${chap.chapter}`;
+});
+
+// Hiện ảnh
+const reader = document.getElementById("reader");
+reader.innerHTML = "";
+
+const html = chap.images.map(img => `
+    <img src="${img}" alt="">
+`).join("");
+
+reader.innerHTML = html;
+
+// Danh sách chapter
+document.querySelectorAll(".chapter-list").forEach(list => {
+    list.innerHTML = "";
+
+    chapters
+        .filter(item => item.id === id)
+        .forEach(item => {
+            list.innerHTML += `
+                <a
+                    href="doctruyen.html?id=${id}&chapter=${item.chapter}"
+                    class="${item.chapter === chapter ? "active" : ""}">
+                    Chapter ${item.chapter}
+                </a>
+            `;
+        });
 });
