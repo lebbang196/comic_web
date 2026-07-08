@@ -63,10 +63,10 @@ function renderHero() {
   const btnDocMoi = document.getElementById("btnDocMoi");
   if (coChapter) {
     btnDocDau.href =
-      `./Trang_doc_truyen/doctruyen.html?id=${truyen.id}&chapter=${Math.min(...truyen.danhSachChapter.map(ch => ch.so))}`;
+      `./doctruyen.html?id=${truyen.id}&chapter=${Math.min(...truyen.danhSachChapter.map(ch => ch.so))}`;
 
     btnDocMoi.href =
-      `./Trang_doc_truyen/doctruyen.html?id=${truyen.id}&chapter=${Math.max(...truyen.danhSachChapter.map(ch => ch.so))}`;
+      `./doctruyen.html?id=${truyen.id}&chapter=${Math.max(...truyen.danhSachChapter.map(ch => ch.so))}`;
   } else {
     btnDocDau.removeAttribute("href");
     btnDocDau.textContent = "⏳ Sắp ra mắt";
