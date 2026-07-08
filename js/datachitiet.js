@@ -392,8 +392,7 @@ const danhSachTruyen = [
     luotXem: "670,000",
     luotTheo: "38,000",
     diemDanhGia: 3.9,
-    anhBia:
-      "https://panomic1.info/wp-content/uploads/2026/04/z7754738904501_a90173d77d1d74041c4a64cf5af3a9eb-720x970.webp",
+    anhBia: "/img/tt14.jpg",
     moTa: `Ác Chi Hoàn kể về hành trình sinh tồn đầy căng thẳng của những con người bị
           cuốn vào một thế giới tàn khốc, nơi ranh giới giữa thiện và ác trở
           nên mờ nhạt. Khi những bí mật đen tối và các thế lực nguy hiểm dần

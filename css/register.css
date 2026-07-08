@@ -10,19 +10,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, rgb(169, 168, 168) 0%, rgb(90, 78, 121) 100%);
+  background: linear-gradient(rgb(169, 168, 168), rgb(90, 78, 121));
   background-attachment: fixed;
   padding: 20px;
 }
 
-.login-container {
+.register-container {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   margin: 0 auto;
   position: relative;
 }
 
-.login-card {
+.register-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -34,7 +34,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.login-card:hover {
+.register-card:hover {
   transform: translateY(-4px);
 }
 
@@ -46,7 +46,9 @@ body {
   color: rgba(255, 255, 255, 0.6);
   font-size: 26px;
   text-decoration: none;
-  transition: color 0.3s, transform 0.3s;
+  transition:
+    color 0.3s,
+    transform 0.3s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -59,16 +61,16 @@ body {
 
 .close-btn:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(134, 98, 242, 0.4);
   transform: rotate(90deg);
 }
 
-.login-header {
+.register-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
-.logo-login {
+.logo-register {
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -79,24 +81,26 @@ body {
   border: 2px solid rgba(134, 98, 242, 0.4);
 }
 
-.login-header h2 {
+.register-header h2 {
   font-size: 28px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.5px;
 }
 
-.login-header p {
+.register-header p {
   color: rgba(255, 255, 255, 0.6);
   font-size: 15px;
   margin-top: 4px;
+  font-weight: 500;
+  font-weight: 500;
 }
 
 /* Form */
-#loginForm {
+#registerForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .input-group {
@@ -115,7 +119,7 @@ body {
 }
 
 .input-group label i {
-  color: rgb(134, 98, 242);
+  color: rgb(224, 222, 230);
 }
 
 .input-group input {
@@ -126,7 +130,9 @@ body {
   background: rgba(255, 255, 255, 0.07);
   color: #fff;
   font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
   outline: none;
 }
 
@@ -172,44 +178,44 @@ body {
   margin-top: 2px;
 }
 
-.form-options {
+.form-agreement {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
 }
 
-.remember-me {
+.agree-check {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
   color: rgba(255, 255, 255, 0.75);
   font-size: 14px;
   cursor: pointer;
+  line-height: 1.5;
 }
 
-.remember-me input[type="checkbox"] {
+.agree-check input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: rgb(134, 98, 242);
   cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.forgot-link {
-  color: rgb(134, 98, 242);
+.agree-check a {
+  color: rgb(73, 32, 198);
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
   transition: color 0.3s;
 }
 
-.forgot-link:hover {
+.agree-check a:hover {
   color: #c4b5fd;
   text-decoration: underline;
 }
 
-.btn-login {
+.btn-register {
   width: 100%;
   padding: 16px;
   border: none;
@@ -219,121 +225,54 @@ body {
   font-size: 17px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  transition:
+    background 0.3s,
+    transform 0.2s,
+    box-shadow 0.3s;
   margin-top: 4px;
 }
 
-.btn-login:hover {
+.btn-register:hover {
   background: rgb(110, 75, 210);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(134, 98, 242, 0.35);
 }
 
-.btn-login:active {
+.btn-register:active {
   transform: scale(0.98);
 }
 
-.register-link {
+.login-link {
   text-align: center;
   margin-top: 24px;
   color: rgba(255, 255, 255, 0.7);
   font-size: 15px;
 }
 
-.register-link a {
-  color: rgb(134, 98, 242);
+.login-link a {
+  color: rgb(73, 32, 198);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
 
-.register-link a:hover {
+.login-link a:hover {
   color: #c4b5fd;
   text-decoration: underline;
 }
 
-.social-login {
-  margin-top: 28px;
-  text-align: center;
-}
-
-.social-login p {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 13px;
-  margin-bottom: 14px;
-  position: relative;
-}
-
-.social-login p::before,
-.social-login p::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.social-login p::before {
-  left: 0;
-}
-
-.social-login p::after {
-  right: 0;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-
-.social-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 20px;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.3s, color 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.social-btn:hover {
-  transform: translateY(-4px);
-}
-
-.social-btn.google:hover {
-  background: #ea4335;
-  color: #fff;
-}
-
-.social-btn.facebook:hover {
-  background: #1877f2;
-  color: #fff;
-}
-
-.social-btn.github:hover {
-  background: #333;
-  color: #fff;
-}
-
 /* Responsive */
 @media (max-width: 480px) {
-  .login-card {
+  .register-card {
     padding: 28px 20px;
     border-radius: 24px;
   }
 
-  .login-header h2 {
+  .register-header h2 {
     font-size: 24px;
   }
 
-  .logo-login {
+  .logo-register {
     width: 64px;
     height: 64px;
   }
@@ -351,14 +290,12 @@ body {
     font-size: 14px;
   }
 
-  .btn-login {
+  .btn-register {
     padding: 14px;
     font-size: 16px;
   }
 
-  .form-options {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .agree-check {
+    font-size: 13px;
   }
 }

@@ -21,7 +21,8 @@ header h1 {
   color: white;
 }
 section {
-  max-width: 900px;
+  position: relative;
+  max-width: 550px;
   margin: 50px auto;
   padding: 40px;
   background: rgba(255, 255, 255, 0.12);
@@ -40,13 +41,18 @@ section p:last-child {
   margin-bottom: 0;
 }
 .back-home {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 12px 24px;
-  background: rgb(134, 98, 242);
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(167, 142, 244);
   color: white;
   text-decoration: none;
-  border-radius: 30px;
+  border-radius: 50px;
   transition: 0.3s;
 }
 .back-home:hover {

@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Kiểm tra nếu không có tham số theloai -> hiển thị tất cả
   let danhSachHienThi = [];
-  let tieuDe = "📚 Tất cả thể loại";
+  let tieuDe = "📚 Tất Cả Thể Loại";
 
   if (theloai) {
     // Lọc truyện theo thể loại (không phân biệt hoa thường)
-    danhSachHienThi = danhSachTruyen.filter(truyen =>
-      truyen.theLoai.some(tl => tl.toLowerCase() === theloai.toLowerCase())
+    danhSachHienThi = danhSachTruyen.filter((truyen) =>
+      truyen.theLoai.some((tl) => tl.toLowerCase() === theloai.toLowerCase()),
     );
     tieuDe = `📚 Thể loại: ${theloai}`;
   } else {
@@ -33,13 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Render danh sách truyện (giống giao diện index)
-  khung.innerHTML = danhSachHienThi.map(truyen => `
+  khung.innerHTML = danhSachHienThi
+    .map(
+      (truyen) => `
     <div class="khungtruyenrieng">
-      <a href="/trangchitiet/trangchitiet.html?id=${truyen.id}">
+      <a href="trangchitiet.html?id=${truyen.id}">
         <img src="${truyen.anhBia}" alt="${truyen.ten}" />
         <h3>${truyen.ten}</h3>
       </a>
       <span>${truyen.theLoai.join(" - ")}</span>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 });

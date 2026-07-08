@@ -46,14 +46,14 @@ header {
   position: relative;
 }
 
-.theloai>a {
+.theloai > a {
   font-weight: 500;
   color: white;
   text-decoration: none;
   transition: 0.3s;
 }
 
-.theloai>a:hover {
+.theloai > a:hover {
   color: #93c5fd;
 }
 
@@ -156,7 +156,7 @@ nav a:hover {
 }
 
 .content_background button {
-  background: rgb(196, 194, 194);
+  background: rgb(251, 251, 251);
   padding: 18px 40px;
   border: none;
   border-radius: 40px;
@@ -188,7 +188,7 @@ nav a:hover {
   gap: 20px;
 }
 
-.list div {
+.list a {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -199,7 +199,7 @@ nav a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
-.list div:hover {
+.list a:hover {
   background: rgb(134, 98, 242);
 }
 
@@ -249,6 +249,7 @@ nav a:hover {
 
 .khungtruyenrieng a {
   text-decoration: none;
+  color: rgb(77, 62, 124);
 }
 
 .xemthem {
@@ -400,7 +401,7 @@ footer {
     font-size: 15px;
   }
 
-  .theloai>a {
+  .theloai > a {
     font-size: 15px;
   }
 

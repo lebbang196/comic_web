@@ -49,7 +49,7 @@ function renderTop3(dsXepHang) {
   el.innerHTML = top3
     .map(
       (truyen, chiSo) => `
-    <a class="xh-top3-the hang-${chiSo + 1}" href="/trangchitiet/trangchitiet.html?id=${truyen.id}">
+    <a class="xh-top3-the hang-${chiSo + 1}" href="trangchitiet.html?id=${truyen.id}">
       <div class="xh-hang-so">${chiSo + 1}</div>
       <img src="${truyen.anhBia}" alt="${truyen.ten}">
       <div class="xh-top3-info">
@@ -69,7 +69,7 @@ function renderDanhSach(dsXepHang) {
   const dsHtml = dsHienThi
     .map(
       (truyen, chiSo) => `
-    <a class="xh-hang-muc" href="/trangchitiet/trangchitiet.html?id=${truyen.id}">
+    <a class="xh-hang-muc" href="trangchitiet.html?id=${truyen.id}">
       <div class="xh-hang-so-nho">${chiSo + 4}</div>
       <img src="${truyen.anhBia}" alt="${truyen.ten}">
       <div class="xh-hang-muc-info">

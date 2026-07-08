@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Kiểm tra tài khoản
     const users = getUsers();
     const foundUser = users.find(
-      (user) => user.email === email && user.password === password
+      (user) => user.email === email && user.password === password,
     );
 
     if (foundUser) {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Chuyển hướng về trang chủ với thông báo
-      window.location.href = "/index.html?login=success";
+      window.location.href = "trangchu.html?login=success";
     } else {
       // Kiểm tra xem email có tồn tại không để đưa ra thông báo phù hợp
       const userExists = users.some((user) => user.email === email);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const currentUser = localStorage.getItem("currentUser");
   if (currentUser) {
     // Nếu đang ở trang login, chuyển về index
-    window.location.href = "/index.html";
+    window.location.href = "trangchu.html";
   }
 
   // Tự động điền email nếu có rememberMe
