@@ -17,52 +17,51 @@ nutQuayLai.addEventListener("click", function () {
 const search = document.getElementById("inputsearch");
 const khungKetQua = document.getElementById("khungKetQua");
 const ketquatimkiem = document.getElementById("ketquatimkiem");
-const sapramat = document.getElementById("sapramat");
-const decu = document.getElementById("decu");
 const phobien = document.getElementById("phobien");
 const moiramat = document.getElementById("moiramat");
+const sapramat = document.getElementById("sapramat");
+const decu = document.getElementById("decu");
 const theloai = document.getElementById("theloai");
 search.addEventListener("input", function () {
-  const tukhoa = search.value.toLowerCase().trim();
-  khungKetQua.innerHTML = "";
-  if (tukhoa === "") {
+  const tuKhoa = search.value.trim().toLowerCase();
+  if (tuKhoa === "") {
     ketquatimkiem.style.display = "none";
-    theloai.style.display = "block";
     phobien.style.display = "block";
     moiramat.style.display = "block";
     sapramat.style.display = "block";
     decu.style.display = "block";
+    theloai.style.display = "block";
     return;
   }
   ketquatimkiem.style.display = "block";
+  phobien.style.display = "none";
+  moiramat.style.display = "none";
   sapramat.style.display = "none";
   decu.style.display = "none";
   theloai.style.display = "none";
-  phobien.style.display = "none";
-  moiramat.style.display = "none";
-  const danhsach = document.querySelectorAll("#decu .khungtruyenrieng");
-  const danhsachtimkiem = [];
-  danhsach.forEach(function (truyen) {
-    const ten = truyen.querySelector("h3").textContent.trim();
-    if (ten.toLowerCase().includes(tukhoa) && !danhsachtimkiem.includes(ten)) {
-      danhsachtimkiem.push(ten);
-      const clone = truyen.cloneNode(true);
-      khungKetQua.appendChild(clone);
-    }
+  const ketQua = danhSachTruyen.filter(function (truyen) {
+    return (
+      truyen.ten.toLowerCase().includes(tuKhoa) ||
+      truyen.tacGia.toLowerCase().includes(tuKhoa) ||
+      truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
+    );
   });
-  if (khungKetQua.children.length === 0) {
+  if (ketQua.length === 0) {
+    khungKetQua.style.display = "block";
     khungKetQua.innerHTML = `
       <p style="
         color:white;
         font-size:20px;
         text-align:center;
-        width:100%;
         padding:40px;
-      ">
-        Không tìm thấy truyện phù hợp
+        ">
+        🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác
       </p>
     `;
+    return;
   }
+  hienThiTruyen("khungKetQua", ketQua);
+  khungKetQua.style.display = "grid";
 });
 //Nút Xem Thêm
 const btnXemThem = document.getElementById("btnXemThem");
@@ -74,13 +73,12 @@ btnXemThem.addEventListener("click", function () {
     btnXemThem.textContent = "Thu Gọn";
     moRong = true;
   } else {
-    khungDeCu.style.maxHeight = "950px";
+    khungDeCu.style.maxHeight = "920px";
     btnXemThem.textContent = "Xem Thêm";
     moRong = false;
   }
 });
 //Hiệu Ứng Khi Cuộn Xuống
-const cards = document.querySelectorAll(".khungtruyenrieng");
 const sections = document.querySelectorAll(".hidden");
 function hienNoiDung() {
   sections.forEach(function (section) {
@@ -118,3 +116,37 @@ const menu = document.querySelector(".menu");
 menuToggle.addEventListener("click", function () {
   menu.classList.toggle("active");
 });
+//Hiển Thị Truyện Thông Qua datachitiet.js
+function hienThiTruyen(idKhung, danhSach) {
+  const khung = document.getElementById(idKhung);
+  khung.innerHTML = "";
+  danhSach.forEach(function (truyen) {
+    khung.innerHTML += `
+      <div class="khungtruyenrieng">
+        <a href="trangchitiet.html?id=${truyen.id}">
+          <img src="${truyen.anhBia}" alt="${truyen.ten}">
+          <h3>${truyen.ten}</h3>
+        </a>
+        <span>${truyen.theLoai.join(" • ")}</span>
+      </div>
+    `;
+  });
+}
+//Hiển Thị Truyện Cho Truyện Phổ Biến
+const dsPhoBien = danhSachTruyen.filter(function (truyen) {
+  return [1, 2, 3, 4, 5, 6, 7, 8, 11, 14].includes(truyen.id);
+});
+hienThiTruyen("dsPhoBien", dsPhoBien);
+//Hiển Thị Truyện Cho Truyện Mới Ra Mắt
+const dsMoiRa = danhSachTruyen.filter(function (truyen) {
+  return [9, 11, 12, 13, 14, 15, 16, 10, 17, 19].includes(truyen.id);
+});
+hienThiTruyen("dsMoiRa", dsMoiRa);
+//Hiển Thị Truyện Cho Truyện Sắp Ra Mắt
+const dsSapRa = danhSachTruyen.filter(function (truyen) {
+  return truyen.tinhTrang === "Sắp Ra Mắt";
+});
+hienThiTruyen("dsSapRa", dsSapRa);
+//Hiển Thị Truyện Cho Truyện Đề Cử
+const dsDeCu = danhSachTruyen;
+hienThiTruyen("dsDeCu", dsDeCu);
