@@ -136,9 +136,70 @@ function ganMenuToggle() {
   });
 }
 
+//Tìm Kiếm Truyện
+function hienThiTruyen(idKhung, danhSach) {
+  const khung = document.getElementById(idKhung);
+  khung.innerHTML = "";
+  danhSach.forEach(function (truyen) {
+    khung.innerHTML += `
+      <div class="khungtruyenrieng">
+        <a href="trangchitiet.html?id=${truyen.id}">
+          <img src="${truyen.anhBia}" alt="${truyen.ten}">
+          <h3>${truyen.ten}</h3>
+        </a>
+        <span>${truyen.theLoai.join(" • ")}</span>
+      </div>
+    `;
+  });
+}
+
+function ganTimKiem() {
+  const search = document.getElementById("inputsearch");
+  const khungKetQua = document.getElementById("khungKetQua");
+  const ketquatimkiem = document.getElementById("ketquatimkiem");
+  const breadcrumb = document.querySelector(".breadcrumb");
+  const xephang = document.getElementById("sectionXepHang");
+  search.addEventListener("input", function () {
+    const tuKhoa = search.value.trim().toLowerCase();
+    if (tuKhoa === "") {
+      ketquatimkiem.style.display = "none";
+      breadcrumb.style.display = "block";
+      xephang.style.display = "block";
+      return;
+    }
+    ketquatimkiem.style.display = "block";
+    breadcrumb.style.display = "none";
+    xephang.style.display = "none";
+    const ketQua = danhSachTruyen.filter(function (truyen) {
+      return (
+        truyen.ten.toLowerCase().includes(tuKhoa) ||
+        truyen.tacGia.toLowerCase().includes(tuKhoa) ||
+        truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
+      );
+    });
+    if (ketQua.length === 0) {
+      khungKetQua.style.display = "block";
+      khungKetQua.innerHTML = `
+      <p style="
+        color:white;
+        font-size:20px;
+        text-align:center;
+        padding:40px;
+        ">
+        🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác
+      </p>
+    `;
+      return;
+    }
+    hienThiTruyen("khungKetQua", ketQua);
+    khungKetQua.style.display = "grid";
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   ganSuKienTab();
   renderTrangXepHang();
   ganNutQuayLai();
   ganMenuToggle();
+  ganTimKiem();
 });
