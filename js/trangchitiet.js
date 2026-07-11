@@ -11,6 +11,17 @@ function layThamSoURL(tenThamSo) {
   }
   return null;
 }
+let favorites;
+
+try {
+  const duLieuYeuThich = JSON.parse(localStorage.getItem("favorites"));
+
+  favorites = Array.isArray(duLieuYeuThich)
+    ? duLieuYeuThich
+    : [];
+} catch (error) {
+  favorites = [];
+}
 
 let dangTheoDoi = false;
 let synopsisMoRong = false;
@@ -73,8 +84,6 @@ function renderHero() {
   document
     .getElementById("btnSynopsis")
     .addEventListener("click", toggleSynopsis);
-
-  ganNutTheoDoi();
 }
 
 function renderChapter() {
@@ -253,17 +262,51 @@ function toggleSynopsis() {
 }
 
 function toggleTheoDoi() {
-  dangTheoDoi = !dangTheoDoi;
+  const index = favorites.findIndex(
+    (item) =>
+      Number(item.id) === Number(truyen.id) ||
+      (item.link && item.link.endsWith(`id=${truyen.id}`)),
+  );
+
+  if (index === -1) {
+    favorites.push({
+      id: truyen.id,
+      title: truyen.ten,
+      image: truyen.anhBia,
+      link: `/trangchitiet.html?id=${truyen.id}`,
+    });
+  } else {
+    favorites.splice(index, 1);
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  capNhatNutTheoDoi();
+}
+
+function capNhatNutTheoDoi() {
+  dangTheoDoi = favorites.some(
+    (item) =>
+      Number(item.id) === Number(truyen.id) ||
+      (item.link && item.link.endsWith(`id=${truyen.id}`)),
+  );
 
   const btn = document.getElementById("btnTheodoi");
-  btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
-  btn.classList.toggle("dang-theo-doi");
+
+  if (!btn) return;
+
+  btn.textContent = dangTheoDoi
+    ? "✅ Đang Theo Dõi"
+    : "🔔 Theo Dõi";
+
+  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
 }
 
 function ganNutTheoDoi() {
   const btn = document.getElementById("btnTheodoi");
+
   if (btn) {
     btn.addEventListener("click", toggleTheoDoi);
+    capNhatNutTheoDoi();
   }
 }
 
@@ -395,4 +438,5 @@ document.addEventListener("DOMContentLoaded", () => {
   ganNutQuayLai();
   ganMenuToggle();
   ganTimKiem();
+  ganNutTheoDoi();
 });

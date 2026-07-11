@@ -184,12 +184,29 @@ if (!truyen) {
 // Yêu thích
 const loveBtns = document.querySelectorAll(".love");
 
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let favorites;
 
-const link = `/trangchitiet/trangchitiet.html?id=${truyen.id}`;
+try {
+  const duLieuYeuThich = JSON.parse(localStorage.getItem("favorites"));
+
+  favorites = Array.isArray(duLieuYeuThich)
+    ? duLieuYeuThich
+    : [];
+} catch (error) {
+  favorites = [];
+}
+
+const link = `/trangchitiet.html?id=${truyen.id}`;
+
+function laTruyenYeuThich(item) {
+  return (
+    Number(item.id) === Number(truyen.id) ||
+    (item.link && item.link.endsWith(`id=${truyen.id}`))
+  );
+}
 
 function updateLoveButton() {
-  const isLoved = favorites.some((item) => item.link === link);
+  const isLoved = favorites.some(laTruyenYeuThich);
 
   loveBtns.forEach((btn) => {
     if (isLoved) {
@@ -211,7 +228,7 @@ updateLoveButton();
 
 loveBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const index = favorites.findIndex((item) => item.link === link);
+    const index = favorites.findIndex(laTruyenYeuThich);
 
     if (index === -1) {
       favorites.push({
