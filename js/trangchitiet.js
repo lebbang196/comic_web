@@ -214,11 +214,10 @@ function renderBinhLuan() {
             <strong>${bl.ten}</strong>
             ${bl.sao ? `<span class="bl-stars">${"★".repeat(bl.sao)}</span>` : ""}
             <span class="bl-time">${bl.thoiGian}</span>
-            ${
-              bl.chapterSo
-                ? `<span class="bl-chapter-tag">📍 Chapter ${bl.chapterSo}</span>`
-                : ""
-            }
+            ${bl.chapterSo
+          ? `<span class="bl-chapter-tag">📍 Chapter ${bl.chapterSo}</span>`
+          : ""
+        }
           </div>
           <p>${bl.noiDung}</p>
         </div>
@@ -306,27 +305,35 @@ function toggleSynopsis() {
   btn.textContent = synopsisMoRong ? "▲ Thu gọn" : "▼ Xem thêm";
 }
 function toggleTheoDoi() {
-  // toggleTheoDoiId() trong luutru.js
+  // Lưu theo tài khoản đang đăng nhập
   dangTheoDoi = toggleTheoDoiId(truyen.id);
   const btn = document.getElementById("btnTheodoi");
+
+  if (!btn) return;
+
   btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
-  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
+
+  btn.classList.toggle("dang-theo-doi", dangTheoDoi,);
 }
 
 function ganNutTheoDoi() {
   const btn = document.getElementById("btnTheodoi");
+
   if (!btn) return;
 
-  // Đọc trạng thái đã lưu
+  // Đọc trạng thái của tài khoản hiện tại
   dangTheoDoi = kiemTraDaTheoDoi(truyen.id);
-  btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
-  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
+
+  btn.textContent = dangTheoDoi
+    ? "✅ Đang Theo Dõi"
+    : "🔔 Theo Dõi";
+
+  btn.classList.toggle(
+    "dang-theo-doi",
+    dangTheoDoi,
+  );
 
   btn.addEventListener("click", toggleTheoDoi);
-}
-
-function phanTuDaVaoKhungNhin(el) {
-  return el.getBoundingClientRect().top < window.innerHeight * 0.9;
 }
 
 function ganHieuUngScroll() {

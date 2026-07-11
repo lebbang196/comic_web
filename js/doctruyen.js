@@ -181,70 +181,46 @@ if (!truyen) {
   throw new Error("Không tìm thấy truyện");
 }
 
-// Yêu thích
+// YÊU THÍCH - DÙNG CHUNG THEO DÕI THEO TÀI KHOẢN
 const loveBtns = document.querySelectorAll(".love");
 
-let favorites;
-
-try {
-  const duLieuYeuThich = JSON.parse(localStorage.getItem("favorites"));
-
-  favorites = Array.isArray(duLieuYeuThich)
-    ? duLieuYeuThich
-    : [];
-} catch (error) {
-  favorites = [];
-}
-
-const link = `/trangchitiet.html?id=${truyen.id}`;
-
-function laTruyenYeuThich(item) {
-  return (
-    Number(item.id) === Number(truyen.id) ||
-    (item.link && item.link.endsWith(`id=${truyen.id}`))
-  );
-}
-
 function updateLoveButton() {
-  const isLoved = favorites.some(laTruyenYeuThich);
+  // Hàm trong luutru.js
+  const isLoved = kiemTraDaTheoDoi(truyen.id);
 
   loveBtns.forEach((btn) => {
     if (isLoved) {
       btn.innerHTML = `
-            <i class="fa-solid fa-heart"></i>
-            Đã thích
-            `;
+        <i class="fa-solid fa-heart"></i>
+        Đã thích
+      `;
+
       btn.classList.add("is-loved");
     } else {
       btn.innerHTML = `
-            <i class="fa-regular fa-heart"></i>
-            Yêu thích
-            `;
+        <i class="fa-regular fa-heart"></i>
+        Yêu thích
+      `;
+
       btn.classList.remove("is-loved");
     }
   });
 }
-updateLoveButton();
 
 loveBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const index = favorites.findIndex(laTruyenYeuThich);
+    // Hàm trong luutru.js:
+    // - Chưa đăng nhập: thông báo yêu cầu đăng nhập
+    // - Đã đăng nhập: thêm hoặc xóa truyện
+    toggleTheoDoiId(truyen.id);
 
-    if (index === -1) {
-      favorites.push({
-        title: truyen.ten,
-        image: truyen.anhBia,
-        link: link,
-      });
-    } else {
-      favorites.splice(index, 1);
-    }
-
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-
+    // Cập nhật cả hai nút yêu thích
     updateLoveButton();
   });
 });
+
+// Hiển thị đúng trạng thái khi mở trang
+updateLoveButton();
 
 if (!chap) {
   document.getElementById("reader").innerHTML =
