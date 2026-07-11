@@ -234,7 +234,8 @@ if (!chap) {
     "<h2>Không tìm thấy chapter!</h2>";
   throw new Error("Không tìm thấy chapter");
 }
-
+//xem tiến độ đọc tiếp
+luuTienDoDoc(truyen.id, chap.chapter);
 // Hiện tên
 document.querySelectorAll(".chapter-name").forEach((el) => {
   el.textContent = `Chapter ${chap.chapter}`;
@@ -279,7 +280,7 @@ function hienThiTruyen(idKhung, danhSach) {
   danhSach.forEach(function (truyen) {
     khung.innerHTML += `
       <div class="khungtruyenrieng">
-        <a href="/trangchitiet.html?id=${truyen.id}">
+        <a href="trangchitiet.html?id=${truyen.id}">
           <img src="${truyen.anhBia}" alt="${truyen.ten}">
           <h3>${truyen.ten}</h3>
         </a>
