@@ -1,7 +1,7 @@
+/*HÀM TỰ TÁCH THAM SỐ TỪ URL*/
 function layThamSoURL(tenThamSo) {
   const chuoi = window.location.search.substring(1);
   if (!chuoi) return null;
-
   const danhSach = chuoi.split("&");
   for (let i = 0; i < danhSach.length; i++) {
     const cap = danhSach[i].split("=");
@@ -11,23 +11,14 @@ function layThamSoURL(tenThamSo) {
   }
   return null;
 }
-let favorites;
 
-try {
-  const duLieuYeuThich = JSON.parse(localStorage.getItem("favorites"));
-
-  favorites = Array.isArray(duLieuYeuThich)
-    ? duLieuYeuThich
-    : [];
-} catch (error) {
-  favorites = [];
-}
-
+//Các biến nhớ trạng thái của trang
 let dangTheoDoi = false;
 let synopsisMoRong = false;
 let thuTuChapter = "desc";
 let chapterMoRong = false;
 let saoDangChon = 0;
+
 const idTruyen = parseInt(layThamSoURL("id")) || 1;
 const truyen = layTruyenTheoId(idTruyen);
 
@@ -36,16 +27,18 @@ if (!truyen) {
     "<h1 style='color:white;text-align:center;margin-top:100px'>Không tìm thấy truyện</h1>";
   throw new Error("Không tìm thấy truyện");
 }
-
+function layTaiKhoanHienTai() {
+  const chuoi = localStorage.getItem("currentUser");
+  return chuoi ? JSON.parse(chuoi) : null;
+}
 function layClassTinhTrang(tinhTrang) {
   if (tinhTrang === "Đang Ra") return "dang-ra";
   if (tinhTrang === "Hoàn Thành") return "hoan-thanh";
   return "sap-ra-mat";
 }
-
+//HERO: ảnh, tên truyện,nút đọc,...
 function renderHero() {
   const coChapter = truyen.danhSachChapter.length > 0;
-
   let soChapterMoiNhat = null;
   if (coChapter) {
     soChapterMoiNhat = Math.max(...truyen.danhSachChapter.map((ch) => ch.so));
@@ -60,9 +53,11 @@ function renderHero() {
   );
   document.getElementById("diemDanhGia").textContent = truyen.diemDanhGia;
   document.getElementById("tacGia").textContent = truyen.tacGia;
+
   const tinhTrang = document.getElementById("tinhTrang");
   tinhTrang.textContent = truyen.tinhTrang;
   tinhTrang.classList.add(layClassTinhTrang(truyen.tinhTrang));
+
   document.getElementById("theLoai").innerHTML = truyen.theLoai
     .map((t) => `<span class="tag">${t}</span>`)
     .join("");
@@ -73,19 +68,42 @@ function renderHero() {
   const btnDocDau = document.getElementById("btnDocDau");
   const btnDocMoi = document.getElementById("btnDocMoi");
   if (coChapter) {
-    btnDocDau.href = `./doctruyen.html?id=${truyen.id}&chapter=${Math.min(...truyen.danhSachChapter.map((ch) => ch.so))}`;
-
-    btnDocMoi.href = `./doctruyen.html?id=${truyen.id}&chapter=${Math.max(...truyen.danhSachChapter.map((ch) => ch.so))}`;
+    btnDocDau.href = `/doctruyen.html?id=${truyen.id}&chapter=${Math.min(...truyen.danhSachChapter.map((ch) => ch.so))}`;
+    btnDocMoi.href = `/doctruyen.html?id=${truyen.id}&chapter=${Math.max(...truyen.danhSachChapter.map((ch) => ch.so))}`;
   } else {
     btnDocDau.removeAttribute("href");
     btnDocDau.textContent = "⏳ Sắp ra mắt";
     btnDocMoi.style.display = "none";
   }
+
+  hienNutDocTiep(coChapter);
   document
     .getElementById("btnSynopsis")
     .addEventListener("click", toggleSynopsis);
-}
 
+  ganNutTheoDoi();
+}
+//HÀM RIÊNG CHO NÚT ĐỌC TIẾP
+function hienNutDocTiep(coChapter) {
+  const btnDocTiep = document.getElementById("btnDocTiep");
+  if (!coChapter) {
+    btnDocTiep.style.display = "none";
+    return;
+  }
+
+  const chapterDaDoc = layChapterDangDocDo(truyen.id);
+  const chapterVanConTonTai =
+    chapterDaDoc && truyen.danhSachChapter.some((c) => c.so === chapterDaDoc);
+
+  if (chapterVanConTonTai) {
+    btnDocTiep.href = `/doctruyen.html?id=${truyen.id}&chapter=${chapterDaDoc}`;
+    btnDocTiep.textContent = `▶ Đọc Tiếp - Chapter ${chapterDaDoc}`;
+    btnDocTiep.style.display = "block";
+  } else {
+    btnDocTiep.style.display = "none";
+  }
+}
+//DS CHAPTER
 function renderChapter() {
   const tongChapter = document.getElementById("tongChapter");
   const chapterDanhSach = document.getElementById("chapterDanhSach");
@@ -113,7 +131,7 @@ function renderChapter() {
     .map(
       (chapter) => `
       <a class="chapter-item"
-        href="./doctruyen.html?id=${truyen.id}&chapter=${chapter.so}">
+        href="doctruyen.html?id=${truyen.id}&chapter=${chapter.so}">
         <div class="chapter-so">
           Chapter ${chapter.so}
           ${chapter.isMoi ? `<span class="chapter-moi-badge">MỚI</span>` : ""}
@@ -160,7 +178,7 @@ function toggleChapter() {
   chapterMoRong = !chapterMoRong;
   renderChapter();
 }
-
+//TRUYỆN LIÊN QUAN
 function renderLienQuan() {
   const ds = layTruyenLienQuan(truyen.id, 4);
   const grid = document.getElementById("lienQuanGrid");
@@ -168,7 +186,7 @@ function renderLienQuan() {
   grid.innerHTML = ds
     .map(
       (t) => `
-      <a class="lien-quan-card" href="./trangchitiet.html?id=${t.id}">
+      <a class="lien-quan-card" href="trangchitiet.html?id=${t.id}">
         <img src="${t.anhBia}" alt="${t.ten}">
         <div class="lien-quan-info">
           <div class="lien-quan-ten">${t.ten}</div>
@@ -179,12 +197,14 @@ function renderLienQuan() {
     )
     .join("");
 }
+//BÌNH LUẬN
+let dsBinhLuan = [];
 
 function renderBinhLuan() {
-  document.getElementById("soBinhLuan").textContent =
-    `(${truyen.binhLuan.length})`;
+  dsBinhLuan = layBinhLuanTruyen(truyen.id, truyen.binhLuan);
+  document.getElementById("soBinhLuan").textContent = `(${dsBinhLuan.length})`;
   const danhSach = document.getElementById("danhSachBinhLuan");
-  danhSach.innerHTML = truyen.binhLuan
+  danhSach.innerHTML = dsBinhLuan
     .map(
       (bl) => `
       <div class="binh-luan-item">
@@ -192,8 +212,13 @@ function renderBinhLuan() {
         <div class="bl-noidung">
           <div class="bl-meta">
             <strong>${bl.ten}</strong>
-            <span class="bl-stars">${"★".repeat(bl.sao)}</span>
+            ${bl.sao ? `<span class="bl-stars">${"★".repeat(bl.sao)}</span>` : ""}
             <span class="bl-time">${bl.thoiGian}</span>
+            ${
+              bl.chapterSo
+                ? `<span class="bl-chapter-tag">📍 Chapter ${bl.chapterSo}</span>`
+                : ""
+            }
           </div>
           <p>${bl.noiDung}</p>
         </div>
@@ -203,16 +228,33 @@ function renderBinhLuan() {
     .join("");
 }
 
+function apDungTrangThaiDangNhap() {
+  const taiKhoan = layTaiKhoanHienTai();
+
+  const thongBaoChuaDangNhap = document.getElementById("blThongBaoDangNhap");
+  const form = document.getElementById("blForm");
+
+  if (taiKhoan) {
+    thongBaoChuaDangNhap.style.display = "none";
+    form.style.display = "flex";
+    document.getElementById("blDangBinhLuanVoi").textContent =
+      `Đang bình luận với tư cách: ${taiKhoan.fullname}`;
+  } else {
+    thongBaoChuaDangNhap.style.display = "block";
+    form.style.display = "none";
+
+    const linkDangNhap = document.getElementById("blLinkDangNhap");
+    const urlHienTai = encodeURIComponent(window.location.href);
+    linkDangNhap.href = `/login.html?quaylai=${urlHienTai}`;
+  }
+}
+
 function chonSao(soSao) {
   saoDangChon = soSao;
   const allStars = document.querySelectorAll("#starPickWrap .star-pick");
   allStars.forEach((star) => {
     const giaTri = parseInt(star.dataset.star);
-    if (giaTri <= soSao) {
-      star.classList.add("active");
-    } else {
-      star.classList.remove("active");
-    }
+    star.classList.toggle("active", giaTri <= soSao);
   });
 }
 
@@ -226,27 +268,30 @@ function ganChonSao() {
 }
 
 function guiBinhLuan() {
-  const inputTen = document.getElementById("blTen");
-  const inputNoiDung = document.getElementById("blNoiDung");
-
-  const ten = inputTen.value.trim();
-  const noiDung = inputNoiDung.value.trim();
-
-  if (!ten || !noiDung) {
-    alert("Vui lòng nhập tên và nội dung bình luận!");
+  const taiKhoan = layTaiKhoanHienTai();
+  if (!taiKhoan) {
+    alert("Bạn cần đăng nhập để bình luận!");
     return;
   }
 
-  truyen.binhLuan.unshift({
-    ten: ten,
-    kyTuDau: ten.charAt(0).toUpperCase(),
+  const inputNoiDung = document.getElementById("blNoiDung");
+  const noiDung = inputNoiDung.value.trim();
+
+  if (!noiDung) {
+    alert("Vui lòng nhập nội dung bình luận!");
+    return;
+  }
+
+  dsBinhLuan = themBinhLuan(truyen.id, {
+    ten: taiKhoan.fullname,
+    kyTuDau: taiKhoan.fullname.charAt(0).toUpperCase(),
     sao: saoDangChon || 5,
     thoiGian: "Vừa xong",
     noiDung: noiDung,
+    chapterSo: null,
   });
 
   saoDangChon = 0;
-  inputTen.value = "";
   inputNoiDung.value = "";
 
   renderBinhLuan();
@@ -260,54 +305,24 @@ function toggleSynopsis() {
   text.classList.toggle("synopsis-hidden");
   btn.textContent = synopsisMoRong ? "▲ Thu gọn" : "▼ Xem thêm";
 }
-
 function toggleTheoDoi() {
-  const index = favorites.findIndex(
-    (item) =>
-      Number(item.id) === Number(truyen.id) ||
-      (item.link && item.link.endsWith(`id=${truyen.id}`)),
-  );
-
-  if (index === -1) {
-    favorites.push({
-      id: truyen.id,
-      title: truyen.ten,
-      image: truyen.anhBia,
-      link: `/trangchitiet.html?id=${truyen.id}`,
-    });
-  } else {
-    favorites.splice(index, 1);
-  }
-
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  capNhatNutTheoDoi();
-}
-
-function capNhatNutTheoDoi() {
-  dangTheoDoi = favorites.some(
-    (item) =>
-      Number(item.id) === Number(truyen.id) ||
-      (item.link && item.link.endsWith(`id=${truyen.id}`)),
-  );
-
+  // toggleTheoDoiId() trong luutru.js
+  dangTheoDoi = toggleTheoDoiId(truyen.id);
   const btn = document.getElementById("btnTheodoi");
-
-  if (!btn) return;
-
-  btn.textContent = dangTheoDoi
-    ? "✅ Đang Theo Dõi"
-    : "🔔 Theo Dõi";
-
+  btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
   btn.classList.toggle("dang-theo-doi", dangTheoDoi);
 }
 
 function ganNutTheoDoi() {
   const btn = document.getElementById("btnTheodoi");
+  if (!btn) return;
 
-  if (btn) {
-    btn.addEventListener("click", toggleTheoDoi);
-    capNhatNutTheoDoi();
-  }
+  // Đọc trạng thái đã lưu
+  dangTheoDoi = kiemTraDaTheoDoi(truyen.id);
+  btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
+  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
+
+  btn.addEventListener("click", toggleTheoDoi);
 }
 
 function phanTuDaVaoKhungNhin(el) {
@@ -356,14 +371,14 @@ function ganMenuToggle() {
 function hienThiTruyen(idKhung, danhSach) {
   const khung = document.getElementById(idKhung);
   khung.innerHTML = "";
-  danhSach.forEach(function (truyen) {
+  danhSach.forEach(function (t) {
     khung.innerHTML += `
       <div class="khungtruyenrieng">
-        <a href="trangchitiet.html?id=${truyen.id}">
-          <img src="${truyen.anhBia}" alt="${truyen.ten}">
-          <h3>${truyen.ten}</h3>
+        <a href="trangchitiet.html?id=${t.id}">
+          <img src="${t.anhBia}" alt="${t.ten}">
+          <h3>${t.ten}</h3>
         </a>
-        <span>${truyen.theLoai.join(" • ")}</span>
+        <span>${t.theLoai.join(" • ")}</span>
       </div>
     `;
   });
@@ -395,11 +410,11 @@ function ganTimKiem() {
     chapter.style.display = "none";
     lienquan.style.display = "none";
     binhluan.style.display = "none";
-    const ketQua = danhSachTruyen.filter(function (truyen) {
+    const ketQua = danhSachTruyen.filter(function (t) {
       return (
-        truyen.ten.toLowerCase().includes(tuKhoa) ||
-        truyen.tacGia.toLowerCase().includes(tuKhoa) ||
-        truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
+        t.ten.toLowerCase().includes(tuKhoa) ||
+        t.tacGia.toLowerCase().includes(tuKhoa) ||
+        t.theLoai.join(" ").toLowerCase().includes(tuKhoa)
       );
     });
     if (ketQua.length === 0) {
@@ -429,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderChapter();
   renderLienQuan();
   renderBinhLuan();
+  apDungTrangThaiDangNhap();
   ganNutSapXep();
   ganChonSao();
   document
@@ -438,5 +454,4 @@ document.addEventListener("DOMContentLoaded", () => {
   ganNutQuayLai();
   ganMenuToggle();
   ganTimKiem();
-  ganNutTheoDoi();
 });

@@ -1,0 +1,44 @@
+.breadcrumb {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  padding: 10px 6%;
+}
+
+.td-rong {
+  color: #aaa;
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 15px;
+}
+
+.td-the {
+  position: relative;
+}
+
+.td-nut-bo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s;
+}
+
+.td-nut-bo:hover {
+  background: rgb(239, 68, 68);
+  transform: scale(1.1);
+}

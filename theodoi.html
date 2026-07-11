@@ -1,24 +1,20 @@
 <!doctype html>
-<html lang="vn">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/trangchu.css" />
-    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <title>Đọc truyện</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <title>Comic_web</title>
+    <link rel="stylesheet" href="css/trangchu.css" />
   </head>
 
   <body>
     <header>
+      <button class="menu-toggle">☰</button>
       <div class="logo">
         <a href="trangchu.html"><img src="img/logo.png" alt="logo" /></a>
       </div>
@@ -64,73 +60,22 @@
         <a href="register.html">Đăng Ký</a>
       </nav>
     </header>
-    <!-- 123 3-->
-    <main>
-      <div class="div_main top">
-        <nav class="navigation--main">
-          <a class="home a-main" href="trangchu.html">&#8962;</a> |
-          <a class="menus a-main" href="trangchitiet.html">☰</a> |
-          <nav class="nav_inline a-main">
-            <a class="arrow-box a-main" href=""> &larr; </a>
-            <div class="check__line a-main">
-              <h4 class="chapter-name"></h4>
-              <div class="chapter-list"></div>
-            </div>
-            <a class="arrow-box a-main" href="">&rarr; </a>
-          </nav>
-        </nav>
-        ||
-        <button class="love a-main">
-          <i class="fa-regular fa-heart"></i> Yêu thích
-        </button>
-        <!-- yêu thích -->
-      </div>
 
-      <section class="sction__main" id="reader"></section>
-      <div class="div_main bottom">
-        <nav class="navigation--main">
-          <a class="home a-main" href="trangchu.html">&#8962; </a> |
-          <a class="menus a-main" href="trangchitiet.html">☰</a> |
-          <nav class="nav_inline a-main">
-            <a class="arrow-box a-main" href=""> &larr; </a>
-            <div class="check__line a-main">
-              <h4 class="chapter-name"></h4>
-              <div class="chapter-list"></div>
-            </div>
-            <a class="arrow-box a-main" href="">&rarr; </a>
-          </nav>
-        </nav>
-        |
-        <button class="love a-main">
-          <i class="fa-regular fa-heart"></i> Yêu thích
-        </button>
-        <!-- sài button để lưu vô danh sách yêu thích -->
-        <!-- yêu thích -->
-      </div>
-      <section class="comment-section">
-        <h3><i class="fa-solid fa-comments"></i> Bình luận</h3>
+    <nav class="breadcrumb section">
+      <a href="trangchu.html">Trang Chủ</a>
+      <span>&gt;</span>
+      <span class="breadcrumb-current">Theo Dõi</span>
+    </nav>
 
-        <form id="commentForm">
-          <textarea
-            id="commentInput"
-            placeholder="Chia sẻ cảm xúc của bạn về chương này..."
-            required
-          ></textarea>
-          <button type="submit" id="btnSubmitComment">Gửi bình luận</button>
-        </form>
+    <section class="section">
+      <h2>🔔 Truyện Đang Theo Dõi</h2>
 
-        <div id="commentList"></div>
-      </section>
-      <nav>
-        <button id="btnScrollTop" title="Lên đầu trang">
-          <i class="bi bi-chevron-up"></i>
-        </button>
-      </nav>
-    </main>
+      <p id="tdRong" class="td-rong" style="display: none">
+        Bạn chưa theo dõi truyện nào. Hãy vào 1 truyện và bấm nút "🔔 Theo Dõi"
+        nhé!
+      </p>
 
-    <section class="section" id="ketquatimkiem" style="display: none">
-      <h2>🔍 Kết Quả Tìm Kiếm</h2>
-      <div class="khungtruyen" id="khungKetQua"></div>
+      <div class="khungtruyen" id="tdDanhSach"></div>
     </section>
 
     <footer>
@@ -163,10 +108,10 @@
         </div>
       </div>
     </footer>
+    <button class="quaylai" id="quaylai">⬆</button>
+
     <script src="js/datachitiet.js"></script>
-    <script src="js/datadoctruyen.js"></script>
     <script src="js/luutru.js"></script>
-    <!--Thêm dòng này-->
-    <script src="js/doctruyen.js"></script>
+    <script src="js/theodoi.js"></script>
   </body>
 </html>
