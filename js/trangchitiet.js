@@ -305,6 +305,7 @@ function toggleSynopsis() {
   text.classList.toggle("synopsis-hidden");
   btn.textContent = synopsisMoRong ? "▲ Thu gọn" : "▼ Xem thêm";
 }
+
 function toggleTheoDoi() {
   // toggleTheoDoiId() trong luutru.js
   dangTheoDoi = toggleTheoDoiId(truyen.id);
