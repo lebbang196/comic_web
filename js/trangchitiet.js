@@ -214,10 +214,11 @@ function renderBinhLuan() {
             <strong>${bl.ten}</strong>
             ${bl.sao ? `<span class="bl-stars">${"★".repeat(bl.sao)}</span>` : ""}
             <span class="bl-time">${bl.thoiGian}</span>
-            ${bl.chapterSo
-          ? `<span class="bl-chapter-tag">📍 Chapter ${bl.chapterSo}</span>`
-          : ""
-        }
+            ${
+              bl.chapterSo
+                ? `<span class="bl-chapter-tag">📍 Chapter ${bl.chapterSo}</span>`
+                : ""
+            }
           </div>
           <p>${bl.noiDung}</p>
         </div>
@@ -313,7 +314,7 @@ function toggleTheoDoi() {
 
   btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
 
-  btn.classList.toggle("dang-theo-doi", dangTheoDoi,);
+  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
 }
 
 function ganNutTheoDoi() {
@@ -324,18 +325,15 @@ function ganNutTheoDoi() {
   // Đọc trạng thái của tài khoản hiện tại
   dangTheoDoi = kiemTraDaTheoDoi(truyen.id);
 
-  btn.textContent = dangTheoDoi
-    ? "✅ Đang Theo Dõi"
-    : "🔔 Theo Dõi";
+  btn.textContent = dangTheoDoi ? "✅ Đang Theo Dõi" : "🔔 Theo Dõi";
 
-  btn.classList.toggle(
-    "dang-theo-doi",
-    dangTheoDoi,
-  );
+  btn.classList.toggle("dang-theo-doi", dangTheoDoi);
 
   btn.addEventListener("click", toggleTheoDoi);
 }
-
+function phanTuDaVaoKhungNhin(el) {
+  return el.getBoundingClientRect().top < window.innerHeight * 0.9;
+}
 function ganHieuUngScroll() {
   const cacIdCanHieuUng = ["sectionLQuan", "sectionBLuan"];
 

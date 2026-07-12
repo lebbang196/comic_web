@@ -1,3 +1,15 @@
+// Đếm số chapter thật đã có ảnh trong datadoctruyen.js cho 1 truyện.
+// Trả về 0 nếu chưa nạp datadoctruyen.js, hoặc truyện đó chưa có chapter nào
+// trong đó (lúc đó sẽ dùng số dự phòng "|| N" ở mỗi truyện bên dưới).
+function demSoChapter(idTruyen) {
+  if (typeof chapters === "undefined") return 0;
+
+  const cuaTruyenNay = chapters.filter((c) => c.id === idTruyen);
+  if (cuaTruyenNay.length === 0) return 0;
+
+  return Math.max(...cuaTruyenNay.map((c) => c.chapter));
+}
+
 function taoChapter(
   tongChapter,
   chapterDacBiet = [],
@@ -51,7 +63,7 @@ const danhSachTruyen = [
           gái trở lại thành người. Cuộc chiến của Tanjiro không chỉ là hành
           trình báo thù cho gia đình, mà còn là nỗ lực chấm dứt bi kịch và
           đau thương do quỷ dữ gây ra.`,
-    danhSachChapter: taoChapter(205),
+    danhSachChapter: taoChapter(demSoChapter(1) || 205),
     binhLuan: [],
   },
   {
@@ -76,7 +88,7 @@ const danhSachTruyen = [
           những lời nguyền và chú thuật, đối mặt với những kẻ thù ngày càng
           mạnh hơn trong hành trình tìm kiếm tất cả các ngón tay của Sukuna
           để tiêu diệt chúng mãi mãi.`,
-    danhSachChapter: taoChapter(266),
+    danhSachChapter: taoChapter(demSoChapter(2) || 266),
     binhLuan: [],
   },
 
@@ -108,7 +120,7 @@ const danhSachTruyen = [
           mình, Conan liên tục đối mặt với những vụ án phức tạp, những âm mưu nguy hiểm 
           và từng bước tiến gần hơn đến bí mật của Tổ chức Áo Đen trong hành trình tìm lại 
           cơ thể thật của mình.`,
-    danhSachChapter: taoChapter(1120),
+    danhSachChapter: taoChapter(demSoChapter(3) || 1120),
     binhLuan: [],
   },
   {
@@ -131,7 +143,7 @@ const danhSachTruyen = [
           Bộc Ngưu, Asta cùng những đồng đội chiến đấu chống lại các thế lực
           hắc ám, bảo vệ vương quốc và từng bước tiến gần hơn đến ước mơ trở
           thành Ma Pháp Vương.`,
-    danhSachChapter: taoChapter(370),
+    danhSachChapter: taoChapter(demSoChapter(4) || 370),
     binhLuan: [],
   },
   {
@@ -155,7 +167,7 @@ const danhSachTruyen = [
           cùng những người bạn mới, Iruma dần trở thành tâm điểm của hàng loạt
           sự kiện kỳ lạ và những cuộc phiêu lưu đầy thú vị trong thế giới quỷ
           đầy bí ẩn.`,
-    danhSachChapter: taoChapter(280),
+    danhSachChapter: taoChapter(demSoChapter(5) || 280),
     binhLuan: [],
   },
   {
@@ -187,7 +199,7 @@ const danhSachTruyen = [
           mạnh mẽ để chứng minh rằng sức mạnh không chỉ đến từ ma pháp. Đồng
           thời, cậu cũng nỗ lực thực hiện lời hứa năm xưa với người bạn thân
           của mình, người đang đứng trên đỉnh cao của thế giới phép thuật.`,
-    danhSachChapter: taoChapter(65),
+    danhSachChapter: taoChapter(demSoChapter(6) || 65),
     binhLuan: [],
   },
   {
@@ -212,7 +224,7 @@ const danhSachTruyen = [
           cuộc đối đầu căng thẳng, Isagi không ngừng khám phá bản thân, phát
           triển kỹ năng và theo đuổi giấc mơ trở thành tiền đạo số một thế
           giới.`,
-    danhSachChapter: taoChapter(280),
+    danhSachChapter: taoChapter(demSoChapter(7) || 280),
     binhLuan: [],
   },
   {
@@ -236,7 +248,7 @@ const danhSachTruyen = [
           qua những trận đấu đầy kịch tính và cảm xúc mà còn phải vượt qua
           giới hạn của bản thân, tinh thần đồng đội và những thử thách khắc
           nghiệt để hiện thực hóa giấc mơ trở thành nhà vô địch thế giới.`,
-    danhSachChapter: taoChapter(45),
+    danhSachChapter: taoChapter(demSoChapter(8) || 45),
     binhLuan: [],
   },
   {
@@ -260,7 +272,7 @@ const danhSachTruyen = [
           trình trưởng thành, họ không chỉ khám phá tình cảm của bản thân mà
           còn học cách đối mặt với quá khứ, vượt qua khó khăn và theo đuổi
           những ước mơ của riêng mình.`,
-    danhSachChapter: taoChapter(40),
+    danhSachChapter: taoChapter(demSoChapter(9) || 40),
     binhLuan: [],
   },
   {
@@ -285,7 +297,7 @@ const danhSachTruyen = [
           quanh rơi vào những tình huống dở khóc dở cười. Hành trình của cô là
           chuỗi những cuộc phiêu lưu, tình huống hài hước và những bí mật dần
           được hé lộ về thế giới mà cô đang sống.`,
-    danhSachChapter: taoChapter(30),
+    danhSachChapter: taoChapter(demSoChapter(10) || 30),
     binhLuan: [],
   },
   {
@@ -308,7 +320,7 @@ const danhSachTruyen = [
           sự thật đằng sau ngày tận thế. Với lòng dũng cảm, ý chí sinh tồn và
           khát vọng xây dựng lại tương lai, họ từng bước vượt qua tuyệt vọng
           để tìm kiếm hy vọng trong một thế giới đã hoàn toàn thay đổi.`,
-    danhSachChapter: taoChapter(55),
+    danhSachChapter: taoChapter(demSoChapter(11) || 55),
     binhLuan: [],
   },
   {
@@ -333,7 +345,7 @@ const danhSachTruyen = [
           Ard liên tục bị cuốn vào những âm mưu, trận chiến và bí mật của thế
           giới, đồng thời dần khám phá sự thật về quá khứ và vận mệnh của
           chính mình.`,
-    danhSachChapter: taoChapter(48),
+    danhSachChapter: taoChapter(demSoChapter(12) || 48),
     binhLuan: [],
   },
   {
@@ -356,7 +368,7 @@ const danhSachTruyen = [
           bản thân. Trên con đường ấy, cậu phải đối mặt với những kẻ thù nguy
           hiểm, những âm mưu đen tối và số phận nghiệt ngã đang chờ đợi mình,
           đồng thời tìm kiếm ý nghĩa thực sự của sức mạnh mà cậu sở hữu.`,
-    danhSachChapter: taoChapter(25),
+    danhSachChapter: taoChapter(demSoChapter(13) || 25),
     binhLuan: [],
   },
   {
@@ -379,7 +391,7 @@ const danhSachTruyen = [
           bí mật gia tộc và thử thách của số phận, cả hai dần nảy sinh tình
           cảm sâu sắc. Hành trình của họ là câu chuyện về tình yêu, sự hy sinh
           và niềm tin vào hạnh phúc giữa những nghịch cảnh của cuộc đời.`,
-    danhSachChapter: taoChapter(60),
+    danhSachChapter: taoChapter(demSoChapter(14) || 60),
     binhLuan: [],
   },
   {
@@ -401,7 +413,7 @@ const danhSachTruyen = [
           Trên hành trình ấy, họ phải đối mặt với sự phản bội, tuyệt vọng và
           những lựa chọn nghiệt ngã, đồng thời khám phá bản chất thực sự của
           con người khi bị đẩy đến giới hạn cuối cùng.`,
-    danhSachChapter: taoChapter(20),
+    danhSachChapter: taoChapter(demSoChapter(15) || 20),
     binhLuan: [],
   },
   {
@@ -425,7 +437,7 @@ const danhSachTruyen = [
           mạnh của chính mình. Hành trình ấy không chỉ thử thách lòng dũng cảm
           mà còn làm thay đổi hoàn toàn nhận thức của cậu về thế giới mà mình
           đang sống.`,
-    danhSachChapter: taoChapter(18),
+    danhSachChapter: taoChapter(demSoChapter(16) || 18),
     binhLuan: [],
   },
   {
@@ -449,7 +461,7 @@ const danhSachTruyen = [
           khám phá bí mật đằng sau hệ thống phát sóng kỳ lạ này. Trên hành
           trình đó, anh dần nhận ra rằng vận mệnh của nhiều thế giới đang gắn
           liền với chính sự tồn tại của mình.`,
-    danhSachChapter: taoChapter(22),
+    danhSachChapter: taoChapter(demSoChapter(17) || 22),
     binhLuan: [],
   },
   {
@@ -472,7 +484,7 @@ const danhSachTruyen = [
           rào cản trong cuộc sống và dũng cảm thổ lộ tình yêu của mình. Đây là
           câu chuyện về tình yêu, sự trưởng thành và những rung động đẹp đẽ
           của tuổi thanh xuân.`,
-    danhSachChapter: taoChapter(35),
+    danhSachChapter: taoChapter(demSoChapter(18) || 35),
     binhLuan: [],
   },
   {
@@ -496,7 +508,7 @@ const danhSachTruyen = [
           cậu phải đối mặt với những kẻ thù nguy hiểm, khám phá bí mật của thế
           giới và từng bước xây dựng đội quân bất tử của riêng mình để chinh
           phục mọi thử thách.`,
-    danhSachChapter: taoChapter(38),
+    danhSachChapter: taoChapter(demSoChapter(19) || 38),
     binhLuan: [],
   },
   {
@@ -580,7 +592,7 @@ const danhSachTruyen = [
           mình. Với ý chí kiên cường và khát vọng sinh tồn mãnh liệt, cậu từng
           bước khám phá bí mật về Huyết Vương và vươn lên trở thành một trong
           những tồn tại mạnh nhất thế giới.`,
-    danhSachChapter: taoChapter(28),
+    danhSachChapter: taoChapter(demSoChapter(24) || 28),
     binhLuan: [],
   },
   {
@@ -604,7 +616,7 @@ const danhSachTruyen = [
           Hành trình của cô là sự kết hợp giữa yếu tố hài hước, lãng mạn và
           những màn đấu trí đầy hấp dẫn nhằm thoát khỏi số phận của một nhân
           vật pháo hôi.`,
-    danhSachChapter: taoChapter(33),
+    danhSachChapter: taoChapter(demSoChapter(25) || 33),
     binhLuan: [],
   },
   {
@@ -629,7 +641,7 @@ const danhSachTruyen = [
           vật, các thế lực hùng mạnh và những bí mật của thế giới để chứng
           minh rằng kẻ bị coi là yếu nhất có thể trở thành tồn tại đáng sợ
           nhất.`,
-    danhSachChapter: taoChapter(42),
+    danhSachChapter: taoChapter(demSoChapter(26) || 42),
     binhLuan: [],
   },
   {
@@ -653,7 +665,7 @@ const danhSachTruyen = [
           thiện năng lực của bản thân. Câu chuyện là sự kết hợp giữa phiêu
           lưu, hành động và những bí ẩn xoay quanh sức mạnh đặc biệt mà cậu
           đang nắm giữ.`,
-    danhSachChapter: taoChapter(15),
+    danhSachChapter: taoChapter(demSoChapter(27) || 15),
     binhLuan: [],
   },
 

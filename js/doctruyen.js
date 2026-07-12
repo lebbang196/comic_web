@@ -7,35 +7,64 @@ window.onload = function () {
   const commentForm = document.getElementById("commentForm");
   const commentInput = document.getElementById("commentInput");
   const commentList = document.getElementById("commentList");
-  const commentStorageId =
-    "comments_" + window.location.pathname + "_" + document.title;
 
-  function loadComments() {
-    commentList.innerHTML = "";
-    let comments = JSON.parse(localStorage.getItem(commentStorageId)) || [];
+  function layTaiKhoanHienTai() {
+    const c = localStorage.getItem("currentUser");
+    return c ? JSON.parse(c) : null;
+  }
 
-    if (comments.length === 0) {
+  // Chỉ hiện bình luận CỦA đúng chapter đang đọc (chapterSo === chap.chapter)
+  function renderBinhLuanChapter() {
+    const tatCa = layBinhLuanTruyen(truyen.id, truyen.binhLuan); // luutru.js
+    const cuaChapNay = tatCa.filter((bl) => bl.chapterSo === chap.chapter);
+
+    if (cuaChapNay.length === 0) {
       commentList.innerHTML =
-        '<p style="color: #aaa; font-size: 14px; text-align: center;">Chưa có bình luận nào. Hãy là người đầu tiên!</p>';
+        '<p style="color: #aaa; font-size: 14px; text-align: center;">Chưa có bình luận nào ở chapter này. Hãy là người đầu tiên!</p>';
       return;
     }
 
-    comments.reverse().forEach((item) => {
-      const div = document.createElement("div");
-      div.className = "comment-item";
-      div.innerHTML = `
-        <span class="comment-time">${item.time}</span>
-        <p class="comment-text">${item.text}</p>
-            `;
-      commentList.appendChild(div);
-    });
+    commentList.innerHTML = cuaChapNay
+      .map(
+        (bl) => `
+        <div class="comment-item">
+          <span class="comment-time"><strong>${bl.ten}</strong> · ${bl.thoiGian}</span>
+          <p class="comment-text">${bl.noiDung}</p>
+        </div>
+      `,
+      )
+      .join("");
+  }
+
+  // Ẩn/hiện form theo trạng thái đăng nhập
+  function apDungDangNhapBinhLuan() {
+    const tk = layTaiKhoanHienTai();
+    const thongBao = document.getElementById("blThongBaoDangNhap");
+
+    if (tk) {
+      thongBao.style.display = "none";
+      commentForm.style.display = "flex";
+    } else {
+      thongBao.style.display = "block";
+      commentForm.style.display = "none";
+
+      const linkDN = document.getElementById("blLinkDangNhap");
+      linkDN.href = `/login.html?quaylai=${encodeURIComponent(window.location.href)}`;
+    }
   }
 
   if (commentForm && commentInput && commentList) {
-    loadComments();
+    apDungDangNhapBinhLuan();
+    renderBinhLuanChapter();
 
     commentForm.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      const tk = layTaiKhoanHienTai();
+      if (!tk) {
+        alert("Bạn cần đăng nhập để bình luận!");
+        return;
+      }
 
       const text = commentInput.value.trim();
       if (!text) return;
@@ -46,12 +75,17 @@ window.onload = function () {
         " " +
         now.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
 
-      let comments = JSON.parse(localStorage.getItem(commentStorageId)) || [];
-      comments.push({ text: text, time: timeString });
+      themBinhLuan(truyen.id, {
+        ten: tk.fullname,
+        kyTuDau: tk.fullname.charAt(0).toUpperCase(),
+        sao: 0,
+        thoiGian: timeString,
+        noiDung: text,
+        chapterSo: chap.chapter, // đánh dấu bình luận thuộc chapter đang đọc
+      });
 
-      localStorage.setItem(commentStorageId, JSON.stringify(comments));
       commentInput.value = "";
-      loadComments();
+      renderBinhLuanChapter();
     });
   }
 
@@ -270,14 +304,14 @@ function hienThiTruyen(idKhung, danhSach) {
   const khung = document.getElementById(idKhung);
   khung.innerHTML = "";
 
-  danhSach.forEach(function (truyen) {
+  danhSach.forEach(function (t) {
     khung.innerHTML += `
       <div class="khungtruyenrieng">
-        <a href="trangchitiet.html?id=${truyen.id}">
-          <img src="${truyen.anhBia}" alt="${truyen.ten}">
-          <h3>${truyen.ten}</h3>
+        <a href="trangchitiet.html?id=${t.id}">
+          <img src="${t.anhBia}" alt="${t.ten}">
+          <h3>${t.ten}</h3>
         </a>
-        <span>${truyen.theLoai.join(" • ")}</span>
+        <span>${t.theLoai.join(" • ")}</span>
       </div>
     `;
   });
@@ -297,11 +331,11 @@ function ganTimKiem() {
     }
     ketquatimkiem.style.display = "block";
     main.style.display = "none";
-    const ketQua = danhSachTruyen.filter(function (truyen) {
+    const ketQua = danhSachTruyen.filter(function (t) {
       return (
-        truyen.ten.toLowerCase().includes(tuKhoa) ||
-        truyen.tacGia.toLowerCase().includes(tuKhoa) ||
-        truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
+        t.ten.toLowerCase().includes(tuKhoa) ||
+        t.tacGia.toLowerCase().includes(tuKhoa) ||
+        t.theLoai.join(" ").toLowerCase().includes(tuKhoa)
       );
     });
     if (ketQua.length === 0) {

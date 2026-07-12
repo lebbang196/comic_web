@@ -107,9 +107,18 @@
         <!-- sài button để lưu vô danh sách yêu thích -->
         <!-- yêu thích -->
       </div>
+
       <section class="comment-section">
         <h3><i class="fa-solid fa-comments"></i> Bình luận</h3>
-
+        <!--Hiện khi chưa đăng nhập-->
+        <p
+          id="blThongBaoDangNhap"
+          class="bl-thongbao-dangnhap"
+          style="display: none"
+        >
+          🔒 Bạn cần <a id="blLinkDangNhap" href="login.html">đăng nhập</a> để
+          bình luận.
+        </p>
         <form id="commentForm">
           <textarea
             id="commentInput"
@@ -118,9 +127,9 @@
           ></textarea>
           <button type="submit" id="btnSubmitComment">Gửi bình luận</button>
         </form>
-
         <div id="commentList"></div>
       </section>
+
       <nav>
         <button id="btnScrollTop" title="Lên đầu trang">
           <i class="bi bi-chevron-up"></i>
