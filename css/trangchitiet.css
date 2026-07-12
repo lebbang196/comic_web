@@ -725,9 +725,10 @@ body {
   }
 
   .menu {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
   }
 
   .chitiet-container {

@@ -104,6 +104,22 @@ function ganTimKiem() {
     khungKetQua.style.display = "grid";
   });
 }
+//Nút Menu
+function ganMenu() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const menu = document.querySelector(".menu");
+  menuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    menu.classList.toggle("active");
+  });
+  menu.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+  document.addEventListener("click", function () {
+    menu.classList.remove("active");
+  });
+}
 document.addEventListener("DOMContentLoaded", function () {
   ganTimKiem();
+  ganMenu();
 });

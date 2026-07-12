@@ -122,14 +122,23 @@ function ganChuyenNen() {
      url('${images[index]}')`;
   }, 5000);
 }
+
 //Nút Menu
 function ganMenu() {
   const menuToggle = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".menu");
-  menuToggle.addEventListener("click", function () {
+  menuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
     menu.classList.toggle("active");
   });
+  menu.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+  document.addEventListener("click", function () {
+    menu.classList.remove("active");
+  });
 }
+
 //Hiển Thị Truyện Thông Qua datachitiet.js
 function hienThiTruyen(idKhung, danhSach) {
   const khung = document.getElementById(idKhung);
@@ -175,8 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
   ganHieuUngCuon();
   ganNutKhamPha();
   ganChuyenNen();
-
-
   ganMenu();
   hienThiDuLieu();
 });
