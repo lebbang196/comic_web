@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (foundUser) {
       // Lưu trạng thái đăng nhập
       localStorage.setItem("currentUser", JSON.stringify(foundUser));
+      localStorage.setItem("lastEmail", foundUser.email);
       // Ghi nhớ đăng nhập nếu checkbox được chọn
       const remember = document.getElementById("remember").checked;
       if (remember) {
