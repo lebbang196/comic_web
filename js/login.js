@@ -1,124 +1,149 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Toggle hiển thị mật khẩu
-  const togglePassword = document.getElementById("togglePassword");
+  // DOM elements
+  const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
+  const emailRow = document.getElementById("row-email");
+  const passwordRow = document.getElementById("row-password");
+  const emailMsg = document.getElementById("emailMsg");
+  const passwordMsg = document.getElementById("passwordMsg");
+  const loginForm = document.getElementById("loginForm");
+  const togglePassword = document.getElementById("togglePassword");
 
+  // Hàm kiểm tra email hợp lệ (regex)
+  function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  // Hàm xóa trạng thái success/failure
+  function resetRow(row) {
+    row.classList.remove("success", "failure");
+    const msg = row.querySelector(".notification");
+    if (msg) msg.textContent = "";
+  }
+
+  // Hàm đặt lỗi cho một row
+  function setError(row, message, msgElement) {
+    row.classList.remove("success");
+    row.classList.add("failure");
+    if (msgElement) {
+      msgElement.textContent = "\u274C " + message; // dấu X
+    }
+  }
+
+  // Hàm đặt thành công cho một row
+  function setSuccess(row, msgElement) {
+    row.classList.remove("failure");
+    row.classList.add("success");
+    if (msgElement) {
+      msgElement.textContent = "Thành công!";
+    }
+  }
+
+  // ---- Validation cho Email (blur) ----
+  function validateEmailOnBlur() {
+    const email = emailInput.value.trim();
+
+    // Xóa thông báo cũ
+    emailMsg.textContent = "";
+
+    if (email === "") {
+      setError(emailRow, "Vui lòng nhập email!", emailMsg);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError(emailRow, "Email không hợp lệ!", emailMsg);
+      return;
+    }
+
+    setSuccess(emailRow, emailMsg);
+  }
+
+  // ---- Validation cho Password (blur) ----
+  function validatePasswordOnBlur() {
+    const password = passwordInput.value;
+
+    passwordMsg.textContent = "";
+
+    if (password === "") {
+      setError(passwordRow, "Vui lòng nhập mật khẩu!", passwordMsg);
+      return;
+    }
+
+    if (password.length < 8) {
+      setError(passwordRow, "Mật khẩu phải có ít nhất 8 kí tự!", passwordMsg);
+      return;
+    }
+
+    setSuccess(passwordRow, passwordMsg);
+  }
+
+  // Gán sự kiện blur
+  emailInput.addEventListener("blur", validateEmailOnBlur);
+  passwordInput.addEventListener("blur", validatePasswordOnBlur);
+
+  // ---- Toggle hiển thị mật khẩu ----
   togglePassword.addEventListener("click", function () {
-    const type =
-      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
     passwordInput.setAttribute("type", type);
     const icon = this.querySelector("i");
     icon.classList.toggle("bi-eye");
     icon.classList.toggle("bi-eye-slash");
   });
 
-  // Xử lý đăng nhập
-  const loginForm = document.getElementById("loginForm");
-  const emailInput = document.getElementById("email");
-  const passwordInput2 = document.getElementById("password");
-  const emailError = document.getElementById("emailError");
-  const passwordError = document.getElementById("passwordError");
-
-  // Hàm lấy danh sách users từ localStorage
-  function getUsers() {
-    const users = localStorage.getItem("users");
-    return users ? JSON.parse(users) : [];
-  }
-
-  // Hàm lưu users
-  function saveUsers(users) {
-    localStorage.setItem("users", JSON.stringify(users));
-  }
-
-  // Validate email
-  function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
+  // ---- Xử lý submit ----
   loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    // Gọi lại validation để cập nhật trạng thái mới nhất
+    validateEmailOnBlur();
+    validatePasswordOnBlur();
+
+    // Kiểm tra xem cả hai row có success không
+    const isEmailValid = emailRow.classList.contains("success");
+    const isPasswordValid = passwordRow.classList.contains("success");
+
+    if (!isEmailValid || !isPasswordValid) {
+      alert("Form vẫn còn lỗi!");
+      return;
+    }
+
+    // Nếu hợp lệ: kiểm tra tài khoản trong localStorage
     const email = emailInput.value.trim();
-    const password = passwordInput2.value.trim();
+    const password = passwordInput.value;
 
-    let isValid = true;
-
-    // Reset lỗi
-    emailError.textContent = "";
-    passwordError.textContent = "";
-
-    // Validate email
-    if (!email) {
-      emailError.textContent = "Vui lòng nhập email.";
-      isValid = false;
-    } else if (!validateEmail(email)) {
-      emailError.textContent = "Email không hợp lệ.";
-      isValid = false;
-    }
-
-    // Validate password
-    if (!password) {
-      passwordError.textContent = "Vui lòng nhập mật khẩu.";
-      isValid = false;
-    } else if (password.length < 6) {
-      passwordError.textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
-      isValid = false;
-    }
-
-    if (!isValid) return;
-
-    // Kiểm tra tài khoản
-    const users = getUsers();
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
     const foundUser = users.find(
-      (user) => user.email === email && user.password === password,
+      (user) => user.email === email && user.password === password
     );
 
     if (foundUser) {
-      // Lưu trạng thái đăng nhập
       localStorage.setItem("currentUser", JSON.stringify(foundUser));
-      localStorage.setItem("lastEmail", foundUser.email);
-      // Ghi nhớ đăng nhập nếu checkbox được chọn
-      const remember = document.getElementById("remember").checked;
-      if (remember) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
-
-      // Chuyển hướng về trang chủ với thông báo
-      window.location.href = "trangchu.html?login=success";
+      alert("Form đã được gửi thành công! Chuyển hướng đến trang chủ!");
+      window.location.href = "trangchu.html";
     } else {
-      // Kiểm tra xem email có tồn tại không để đưa ra thông báo phù hợp
+      // Sai tài khoản – hiển thị lỗi chung
       const userExists = users.some((user) => user.email === email);
       if (userExists) {
-        passwordError.textContent = "Mật khẩu không chính xác.";
+        // Mật khẩu sai
+        setError(passwordRow, "Mật khẩu không chính xác!", passwordMsg);
+        // Đảm bảo email vẫn là success nếu hợp lệ
+        if (isValidEmail(email)) {
+          setSuccess(emailRow, emailMsg);
+        }
       } else {
-        emailError.textContent = "Email chưa được đăng ký.";
+        // Email chưa đăng ký
+        setError(emailRow, "Email chưa được đăng ký!", emailMsg);
+        // Reset password row (vì chưa nhập)
+        resetRow(passwordRow);
+        passwordMsg.textContent = "";
       }
     }
   });
 
-  // Nếu đã đăng nhập rồi, chuyển hướng về trang chủ
-  const currentUser = localStorage.getItem("currentUser");
-  if (currentUser) {
-    // Nếu đang ở trang login, chuyển về index
+  // Nếu đã đăng nhập, chuyển hướng về trang chủ
+  if (localStorage.getItem("currentUser")) {
     window.location.href = "trangchu.html";
-  }
-
-  // Tự động điền email nếu có rememberMe
-  const rememberMe = localStorage.getItem("rememberMe");
-  if (rememberMe === "true") {
-    const users = getUsers();
-    if (users.length > 0) {
-      // Có thể điền email của user cuối cùng đã đăng nhập
-      // Ở đây đơn giản là lấy user đầu tiên trong danh sách
-      // Hoặc có thể lưu riêng email đã nhớ
-      const lastEmail = localStorage.getItem("lastEmail");
-      if (lastEmail) {
-        emailInput.value = lastEmail;
-        document.getElementById("remember").checked = true;
-      }
-    }
   }
 });
