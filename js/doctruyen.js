@@ -261,6 +261,49 @@ if (!chap) {
     "<h2>Không tìm thấy chapter!</h2>";
   throw new Error("Không tìm thấy chapter");
 }
+// CHUYỂN VỀ CHƯƠNG TRƯỚC VÀ SANG CHƯƠNG SAU
+const danhSachChap = chapters
+  .filter((item) => item.id === id)
+  .sort((a, b) => a.chapter - b.chapter);
+
+const viTriChapHienTai = danhSachChap.findIndex(
+  (item) => item.chapter === chap.chapter,
+);
+
+const chapTruoc = danhSachChap[viTriChapHienTai - 1];
+const chapSau = danhSachChap[viTriChapHienTai + 1];
+
+document.querySelectorAll(".nav_inline").forEach((nav) => {
+  const nutMuiTen = nav.querySelectorAll(".arrow-box");
+  const nutChapTruoc = nutMuiTen[0];
+  const nutChapSau = nutMuiTen[1];
+
+  // Nút chương trước
+  if (chapTruoc) {
+    nutChapTruoc.href =
+      `doctruyen.html?id=${id}&chapter=${chapTruoc.chapter}`;
+
+    nutChapTruoc.classList.remove("disabled");
+    nutChapTruoc.title = `Chapter ${chapTruoc.chapter}`;
+  } else {
+    nutChapTruoc.removeAttribute("href");
+    nutChapTruoc.classList.add("disabled");
+    nutChapTruoc.title = "Đây là chapter đầu tiên";
+  }
+
+  // Nút chương sau
+  if (chapSau) {
+    nutChapSau.href =
+      `doctruyen.html?id=${id}&chapter=${chapSau.chapter}`;
+
+    nutChapSau.classList.remove("disabled");
+    nutChapSau.title = `Chapter ${chapSau.chapter}`;
+  } else {
+    nutChapSau.removeAttribute("href");
+    nutChapSau.classList.add("disabled");
+    nutChapSau.title = "Đây là chapter cuối cùng";
+  }
+});
 //xem tiến độ đọc tiếp
 luuTienDoDoc(truyen.id, chap.chapter);
 // Hiện tên
