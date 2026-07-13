@@ -27,77 +27,85 @@
         </div>
 
         <form id="registerForm" novalidate>
-          <div class="input-group">
-            <label for="fullname">
-              <i class="bi bi-person"></i> Họ và tên
-            </label>
-            <input
-              type="text"
-              id="fullname"
-              placeholder="Nguyễn Văn A"
-              required
-            />
-            <span class="error-msg" id="fullnameError"></span>
-          </div>
-
-          <div class="input-group">
-            <label for="email"> <i class="bi bi-envelope"></i> Email </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="example@email.com"
-              required
-            />
-            <span class="error-msg" id="emailError"></span>
-          </div>
-
-          <div class="input-group">
-            <label for="password"> <i class="bi bi-lock"></i> Mật khẩu </label>
-            <div class="password-wrapper">
+          <!-- Tên người dùng -->
+          <div class="form-row" id="row-username">
+            <label>
+              <i class="bi bi-person"></i> Tên người dùng
               <input
-                type="password"
-                id="password"
-                placeholder="Tối thiểu 6 ký tự"
-                required
+                type="text"
+                id="username"
+                placeholder="Nguyễn Văn A"
+                autocomplete="username"
               />
-              <button
-                type="button"
-                class="toggle-password"
-                id="togglePassword"
-                aria-label="Hiển thị mật khẩu"
-              >
-                <i class="bi bi-eye"></i>
-              </button>
-            </div>
-            <span class="error-msg" id="passwordError"></span>
+            </label>
+            <small class="notification" id="usernameMsg"></small>
           </div>
 
-          <div class="input-group">
-            <label for="confirm-password">
+          <!-- Email -->
+          <div class="form-row" id="row-email">
+            <label>
+              <i class="bi bi-envelope"></i> Email
+              <input
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+              />
+            </label>
+            <small class="notification" id="emailMsg"></small>
+          </div>
+
+          <!-- Mật khẩu -->
+          <div class="form-row" id="row-password">
+            <label>
+              <i class="bi bi-lock"></i> Mật khẩu
+              <div class="password-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Tối thiểu 8 ký tự"
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  id="togglePassword"
+                  aria-label="Hiển thị mật khẩu"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </label>
+            <small class="notification" id="passwordMsg"></small>
+          </div>
+
+          <!-- Xác nhận mật khẩu -->
+          <div class="form-row" id="row-confirm">
+            <label>
               <i class="bi bi-check-circle"></i> Xác nhận mật khẩu
+              <div class="password-wrapper">
+                <input
+                  type="password"
+                  id="confirm-password"
+                  placeholder="Nhập lại mật khẩu"
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  id="toggleConfirmPassword"
+                  aria-label="Hiển thị mật khẩu"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
             </label>
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="confirm-password"
-                placeholder="Nhập lại mật khẩu"
-                required
-              />
-              <button
-                type="button"
-                class="toggle-password"
-                id="toggleConfirmPassword"
-                aria-label="Hiển thị mật khẩu"
-              >
-                <i class="bi bi-eye"></i>
-              </button>
-            </div>
-            <span class="error-msg" id="confirmError"></span>
+            <small class="notification" id="confirmMsg"></small>
           </div>
 
           <div class="form-agreement">
             <label class="agree-check">
-              <input type="checkbox" id="agree" required />
+              <input type="checkbox" id="agree" />
               <span>
                 Tôi đồng ý với
                 <a href="dieukhoan.html">Điều khoản sử dụng</a>
@@ -105,7 +113,6 @@
                 <a href="chinhsach.html">Chính sách bảo mật</a>
               </span>
             </label>
-            <span class="error-msg" id="agreeError"></span>
           </div>
 
           <button type="submit" class="btn-register">Đăng ký</button>
