@@ -4712,7 +4712,7 @@ const chapters = [
   },
   {
     id: 3,
-    chapter: 11157,
+    chapter: 1157,
     images: [
       "img/Anhtruyen/Conan/conan_1157/002.jpg",
       "img/Anhtruyen/Conan/conan_1157/003.jpg",
