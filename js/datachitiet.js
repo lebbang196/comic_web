@@ -1,6 +1,3 @@
-// Đếm số chapter thật đã có ảnh trong datadoctruyen.js cho 1 truyện.
-// Trả về 0 nếu chưa nạp datadoctruyen.js, hoặc truyện đó chưa có chapter nào
-// trong đó (lúc đó sẽ dùng số dự phòng "|| N" ở mỗi truyện bên dưới).
 function demSoChapter(idTruyen) {
   if (typeof chapters === "undefined") return 0;
 

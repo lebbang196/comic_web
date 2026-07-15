@@ -1,22 +1,53 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .breadcrumb {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
+  padding: 15px 6%;
   font-size: 14px;
-  color: #fff;
-  padding: 10px 6%;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* Bố cục chính truyện*/
+.breadcrumb-link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #93c5fd;
+}
+
+.breadcrumb-separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.breadcrumb-current {
+  color: #fff;
+  font-weight: 600;
+}
+
+.error-hidden,
+.alias-hidden,
+.bl-login-hidden {
+  display: none !important;
+}
+
 .chitiet-hero {
   padding-top: 20px;
 }
 
-/*Chia 2 cột */
 .chitiet-container {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -24,7 +55,6 @@ body {
   align-items: start;
 }
 
-/* Khu vực cột 1*/
 .chitiet-cover-col {
   display: flex;
   flex-direction: column;
@@ -35,36 +65,35 @@ body {
   width: 100%;
   aspect-ratio: 2 / 3;
   border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   border: 2px solid rgba(134, 98, 242, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
 .chitiet-cover img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .chitiet-cover img:hover {
   transform: scale(1.03);
 }
 
-/*tên khác*/
 .chitiet-alias {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
   padding: 12px 15px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
 }
 
 .chitiet-alias strong {
-  color: rgb(79, 57, 143);
+  color: rgb(167, 139, 250);
 }
 
 .chitiet-btns {
@@ -76,14 +105,14 @@ body {
 .btn-doc {
   display: block;
   padding: 13px 20px;
-  border-radius: 40px;
   border: none;
+  border-radius: 40px;
   font-size: 15px;
   font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
   text-align: center;
-  transition: all 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-doc-primary {
@@ -93,8 +122,8 @@ body {
 
 .btn-doc-primary:hover {
   background: rgb(110, 75, 210);
-  transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(134, 98, 242, 0.4);
+  transform: translateY(-2px);
 }
 
 .btn-doc-secondary {
@@ -110,9 +139,9 @@ body {
 }
 
 .btn-doc-outline {
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-doc-outline:hover {
@@ -120,12 +149,11 @@ body {
 }
 
 .btn-doc-outline.dang-theo-doi {
-  background: rgba(134, 98, 242, 0.2);
   border-color: rgb(134, 98, 242);
+  background: rgba(134, 98, 242, 0.2);
   color: #fff;
 }
 
-/*Khu vục cột 2*/
 .chitiet-info-col {
   display: flex;
   flex-direction: column;
@@ -133,28 +161,29 @@ body {
 }
 
 .chitiet-title {
+  color: #fff;
   font-size: 2.2rem;
   font-weight: 900;
-  color: #fff;
   line-height: 1.2;
 }
 
-.chitiet-rating {
+.rating-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  font-family: sans-serif;
 }
 
-.chitiet-stars {
-  color: gold;
-  font-size: 20px;
+.rating-number {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #ffc107;
+}
+
+.rating-stars {
+  font-size: 1.2rem;
+  color: #ffc107;
   letter-spacing: 2px;
-}
-
-.chitiet-diem {
-  font-size: 20px;
-  font-weight: 700;
-  color: gold;
 }
 
 .chitiet-meta {
@@ -165,16 +194,20 @@ body {
 
 .chitiet-meta-dong {
   display: flex;
-  gap: 10px;
   align-items: flex-start;
+  gap: 10px;
   font-size: 14px;
 }
 
+.meta-stats-row {
+  margin-top: 5px;
+}
+
 .meta-label {
-  color: rgb(248, 248, 248);
-  min-width: 90px;
-  font-size: 13px;
   flex-shrink: 0;
+  min-width: 90px;
+  color: rgb(248, 248, 248);
+  font-size: 13px;
 }
 
 .meta-value {
@@ -188,14 +221,15 @@ body {
 }
 
 .tag {
-  background: rgba(134, 98, 242, 0.2);
-  border: 1px solid rgba(134, 98, 242, 0.4);
-  color: rgb(196, 181, 253);
   padding: 4px 12px;
   border-radius: 20px;
+  border: 1px solid rgba(134, 98, 242, 0.4);
+  background: rgba(134, 98, 242, 0.2);
+  color: rgb(196, 181, 253);
   font-size: 13px;
+  text-decoration: none;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .tag:hover {
@@ -203,7 +237,6 @@ body {
   color: #fff;
 }
 
-/* Badge tình trạng - 3 trạng thái dùng chung khung, khác màu */
 .tinh-trang-badge {
   display: inline-block;
   padding: 4px 14px;
@@ -213,27 +246,27 @@ body {
 }
 
 .tinh-trang-badge.dang-ra {
+  border: 1px solid #3ecf8e;
   background: rgba(62, 207, 142, 0.15);
   color: rgba(11, 242, 69, 0.9);
-  border: 1px solid #3ecf8e;
 }
 
 .tinh-trang-badge.hoan-thanh {
+  border: 1px solid rgb(196, 181, 253);
   background: rgba(134, 98, 242, 0.15);
   color: rgb(196, 181, 253);
-  border: 1px solid rgb(196, 181, 253);
 }
 
 .tinh-trang-badge.sap-ra-mat {
+  border: 1px solid rgb(250, 204, 21);
   background: rgba(250, 204, 21, 0.15);
   color: rgb(250, 204, 21);
-  border: 1px solid rgb(250, 204, 21);
 }
 
 .chitiet-stats {
   display: flex;
-  gap: 25px;
   flex-wrap: wrap;
+  gap: 25px;
 }
 
 .stat-item {
@@ -244,9 +277,23 @@ body {
   color: rgba(248, 248, 248, 0.9);
 }
 
+.stat-heart-spacing {
+  margin-left: 15px;
+}
+
+.icon-view {
+  color: #ccc;
+  margin-right: 5px;
+}
+
+.icon-heart {
+  color: #c32837;
+  margin-right: 5px;
+}
+
 .chitiet-mota {
-  font-size: 14px;
   color: rgb(248, 248, 248);
+  font-size: 14px;
   line-height: 1.8;
   text-align: justify;
 }
@@ -255,69 +302,60 @@ body {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   overflow: hidden;
 }
 
-.danh-gia-box {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.danh-gia-label {
-  font-size: 14px;
-  color: #aaa;
-}
-
-.star-pick {
-  font-size: 26px;
+.btn-synopsis-toggle {
+  border: none;
+  margin-top: 10px;
+  background: transparent;
+  color: rgb(196, 181, 253);
+  font-weight: 600;
   cursor: pointer;
-  color: #555;
-  transition: 0.2s;
-  user-select: none;
+  padding: 0;
 }
 
-.star-pick.active {
-  color: gold;
-}
-
-.star-pick:hover {
-  transform: scale(1.2);
-}
-
-/* Khu vực chap*/
 .chapter-section {
-  background: #1d1d1d;
-  border-radius: 10px;
-  padding: 20px;
   margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #1d1d1d;
 }
 
 .chapter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .chapter-header h2 {
-  font-size: 1.4rem;
   color: #fff;
+  font-size: 1.4rem;
+  margin: 0;
 }
 
 .chapter-dem {
-  font-size: 14px;
-  color: #aaa;
-  font-weight: 400;
   margin-left: 8px;
+  color: #aaa;
+  font-size: 14px;
+  font-weight: 400;
+}
+/* Mặc định ẩn icon tăng dần */
+#btnDaoNguoc .status-asc {
+  display: none;
 }
 
+/* Khi chuyển sang trạng thái asc */
+#btnDaoNguoc[data-order="asc"] .status-desc {
+  display: none;
+}
+#btnDaoNguoc[data-order="asc"] .status-asc {
+  display: inline-block;
+}
 .chapter-sort {
   display: flex;
   gap: 8px;
@@ -325,30 +363,44 @@ body {
 
 .chapter-sort button {
   padding: 6px 16px;
-  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   background: transparent;
   color: #aaa;
   font-size: 13px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .chapter-sort button.active,
 .chapter-sort button:hover {
+  border-color: rgb(134, 98, 242);
   background: rgb(134, 98, 242);
   color: #fff;
-  border-color: rgb(134, 98, 242);
 }
 
-/* Danh sách chapter */
 .chapter-grid {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   max-height: 600px;
   overflow-y: auto;
+  padding-right: 5px;
+}
+
+.chapter-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.chapter-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+.chapter-grid::-webkit-scrollbar-thumb {
+  background: rgba(134, 98, 242, 0.4);
+  border-radius: 10px;
+}
+.chapter-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(134, 98, 242, 0.7);
 }
 
 .chapter-item {
@@ -356,45 +408,45 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
   text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .chapter-item:hover {
-  background: rgba(134, 98, 242, 0.2);
   border-color: rgba(134, 98, 242, 0.4);
+  background: rgba(134, 98, 242, 0.2);
 }
 
 .chapter-so {
+  color: rgb(134, 98, 242);
   font-size: 13px;
   font-weight: 700;
-  color: rgb(134, 98, 242);
 }
 
 .chapter-ngay {
-  font-size: 12px;
-  color: #888;
   flex-shrink: 0;
+  color: #888;
+  font-size: 12px;
 }
 
 .chapter-moi-badge {
+  margin-left: 6px;
+  padding: 2px 7px;
+  border: 1px solid rgba(134, 98, 242, 0.5);
+  border-radius: 20px;
   background: rgba(134, 98, 242, 0.3);
   color: #c4b5fd;
-  border: 1px solid rgba(134, 98, 242, 0.5);
   font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 20px;
   font-weight: 700;
-  margin-left: 6px;
 }
 
 #chapterXemThem {
-  text-align: center;
   margin-top: 16px;
+  text-align: center;
 }
 
 #chapterXemThem button {
@@ -406,23 +458,24 @@ body {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background 0.3s ease;
 }
 
 #chapterXemThem button:hover {
   background: rgb(134, 98, 242);
 }
 
-/* Khu vực truyện liên quan */
 #sectionLQuan {
-  border-radius: 20px;
+  margin-top: 25px;
   padding: 25px;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.05);
 }
 
 #sectionLQuan h2 {
-  font-size: 1.4rem;
   color: #fff;
+  font-size: 1.4rem;
+  margin-top: 0;
   margin-bottom: 20px;
 }
 
@@ -433,14 +486,14 @@ body {
 }
 
 .lien-quan-card {
-  background: rgb(202, 199, 199);
+  display: block;
   border-radius: 16px;
+  background: rgb(202, 199, 199);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s;
-  text-decoration: none;
-  display: block;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
 .lien-quan-card:hover {
@@ -448,19 +501,19 @@ body {
 }
 
 .lien-quan-card img {
+  display: block;
   width: 100%;
   height: 320px;
   object-fit: cover;
-  display: block;
 }
 
 .lien-quan-placeholder {
-  width: 100%;
-  height: 200px;
-  background: rgb(90, 78, 121);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 200px;
+  background: rgb(90, 78, 121);
   font-size: 48px;
 }
 
@@ -469,28 +522,90 @@ body {
 }
 
 .lien-quan-ten {
-  font-size: 14px;
-  font-weight: 700;
-  color: #1c1c24;
-  margin-bottom: 4px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  line-clamp: 3;
   overflow: hidden;
+  margin-bottom: 4px;
+  color: #1c1c24;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .lien-quan-tacgia {
-  font-size: 12px;
   color: #555;
+  font-size: 12px;
 }
 
-/*thông báo đăng nhập*/
+#sectionBLuan {
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#sectionBLuan h2 {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.bl-form .danh-gia-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.danh-gia-label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.chitiet-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star-pick {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #555;
+  font-size: 26px;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.star-pick.active {
+  color: gold;
+}
+
+.star-pick:hover {
+  transform: scale(1.2);
+}
+
+.chitiet-diem {
+  color: gold;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .bl-thongbao-dangnhap {
-  background: rgba(134, 98, 242, 0.15);
+  margin-bottom: 20px;
+  padding: 15px;
   border: 1px solid rgba(134, 98, 242, 0.4);
   border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 20px;
+  background: rgba(134, 98, 242, 0.15);
   color: #c4b5fd;
   font-size: 14px;
 }
@@ -502,46 +617,31 @@ body {
 }
 
 .bl-dang-binh-luan-voi {
-  font-size: 13px;
   color: #aaa;
+  font-size: 13px;
 }
 
-/* Khu vực bình luận */
-#sectionBLuan {
-  border-radius: 20px;
-  padding: 25px;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-#sectionBLuan h2 {
-  font-size: 1.4rem;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-/* Khung nhập bình luận: đổi sang màu đen theo yêu cầu */
 .bl-form {
-  background: #000;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #1d1d1d;
 }
 
 .bl-form input,
 .bl-form textarea {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
   color: #fff;
   font-size: 14px;
   font-family: inherit;
-  padding: 10px 14px;
   outline: none;
-  transition: 0.2s;
-  width: 100%;
+  transition: border-color 0.2s ease;
 }
 
 .bl-form input::placeholder,
@@ -555,8 +655,8 @@ body {
 }
 
 .bl-form textarea {
-  resize: none;
   min-height: 80px;
+  resize: none;
 }
 
 .bl-form-footer {
@@ -576,7 +676,7 @@ body {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .bl-gui-btn:hover {
@@ -596,18 +696,18 @@ body {
 }
 
 .bl-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(134, 98, 242, 0.3);
-  border: 2px solid rgba(134, 98, 242, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(134, 98, 242, 0.5);
+  border-radius: 50%;
+  background: rgba(134, 98, 242, 0.3);
+  color: #c4b5fd;
   font-size: 14px;
   font-weight: 700;
-  color: #c4b5fd;
-  flex-shrink: 0;
 }
 
 .bl-noidung {
@@ -617,9 +717,9 @@ body {
 .bl-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 5px;
-  flex-wrap: wrap;
 }
 
 .bl-meta strong {
@@ -632,24 +732,23 @@ body {
   font-size: 13px;
 }
 
-/* Giờ gửi bình luận: đổi sang trắng, giống màu tên tài khoản */
 .bl-time {
-  font-size: 12px;
   color: #fff;
+  font-size: 12px;
 }
 
 .bl-noidung p {
-  font-size: 14px;
   color: #ccc;
+  font-size: 14px;
   line-height: 1.7;
 }
 
 .footer-copy {
-  text-align: center;
   padding: 20px;
-  color: #cbd5e1;
   border-top: 1px solid rgba(134, 98, 242, 0.4);
+  color: #cbd5e1;
   font-size: 14px;
+  text-align: center;
 }
 
 .section-hidden {
@@ -707,9 +806,9 @@ body {
   }
 
   .chitiet-cover-col {
+    width: 100%;
     max-width: 280px;
     margin: 0 auto;
-    width: 100%;
   }
 
   .chitiet-title {
@@ -722,8 +821,8 @@ body {
 
   .footer {
     grid-template-columns: 1fr;
-    text-align: center;
     gap: 30px;
+    text-align: center;
   }
 
   .social {
