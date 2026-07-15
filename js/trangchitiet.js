@@ -6,8 +6,14 @@ function layThamSoURL(tenThamSo) {
   return cap ? decodeURIComponent(cap.split("=")[1]) : null;
 }
 
+// Hỗ trợ xóa con nhanh và an toàn
+function xoaHetCon(element) {
+  if (element) {
+    element.textContent = "";
+  }
+}
+
 // 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - ĐỌC LOCALSTORAGE AN TOÀN]
-// Chú thích: Hàm bọc try-catch giúp ứng dụng không bị crash nếu dữ liệu JSON của User trong LocalStorage bị hỏng.
 function safeParseJSON(key, fallback = null) {
   try {
     const item = localStorage.getItem(key);
@@ -33,8 +39,10 @@ if (!truyen) {
     const containerChinh = document.getElementById("container-truyen");
     const khungLoi = document.getElementById("khung-loi");
     const lblNoiDungLoi = document.getElementById("lblNoiDungLoi");
+    const breadcrumb = document.querySelector(".breadcrumb");
 
     if (containerChinh) containerChinh.classList.add("error-hidden");
+    if (breadcrumb) breadcrumb.style.display = "none";
     if (khungLoi) {
       khungLoi.classList.remove("error-hidden");
       if (lblNoiDungLoi)
@@ -46,20 +54,12 @@ if (!truyen) {
 }
 
 // --- 3. KHỞI TẠO BIẾN TOÀN CỤC ---
-
-// 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - KHỞI TẠO THÔNG TIN USER]
-// Chú thích: Lấy thông tin tài khoản đang đăng nhập từ LocalStorage để xử lý quyền hạn trên trang.
 let currentUser = safeParseJSON("currentUser", null);
-// 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - KHỞI TẠO THÔNG TIN USER]
-
 let thuTuChapter = "desc";
 let chapterMoRong = false;
 let saoDangChon = 0;
 
 // --- 4. ĐIỀU CHỈNH MENU THEO TRẠNG THÁI ĐĂNG NHẬP ---
-
-// 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - THIẾT LẬP MENU ĐĂNG NHẬP/ĐĂNG XUẤT]
-// Chú thích: Ẩn/Hiện khu vực "Đăng nhập/Đăng ký" hoặc hiển thị Tên tài khoản của người dùng trên thanh Header.
 function thietLapMenu() {
   const khuChuaDangNhap = document.getElementById("khuChuaDangNhap");
   const khuDaDangNhap = document.getElementById("khuDaDangNhap");
@@ -70,7 +70,6 @@ function thietLapMenu() {
     if (khuDaDangNhap) {
       khuDaDangNhap.classList.remove("tai-khoan-an");
       if (tenTaiKhoan) {
-        // Thứ tự ưu tiên hiển thị tên: Họ tên đầy đủ -> Email tài khoản -> Tên mặc định "Độc giả"
         tenTaiKhoan.textContent =
           currentUser.fullname || currentUser.email || "Độc giả";
       }
@@ -80,7 +79,6 @@ function thietLapMenu() {
     if (khuDaDangNhap) khuDaDangNhap.classList.add("tai-khoan-an");
   }
 }
-// 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - THIẾT LẬP MENU ĐĂNG NHẬP/ĐĂNG XUẤT]
 
 // --- 5. HIỂN THỊ CHI TIẾT THÔNG TIN TRUYỆN ---
 function hienThiChiTietTruyen() {
@@ -112,7 +110,6 @@ function hienThiChiTietTruyen() {
   const lblTacGia = document.getElementById("lblTacGia");
   if (lblTacGia) lblTacGia.textContent = truyen.tacGia || "Đang cập nhật";
 
-  // Xử lý 3 Trạng thái truyện: Hoàn thành, Sắp ra mắt, Đang ra
   const lblTrangThai = document.getElementById("lblTrangThai");
   if (lblTrangThai) {
     const tinhTrang = truyen.tinhTrang || "Đang cập nhật";
@@ -127,7 +124,6 @@ function hienThiChiTietTruyen() {
     lblTrangThai.className = `tinh-trang-badge ${classTrangThai}`;
   }
 
-  // Đánh giá sao trung bình
   const lblDiemTb = document.getElementById("lblDiemTb");
   const dungTichSao = document.getElementById("dungTichSao");
   const diemSo = Number(truyen.diemDanhGia) || 0.0;
@@ -141,8 +137,6 @@ function hienThiChiTietTruyen() {
   const lblLuotXem = document.getElementById("lblLuotXem");
   if (lblLuotXem) lblLuotXem.textContent = truyen.luotXem || "0";
 
-  // 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - THỐNG KÊ LƯỢT THEO DÕI CỦA USER]
-  // Chú thích: Đọc danh sách ID truyện theo dõi của user từ LocalStorage. Nếu user hiện tại đang theo dõi, hiển thị tăng thêm 1 lượt.
   const lblLuotTheoDoi = document.getElementById("lblLuotTheoDoi");
   let dsTheoDoi = safeParseJSON("danhSachTheoDoi", []);
   let dangTheoDoi = dsTheoDoi.includes(idTruyen);
@@ -154,9 +148,7 @@ function hienThiChiTietTruyen() {
       dangTheoDoi ? soTheoDoiGoc + 1 : soTheoDoiGoc
     ).toLocaleString("vi-VN");
   }
-  // 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - THỐNG KÊ LƯỢT THEO DÕI CỦA USER]
 
-  // Khúc mô tả rút gọn / mở rộng
   const lblSynopsis = document.getElementById("lblSynopsis");
   const btnDocThemSynopsis = document.getElementById("btnDocThemSynopsis");
   const noiDungMoTa =
@@ -189,7 +181,6 @@ function hienThiChiTietTruyen() {
     }, 50);
   }
 
-  // Hiển thị danh sách thẻ thể loại dưới dạng liên kết
   const boxTheLoai = document.getElementById("boxTheLoai");
   if (boxTheLoai) {
     boxTheLoai.textContent = "";
@@ -203,38 +194,55 @@ function hienThiChiTietTruyen() {
       });
     }
   }
-
   // 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - TƯƠNG TÁC THEO DÕI TRUYỆN]
-  // Chú thích: Thêm hoặc xóa ID truyện khỏi danh sách yêu thích của Tài khoản người dùng trong LocalStorage.
   const btnTheoDoi = document.getElementById("btnTheoDoi");
   if (btnTheoDoi) {
-    const capNhatNutTheoDoi = (status) => {
-      btnTheoDoi.innerHTML = status
-        ? '<i class="bi bi-heart-break-fill"></i> Bỏ theo dõi'
-        : '<i class="bi bi-heart"></i> Theo dõi';
-      btnTheoDoi.classList.toggle("dang-theo-doi", status);
+    const iconHeart = btnTheoDoi.querySelector("i");
+
+    const capNhatGiaoDienTheoDoi = () => {
+      const hienTaiDangTheoDoi =
+        typeof kiemTraDaTheoDoi === "function"
+          ? kiemTraDaTheoDoi(idTruyen)
+          : false;
+
+      btnTheoDoi.classList.toggle("dang-theo-doi", hienTaiDangTheoDoi);
+
+      if (iconHeart) {
+        if (hienTaiDangTheoDoi) {
+          iconHeart.className = "bi bi-check-lg";
+        } else {
+          iconHeart.className = "bi bi-heart";
+        }
+      }
+
+      const textNodes = Array.from(btnTheoDoi.childNodes).filter(
+        (node) => node.nodeType === Node.TEXT_NODE,
+      );
+      textNodes.forEach((node) => node.remove());
+      btnTheoDoi.appendChild(
+        document.createTextNode(
+          hienTaiDangTheoDoi ? " Bỏ theo dõi" : " Theo dõi",
+        ),
+      );
+
+      if (lblLuotTheoDoi) {
+        lblLuotTheoDoi.textContent = (
+          hienTaiDangTheoDoi ? soTheoDoiGoc + 1 : soTheoDoiGoc
+        ).toLocaleString("vi-VN");
+      }
     };
 
-    capNhatNutTheoDoi(dangTheoDoi);
+    capNhatGiaoDienTheoDoi();
 
     btnTheoDoi.addEventListener("click", () => {
-      dsTheoDoi = safeParseJSON("danhSachTheoDoi", []);
-      dangTheoDoi = dsTheoDoi.includes(idTruyen);
-
-      if (dangTheoDoi) {
-        dsTheoDoi = dsTheoDoi.filter((id) => id !== idTruyen);
-        capNhatNutTheoDoi(false);
-        if (lblLuotTheoDoi)
-          lblLuotTheoDoi.textContent = soTheoDoiGoc.toLocaleString("vi-VN");
+      if (typeof toggleTheoDoiId === "function") {
+        const ketQuaToggle = toggleTheoDoiId(idTruyen);
+        if (ketQuaToggle !== false || currentUser) {
+          capNhatGiaoDienTheoDoi();
+        }
       } else {
-        dsTheoDoi.push(idTruyen);
-        capNhatNutTheoDoi(true);
-        if (lblLuotTheoDoi)
-          lblLuotTheoDoi.textContent = (soTheoDoiGoc + 1).toLocaleString(
-            "vi-VN",
-          );
+        alert("Hệ thống lưu trữ đang bận, vui lòng thử lại sau!");
       }
-      localStorage.setItem("danhSachTheoDoi", JSON.stringify(dsTheoDoi));
     });
   }
   // 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - TƯƠNG TÁC THEO DÕI TRUYỆN]
@@ -316,7 +324,7 @@ function thietLapTuongTacChapter() {
       const textNode = btnDaoNguoc.querySelector(".sort-text");
       if (textNode) {
         textNode.textContent =
-          thuTuChapter === "desc" ? " Mới nhất trước" : " Cũ nhất trước";
+          thuTuChapter === "desc" ? "Mới nhất trước" : "Cũ nhất trước";
       }
       renderDanhSachChapter();
     });
@@ -353,12 +361,10 @@ function layKhoBinhLuan() {
 
 function luuBinhLuanCuaTruyen(dsBinhLuan) {
   const toanBoBinhLuan = safeParseJSON("app_comments", {});
-  toanBoBinhLuan[idTruyen] = dsBinhLuan.slice(-40); // Giữ tối đa 40 bình luận mới nhất
+  toanBoBinhLuan[idTruyen] = dsBinhLuan.slice(-40);
   localStorage.setItem("app_comments", JSON.stringify(toanBoBinhLuan));
 }
 
-// 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - HIỂN THỊ THÔNG TIN USER TRONG BÌNH LUẬN]
-// Chú thích: Đọc và hiển thị tên người dùng (fullname/email) của từng tài khoản tương ứng với mỗi bình luận.
 function renderDanhSachBinhLuan() {
   const khuBinhLuan = document.getElementById("khuBinhLuan");
   if (!khuBinhLuan) return;
@@ -381,7 +387,6 @@ function renderDanhSachBinhLuan() {
 
     const avatar = document.createElement("div");
     avatar.className = "bl-avatar";
-    // 🔐 LẤY TÊN USER ĐỂ TẠO AVATAR CHỮ CÁI ĐẦU
     const tenHienThi = bl.fullname || bl.email || "Độc giả";
     avatar.textContent = tenHienThi.trim().charAt(0).toUpperCase();
 
@@ -418,10 +423,8 @@ function renderDanhSachBinhLuan() {
     khuBinhLuan.appendChild(card);
   });
 }
-// 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - HIỂN THỊ THÔNG TIN USER TRONG BÌNH LUẬN]
 
-// 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - KIỂM TRA QUYỀN ĐĂNG BÌNH LUẬN]
-// Chú thích: Chặn người dùng chưa đăng nhập gửi bình luận, lưu thông tin tài khoản viết bình luận vào Database giả lập (LocalStorage).
+// 🔐 [DETAIL-07 - TẠO LINK LOGIN KÈM QUAYLAI]
 function thietLapFormBinhLuan() {
   const formBinhLuan = document.getElementById("formBinhLuan");
   const txtBinhLuan = document.getElementById("txtBinhLuan");
@@ -429,10 +432,20 @@ function thietLapFormBinhLuan() {
 
   if (!formBinhLuan) return;
 
+  // Xử lý đính kèm tham số quaylai cho đường dẫn Đăng nhập ở thông báo bình luận
+  if (thongBaoDangNhapBL) {
+    const linkLogin = thongBaoDangNhapBL.querySelector("a");
+    if (linkLogin) {
+      const duongDanHienTai = encodeURIComponent(
+        window.location.pathname + window.location.search,
+      );
+      linkLogin.href = `login.html?quaylai=${duongDanHienTai}`;
+    }
+  }
+
   formBinhLuan.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // CHẶN BÌNH LUẬN NẾU CHƯA ĐĂNG NHẬP
     if (!currentUser) {
       alert("Vui lòng đăng nhập để thực hiện chức năng này!");
       return;
@@ -446,7 +459,6 @@ function thietLapFormBinhLuan() {
 
     const dsMoi = layKhoBinhLuan();
 
-    // ĐÍNH KÈM THÔNG TIN TÀI KHOẢN ĐANG ĐĂNG NHẬP VÀO BÌNH LUẬN MỚI
     dsMoi.push({
       id: Date.now(),
       fullname: currentUser.fullname || null,
@@ -469,14 +481,12 @@ function thietLapFormBinhLuan() {
     renderDanhSachBinhLuan();
   });
 
-  // ẨN FORM BÌNH LUẬN VÀ HIỂN THỊ THÔNG BÁO YÊU CẦU ĐĂNG NHẬP NẾU CHƯA CÓ USER
   const loggedIn = !!currentUser;
   formBinhLuan.classList.toggle("bl-login-hidden", !loggedIn);
   if (thongBaoDangNhapBL) {
     thongBaoDangNhapBL.classList.toggle("bl-login-hidden", loggedIn);
   }
 }
-// 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - KIỂM TRA QUYỀN ĐĂNG BÌNH LUẬN]
 
 // --- 8. RENDER TRUYỆN LIÊN QUAN ---
 function renderTruyenLQuan() {
@@ -520,7 +530,7 @@ function renderTruyenLQuan() {
   });
 }
 
-// --- 9. NÚT QUAY LẠI ĐẦU TRANG---
+// --- 9. NÚT QUAY LẠI ĐẦU TRANG ---
 const btnQuayLai = document.getElementById("quaylai");
 if (btnQuayLai) {
   window.addEventListener("scroll", () => {
@@ -532,8 +542,113 @@ if (btnQuayLai) {
   });
 }
 
+function hienThiTruyen(idKhung, danhSach) {
+  const khung = document.getElementById(idKhung);
+  xoaHetCon(khung);
+
+  danhSach.forEach((truyenItem) => {
+    const div = document.createElement("div");
+    div.className = "khungtruyenrieng";
+
+    const a = document.createElement("a");
+    a.href = `trangchitiet.html?id=${truyenItem.id}`;
+
+    const img = document.createElement("img");
+    img.src = truyenItem.anhBia;
+    img.alt = truyenItem.ten;
+
+    const h3 = document.createElement("h3");
+    h3.textContent = truyenItem.ten;
+
+    a.append(img, h3);
+
+    const span = document.createElement("span");
+    span.textContent = truyenItem.theLoai ? truyenItem.theLoai.join(" • ") : "";
+
+    div.append(a, span);
+    khung.appendChild(div);
+  });
+}
+
+function ganTimKiem() {
+  const search = document.getElementById("inputsearch");
+  const khungKetQua = document.getElementById("khungKetQua");
+  const ketquatimkiem = document.getElementById("ketquatimkiem");
+  const breadcrumb = document.querySelector(".breadcrumb");
+  const containerTruyen = document.getElementById("container-truyen");
+
+  if (!search || !khungKetQua || !ketquatimkiem || !containerTruyen) return;
+
+  search.addEventListener("input", function () {
+    const tuKhoa = search.value.trim().toLowerCase();
+
+    if (tuKhoa === "") {
+      ketquatimkiem.style.display = "none";
+      if (breadcrumb) breadcrumb.style.display = "block";
+      containerTruyen.style.display = "block";
+      return;
+    }
+
+    ketquatimkiem.style.display = "block";
+    if (breadcrumb) breadcrumb.style.display = "none";
+    containerTruyen.style.display = "none";
+
+    if (typeof danhSachTruyen === "undefined") return;
+
+    const ketQua = danhSachTruyen.filter(function (t) {
+      const ten = (t.ten || "").toLowerCase();
+      const tacGia = (t.tacGia || "").toLowerCase();
+      const theLoai = (t.theLoai || []).join(" ").toLowerCase();
+      return (
+        ten.includes(tuKhoa) ||
+        tacGia.includes(tuKhoa) ||
+        theLoai.includes(tuKhoa)
+      );
+    });
+
+    if (ketQua.length === 0) {
+      xoaHetCon(khungKetQua);
+      const p = document.createElement("p");
+      p.textContent =
+        "🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác";
+      p.style.color = "white";
+      p.style.fontSize = "20px";
+      p.style.textAlign = "center";
+      p.style.padding = "40px";
+      khungKetQua.style.display = "block";
+      khungKetQua.appendChild(p);
+      return;
+    }
+
+    hienThiTruyen("khungKetQua", ketQua);
+    khungKetQua.style.display = "grid";
+  });
+}
+
+function ganMenu() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const menu = document.querySelector(".menu");
+
+  if (!menuToggle || !menu) return;
+
+  menuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    menu.classList.toggle("active");
+  });
+
+  menu.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+
+  document.addEventListener("click", function () {
+    menu.classList.remove("active");
+  });
+}
+
 // --- 10. KHỞI CHẠY TRANG KHI SẴN SÀNG ---
 document.addEventListener("DOMContentLoaded", () => {
+  ganMenu();
+  ganTimKiem();
   thietLapMenu();
   hienThiChiTietTruyen();
   renderDanhSachChapter();

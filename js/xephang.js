@@ -4,11 +4,12 @@ const iconTieuChi = {
   diemDanhGia: "★",
 };
 
-const SO_MUC_HIEN = 10;
+const SO_MUC_HIEN = 7;
 let tieuChiHienTai = "luotXem";
 let danhSachMoRong = false;
 
 function xoaHetCon(el) {
+  if (!el) return;
   while (el.firstChild) {
     el.removeChild(el.firstChild);
   }
@@ -16,12 +17,8 @@ function xoaHetCon(el) {
 
 function layGiaTriSo(truyen, tieuChi) {
   const giaTri = truyen[tieuChi];
-
-  if (typeof giaTri === "number") {
-    return giaTri;
-  }
-
-  return parseInt(giaTri.replace(/,/g, "")) || 0;
+  if (typeof giaTri === "number") return giaTri;
+  return parseInt(String(giaTri || "0").replace(/,/g, ""), 10) || 0;
 }
 
 function xepHangTruyen(tieuChi) {
@@ -30,69 +27,38 @@ function xepHangTruyen(tieuChi) {
   return ds;
 }
 
+// Hàm định dạng tạo các node phần tử (Không dùng innerHTML, an toàn DOM)
 function dinhDangChiSo(truyen, tieuChi) {
-  return `${iconTieuChi[tieuChi]} ${truyen[tieuChi]}`;
+  const giaTri = truyen[tieuChi];
+  let chuoiSo = giaTri;
+
+  if (tieuChi === "diemDanhGia") {
+    chuoiSo = Number(giaTri).toFixed(1);
+  }
+
+  const spanIcon = document.createElement("span");
+  spanIcon.className = "xh-chiso-icon";
+  spanIcon.textContent = iconTieuChi[tieuChi];
+
+  const spanText = document.createElement("span");
+  spanText.className = "xh-chiso-so";
+  spanText.textContent = chuoiSo;
+
+  const fragment = document.createDocumentFragment();
+  fragment.append(spanIcon, spanText);
+  return fragment;
 }
 
-function ganSuKienTab() {
-  const cacNut = document.querySelectorAll(".xh-tab-nut");
-
-  cacNut.forEach((nut) => {
-    nut.addEventListener("click", function () {
-      cacNut.forEach((n) => n.classList.remove("active"));
-      this.classList.add("active");
-      tieuChiHienTai = this.dataset.key;
-      danhSachMoRong = false;
-      renderTrangXepHang();
-    });
-  });
-}
-
-function renderTop3(dsXepHang) {
-  const el = document.getElementById("xhTop3");
-  xoaHetCon(el);
-
-  const top3 = dsXepHang.slice(0, 3);
-
-  top3.forEach((truyen, chiSo) => {
-    const a = document.createElement("a");
-    a.className = `xh-top3-the hang-${chiSo + 1}`;
-    a.href = `/trangchitiet.html?id=${truyen.id}`;
-
-    const hangSo = document.createElement("div");
-    hangSo.className = "xh-hang-so";
-    hangSo.textContent = chiSo + 1;
-
-    const img = document.createElement("img");
-    img.src = truyen.anhBia;
-    img.alt = truyen.ten;
-
-    const info = document.createElement("div");
-    info.className = "xh-top3-info";
-
-    const ten = document.createElement("div");
-    ten.className = "xh-top3-ten";
-    ten.textContent = truyen.ten;
-
-    const chiso = document.createElement("div");
-    chiso.className = "xh-top3-chiso";
-    chiso.textContent = dinhDangChiSo(truyen, tieuChiHienTai);
-
-    info.appendChild(ten);
-    info.appendChild(chiso);
-    a.appendChild(hangSo);
-    a.appendChild(img);
-    a.appendChild(info);
-    el.appendChild(a);
-  });
-}
-
-function renderDanhSach(dsXepHang) {
+function renderTrangXepHang() {
   const el = document.getElementById("xhDanhSach");
+  if (!el) return;
+
   xoaHetCon(el);
 
-  const conLai = dsXepHang.slice(3);
-  const dsHienThi = danhSachMoRong ? conLai : conLai.slice(0, SO_MUC_HIEN);
+  const dsXepHang = xepHangTruyen(tieuChiHienTai);
+
+  const gioiHan = danhSachMoRong ? dsXepHang.length : 3 + SO_MUC_HIEN;
+  const dsHienThi = dsXepHang.slice(0, gioiHan);
 
   dsHienThi.forEach((truyen, chiSo) => {
     const a = document.createElement("a");
@@ -101,11 +67,12 @@ function renderDanhSach(dsXepHang) {
 
     const hangSoNho = document.createElement("div");
     hangSoNho.className = "xh-hang-so-nho";
-    hangSoNho.textContent = chiSo + 4;
+    hangSoNho.textContent = chiSo + 1;
 
     const img = document.createElement("img");
     img.src = truyen.anhBia;
     img.alt = truyen.ten;
+    img.loading = "lazy";
 
     const info = document.createElement("div");
     info.className = "xh-hang-muc-info";
@@ -116,23 +83,21 @@ function renderDanhSach(dsXepHang) {
 
     const tacgia = document.createElement("div");
     tacgia.className = "xh-hang-muc-tacgia";
-    tacgia.textContent = truyen.tacGia;
+    tacgia.textContent = truyen.tacGia || "Đang cập nhật";
 
     info.appendChild(ten);
     info.appendChild(tacgia);
 
     const chiso = document.createElement("div");
     chiso.className = "xh-hang-muc-chiso";
-    chiso.textContent = dinhDangChiSo(truyen, tieuChiHienTai);
+    // Thêm các element span con vào div chỉ số
+    chiso.appendChild(dinhDangChiSo(truyen, tieuChiHienTai));
 
-    a.appendChild(hangSoNho);
-    a.appendChild(img);
-    a.appendChild(info);
-    a.appendChild(chiso);
+    a.append(hangSoNho, img, info, chiso);
     el.appendChild(a);
   });
 
-  if (conLai.length > SO_MUC_HIEN) {
+  if (dsXepHang.length > 3 + SO_MUC_HIEN) {
     const wrap = document.createElement("div");
     wrap.className = "xh-xem-them";
 
@@ -145,16 +110,22 @@ function renderDanhSach(dsXepHang) {
   }
 }
 
-function renderTrangXepHang() {
-  const dsXepHang = xepHangTruyen(tieuChiHienTai);
-  renderTop3(dsXepHang);
-  renderDanhSach(dsXepHang);
-}
-
 function toggleDanhSachXepHang() {
   danhSachMoRong = !danhSachMoRong;
-  const dsXepHang = xepHangTruyen(tieuChiHienTai);
-  renderDanhSach(dsXepHang);
+  renderTrangXepHang();
+}
+
+function ganSuKienTab() {
+  const cacNut = document.querySelectorAll(".xh-tab-nut");
+  cacNut.forEach((nut) => {
+    nut.addEventListener("click", function () {
+      cacNut.forEach((n) => n.classList.remove("active"));
+      this.classList.add("active");
+      tieuChiHienTai = this.dataset.key;
+      danhSachMoRong = false;
+      renderTrangXepHang();
+    });
+  });
 }
 
 function ganNutQuayLai() {
@@ -174,18 +145,6 @@ function ganNutQuayLai() {
   });
 }
 
-function ganMenuToggle() {
-  const btnToggle = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu");
-
-  if (!btnToggle || !menu) return;
-
-  btnToggle.addEventListener("click", function () {
-    menu.classList.toggle("menu-open");
-  });
-}
-
-//Tìm Kiếm Truyện
 function hienThiTruyen(idKhung, danhSach) {
   const khung = document.getElementById(idKhung);
   xoaHetCon(khung);
@@ -204,14 +163,12 @@ function hienThiTruyen(idKhung, danhSach) {
     const h3 = document.createElement("h3");
     h3.textContent = truyen.ten;
 
-    a.appendChild(img);
-    a.appendChild(h3);
+    a.append(img, h3);
 
     const span = document.createElement("span");
-    span.textContent = truyen.theLoai.join(" • ");
+    span.textContent = truyen.theLoai ? truyen.theLoai.join(" • ") : "";
 
-    div.appendChild(a);
-    div.appendChild(span);
+    div.append(a, span);
     khung.appendChild(div);
   });
 }
@@ -223,25 +180,30 @@ function ganTimKiem() {
   const breadcrumb = document.querySelector(".breadcrumb");
   const xephang = document.getElementById("sectionXepHang");
 
+  if (!search || !khungKetQua || !ketquatimkiem || !xephang) return;
+
   search.addEventListener("input", function () {
     const tuKhoa = search.value.trim().toLowerCase();
 
     if (tuKhoa === "") {
       ketquatimkiem.style.display = "none";
-      breadcrumb.style.display = "block";
+      if (breadcrumb) breadcrumb.style.display = "block";
       xephang.style.display = "block";
       return;
     }
 
     ketquatimkiem.style.display = "block";
-    breadcrumb.style.display = "none";
+    if (breadcrumb) breadcrumb.style.display = "none";
     xephang.style.display = "none";
 
     const ketQua = danhSachTruyen.filter(function (truyen) {
+      const ten = (truyen.ten || "").toLowerCase();
+      const tacGia = (truyen.tacGia || "").toLowerCase();
+      const theLoai = (truyen.theLoai || []).join(" ").toLowerCase();
       return (
-        truyen.ten.toLowerCase().includes(tuKhoa) ||
-        truyen.tacGia.toLowerCase().includes(tuKhoa) ||
-        truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
+        ten.includes(tuKhoa) ||
+        tacGia.includes(tuKhoa) ||
+        theLoai.includes(tuKhoa)
       );
     });
 
@@ -264,17 +226,21 @@ function ganTimKiem() {
   });
 }
 
-//Nút Menu
 function ganMenu() {
   const menuToggle = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".menu");
+
+  if (!menuToggle || !menu) return;
+
   menuToggle.addEventListener("click", function (e) {
     e.stopPropagation();
     menu.classList.toggle("active");
   });
+
   menu.addEventListener("click", function (e) {
     e.stopPropagation();
   });
+
   document.addEventListener("click", function () {
     menu.classList.remove("active");
   });
@@ -284,7 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ganSuKienTab();
   renderTrangXepHang();
   ganNutQuayLai();
-  ganMenuToggle();
   ganTimKiem();
   ganMenu();
 });

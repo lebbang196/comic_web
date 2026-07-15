@@ -10,13 +10,13 @@
     />
     <link rel="stylesheet" href="css/trangchu.css" />
     <link rel="stylesheet" href="css/xephang.css" />
-    <link rel="stylesheet" href="/css/taikhoan.css" />
+    <link rel="stylesheet" href="css/taikhoan.css" />
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
   </head>
 
   <body>
     <header>
-      <button class="menu-toggle">☰</button>
+      <button class="menu-toggle" type="button">☰</button>
       <div class="logo">
         <a href="trangchu.html"><img src="img/logo.png" alt="logo" /></a>
       </div>
@@ -104,23 +104,22 @@
 
     <nav class="breadcrumb section">
       <a href="trangchu.html">Trang Chủ</a>
-      <span>></span>
+      <span>&gt;</span>
       <span class="breadcrumb-current">Xếp Hạng</span>
     </nav>
-
     <section class="section" id="sectionXepHang">
       <h2>🏆 Bảng Xếp Hạng Truyện</h2>
       <div class="xh-tab-chon">
-        <button class="xh-tab-nut active" data-key="luotXem">
+        <button class="xh-tab-nut active" type="button" data-key="luotXem">
           👁 Lượt Xem
         </button>
-        <button class="xh-tab-nut" data-key="luotTheo">❤ Lượt Theo Dõi</button>
-        <button class="xh-tab-nut" data-key="diemDanhGia">
+        <button class="xh-tab-nut" type="button" data-key="luotTheo">
+          ❤ Lượt Theo Dõi
+        </button>
+        <button class="xh-tab-nut" type="button" data-key="diemDanhGia">
           ★ Điểm Đánh Giá
         </button>
       </div>
-
-      <div class="xh-top3" id="xhTop3"></div>
       <div class="xh-danh-sach" id="xhDanhSach"></div>
     </section>
 
@@ -152,14 +151,29 @@
           </p>
           <p>📍 Địa chỉ: Cần Thơ, Việt Nam</p>
           <div class="social">
-            <a href="..."><i class="bi bi-facebook"></i></a>
-            <a href="..."><i class="bi bi-youtube"></i></a>
-            <a href="..."><i class="bi bi-tiktok"></i></a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="bi bi-youtube"></i
+            ></a>
+            <a
+              href="https://tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="bi bi-tiktok"></i
+            ></a>
           </div>
         </div>
       </div>
     </footer>
-    <button class="quaylai" id="quaylai">⬆</button>
+    <button class="quaylai" id="quaylai" type="button">⬆</button>
 
     <script src="js/datachitiet.js"></script>
     <script src="js/xephang.js"></script>
