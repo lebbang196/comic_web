@@ -3943,7 +3943,7 @@ const chapters = [
   },
   {
     id: 27,
-    chapter: 34,
+    chapter: 38,
     images: [
       "img/Anhtruyen/phoisacgia/phoisacgia_38/002.jpg",
       "img/Anhtruyen/phoisacgia/phoisacgia_38/003.jpg",
