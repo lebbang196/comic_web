@@ -6792,4 +6792,5 @@ const chapters = [
       "img/Anhtruyen/blue_lock/blue_lock_351/023.jpg",
     ],
   },
+
 ];
