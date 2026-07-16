@@ -5,11 +5,24 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html,
 body {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
   background: linear-gradient(rgb(169, 168, 168), rgb(90, 78, 121));
   background-attachment: fixed;
   background-repeat: no-repeat;
   line-height: 1.5;
+}
+
+main {
+  flex: 1;
 }
 
 header {
@@ -46,14 +59,14 @@ header {
   position: relative;
 }
 
-.theloai > a {
+.theloai>a {
   font-weight: 500;
   color: white;
   text-decoration: none;
   transition: 0.3s;
 }
 
-.theloai > a:hover {
+.theloai>a:hover {
   color: #93c5fd;
 }
 
@@ -402,6 +415,7 @@ footer {
   nav a {
     font-size: 15px;
   }
+
   .theloai_content {
     position: static;
     display: none;
@@ -411,7 +425,8 @@ footer {
     box-shadow: none;
     margin-top: 10px;
   }
-  .theloai > a {
+
+  .theloai>a {
     font-size: 15px;
   }
 
@@ -501,6 +516,7 @@ footer {
     cursor: pointer;
   }
 }
+
 /* Điện thoại nhỏ */
 @media (max-width: 480px) {
   .content_background h1 {
