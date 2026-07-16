@@ -63,7 +63,7 @@ function renderTrangXepHang() {
   dsHienThi.forEach((truyen, chiSo) => {
     const a = document.createElement("a");
     a.className = "xh-hang-muc";
-    a.href = `/trangchitiet.html?id=${truyen.id}`;
+    a.href = `trangchitiet.html?id=${truyen.id}`;
 
     const hangSoNho = document.createElement("div");
     hangSoNho.className = "xh-hang-so-nho";

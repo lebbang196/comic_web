@@ -116,7 +116,7 @@ function ganChuyenNen() {
   const background = document.getElementById("background");
   const images = ["img/bg1.png", "img/bg2.jpg", "img/bg3.jpg"];
   let index = 0;
-  setInterval(() => {
+  setInterval(function () {
     index++;
     if (index >= images.length) {
       index = 0;

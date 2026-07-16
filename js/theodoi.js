@@ -1,68 +1,3 @@
-function renderDanhSachTheoDoi() {
-  const dsId = layDanhSachTheoDoi(); // luutru.js
-  const dsTruyen = danhSachTruyen.filter((t) => dsId.includes(t.id));
-
-  const grid = document.getElementById("tdDanhSach");
-  const thongBaoRong = document.getElementById("tdRong");
-
-  if (dsTruyen.length === 0) {
-    thongBaoRong.style.display = "block";
-    grid.innerHTML = "";
-    return;
-  }
-
-  thongBaoRong.style.display = "none";
-
-  grid.innerHTML = dsTruyen
-    .map(
-      (t) => `
-    <div class="khungtruyenrieng td-the">
-      <button class="td-nut-bo" data-id="${t.id}" title="Bỏ theo dõi">✕</button>
-      <a href="trangchitiet.html?id=${t.id}">
-        <img src="${t.anhBia}" alt="${t.ten}">
-        <h3>${t.ten}</h3>
-      </a>
-      <span>${t.theLoai.join(" - ")}</span>
-    </div>
-  `,
-    )
-    .join("");
-
-  ganNutBoTheoDoi();
-}
-
-function ganNutBoTheoDoi() {
-  document.querySelectorAll(".td-nut-bo").forEach((nut) => {
-    nut.addEventListener("click", () => {
-      toggleTheoDoiId(parseInt(nut.dataset.id)); // luutru.js
-      renderDanhSachTheoDoi();
-    });
-  });
-}
-
-function ganNutQuayLai() {
-  const nut = document.getElementById("quaylai");
-  if (!nut) return;
-  window.addEventListener("scroll", () => {
-    nut.style.display = window.scrollY > 300 ? "block" : "none";
-  });
-  nut.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-function ganMenuToggle() {
-  const btn = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu");
-  if (!btn || !menu) return;
-  btn.addEventListener("click", () => menu.classList.toggle("menu-open"));
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  renderDanhSachTheoDoi();
-  ganNutQuayLai();
-  ganMenuToggle();
-});
 function layTaiKhoanHienTai() {
   try {
     const chuoi = localStorage.getItem("currentUser");
@@ -82,22 +17,26 @@ function renderDanhSachTheoDoi(tuKhoa = "") {
 
   // Chưa đăng nhập
   if (!taiKhoan) {
-    grid.innerHTML = "";
+    grid.replaceChildren();
 
     thongBaoRong.style.display = "block";
+    thongBaoRong.replaceChildren();
 
-    thongBaoRong.innerHTML = `
-      Bạn cần
-      <a href="login.html">đăng nhập</a>
-      để xem danh sách truyện đang theo dõi.
-    `;
+    thongBaoRong.append("Bạn cần ");
+
+    const link = document.createElement("a");
+    link.href = "login.html";
+    link.textContent = "đăng nhập";
+
+    thongBaoRong.append(link);
+    thongBaoRong.append(" để xem danh sách truyện đang theo dõi.");
 
     return;
   }
 
   // Hàm trong luutru.js
   // Tự lấy danh sách của tài khoản hiện tại
-  const dsId = layDanhSachTheoDoi().map(Number);
+  const dsId = layDanhSachTheoDoi();
 
   const tuKhoaThuong = tuKhoa.trim().toLowerCase();
 
@@ -120,8 +59,7 @@ function renderDanhSachTheoDoi(tuKhoa = "") {
     thongBaoRong.textContent =
       'Bạn chưa theo dõi truyện nào. Hãy vào một truyện và bấm nút "🔔 Theo Dõi" nhé!';
 
-    grid.innerHTML = "";
-
+    grid.replaceChildren();
     return;
   }
 
@@ -129,49 +67,56 @@ function renderDanhSachTheoDoi(tuKhoa = "") {
 
   // Có truyện theo dõi nhưng không khớp từ khóa
   if (dsTruyen.length === 0) {
-    grid.innerHTML = `
-      <p style="
-        color: white;
-        text-align: center;
-        grid-column: 1 / -1;
-        padding: 40px;
-      ">
-        Không tìm thấy truyện phù hợp.
-      </p>
-    `;
+    grid.replaceChildren();
 
+    const p = document.createElement("p");
+
+    p.textContent = "Không tìm thấy truyện phù hợp.";
+
+    p.style.color = "white";
+    p.style.textAlign = "center";
+    p.style.gridColumn = "1 / -1";
+    p.style.padding = "40px";
+
+    grid.append(p);
     return;
   }
 
-  grid.innerHTML = dsTruyen
-    .map(
-      (truyen) => `
-        <div class="khungtruyenrieng td-the">
-          <button
-            type="button"
-            class="td-nut-bo"
-            data-id="${truyen.id}"
-            title="Bỏ theo dõi"
-          >
-            ✕
-          </button>
+  grid.replaceChildren();
 
-          <a href="trangchitiet.html?id=${truyen.id}">
-            <img
-              src="${truyen.anhBia}"
-              alt="${truyen.ten}"
-            >
+  dsTruyen.forEach(function (truyen) {
+    const khung = document.createElement("div");
+    khung.className = "khungtruyenrieng td-the";
 
-            <h3>${truyen.ten}</h3>
-          </a>
+    const nut = document.createElement("button");
+    nut.type = "button";
+    nut.className = "td-nut-bo";
+    nut.dataset.id = truyen.id;
+    nut.title = "Bỏ theo dõi";
+    nut.textContent = "✕";
 
-          <span>
-            ${truyen.theLoai.join(" - ")}
-          </span>
-        </div>
-      `,
-    )
-    .join("");
+    const link = document.createElement("a");
+    link.href = "trangchitiet.html?id=" + truyen.id;
+
+    const img = document.createElement("img");
+    img.src = truyen.anhBia;
+    img.alt = truyen.ten;
+
+    const h3 = document.createElement("h3");
+    h3.textContent = truyen.ten;
+
+    const span = document.createElement("span");
+    span.textContent = truyen.theLoai.join(" - ");
+
+    link.append(img);
+    link.append(h3);
+
+    khung.append(nut);
+    khung.append(link);
+    khung.append(span);
+
+    grid.append(khung);
+  });
 }
 
 function ganSuKienDanhSachTheoDoi() {
@@ -216,17 +161,6 @@ function ganNutQuayLai() {
   });
 }
 
-function ganMenuToggle() {
-  const btn = document.querySelector(".menu-toggle");
-
-  const menu = document.querySelector(".menu");
-
-  if (!btn || !menu) return;
-
-  btn.addEventListener("click", function () {
-    menu.classList.toggle("menu-open");
-  });
-}
 //Nút Menu
 function ganMenu() {
   const menuToggle = document.querySelector(".menu-toggle");
@@ -246,6 +180,5 @@ document.addEventListener("DOMContentLoaded", function () {
   renderDanhSachTheoDoi();
   ganSuKienDanhSachTheoDoi();
   ganNutQuayLai();
-  ganMenuToggle();
   ganMenu();
 });

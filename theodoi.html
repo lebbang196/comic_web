@@ -1,157 +1,158 @@
 <!doctype html>
 <html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/taikhoan.css" />
+    <title>Comic_web</title>
+    <link rel="stylesheet" href="css/trangchu.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
-  <link rel="stylesheet" href="/css/taikhoan.css">
-  <title>Comic_web</title>
-  <link rel="stylesheet" href="css/trangchu.css" />
-</head>
-
-<body>
-  <header>
-    <button class="menu-toggle">☰</button>
-    <div class="logo">
-      <a href="trangchu.html"><img src="img/logo.png" alt="logo" /></a>
-    </div>
-    <nav class="menu">
-      <a href="trangchu.html">TRANG CHỦ</a>
-      <div class="theloai">
-        <a href="theloai.html">☰ THỂ LOẠI</a>
-        <div class="theloai_content">
-          <a href="theloai.html">Tất Cả</a>
-          <a href="theloai.html?theloai=Adventure">Adventure</a>
-          <a href="theloai.html?theloai=Action">Action</a>
-          <a href="theloai.html?theloai=ChuyenSinh">Chuyển Sinh</a>
-          <a href="theloai.html?theloai=TuTien">Tu Tiên</a>
-          <a href="theloai.html?theloai=Anime">Anime</a>
-          <a href="theloai.html?theloai=Comedy">Comedy</a>
-          <a href="theloai.html?theloai=Cooking">Cooking</a>
-          <a href="theloai.html?theloai=Drama">Drama</a>
-          <a href="theloai.html?theloai=Fantasy">Fantasy</a>
-          <a href="theloai.html?theloai=Horror">Horror</a>
-          <a href="theloai.html?theloai=LiveAction">Live Action</a>
-          <a href="theloai.html?theloai=Manga">Manga</a>
-          <a href="theloai.html?theloai=Manhua">Manhua</a>
-          <a href="theloai.html?theloai=Manhwa">Manhwa</a>
-          <a href="theloai.html?theloai=Mecha">Mecha</a>
-          <a href="theloai.html?theloai=NgonTinh">Ngôn Tình</a>
-          <a href="theloai.html?theloai=Romance">Romance</a>
-          <a href="theloai.html?theloai=Shounen">Shounen</a>
-          <a href="theloai.html?theloai=Sports">Sports</a>
-          <a href="theloai.html?theloai=TrinhTham">Trinh Thám</a>
-          <a href="theloai.html?theloai=TruyenMau">Truyện Màu</a>
-          <a href="theloai.html?theloai=XuyenKhong">Xuyên Không</a>
-          <a href="theloai.html?theloai=SchoolLife">School Life</a>
-        </div>
+  <body>
+    <header>
+      <button class="menu-toggle">☰</button>
+      <div class="logo">
+        <a href="trangchu.html"><img src="img/logo.png" alt="logo" /></a>
       </div>
-      <a href="xephang.html">XẾP HẠNG</a>
-      <a href="theodoi.html">THEO DÕI</a>
-    </nav>
-    <div class="search">
-      <input type="text" id="inputsearch" placeholder="Tìm truyện...." />
-    </div>
-    <nav>
-      <!-- Hiện khi chưa đăng nhập -->
-      <nav id="khuChuaDangNhap">
-        <a href="login.html">Đăng Nhập</a>
-        <a href="register.html">Đăng Ký</a>
+      <nav class="menu">
+        <a href="trangchu.html">TRANG CHỦ</a>
+        <div class="theloai">
+          <a href="theloai.html">☰ THỂ LOẠI</a>
+          <div class="theloai_content">
+            <a href="theloai.html">Tất Cả</a>
+            <a href="theloai.html?theloai=Adventure">Adventure</a>
+            <a href="theloai.html?theloai=Action">Action</a>
+            <a href="theloai.html?theloai=ChuyenSinh">Chuyển Sinh</a>
+            <a href="theloai.html?theloai=TuTien">Tu Tiên</a>
+            <a href="theloai.html?theloai=Anime">Anime</a>
+            <a href="theloai.html?theloai=Comedy">Comedy</a>
+            <a href="theloai.html?theloai=Cooking">Cooking</a>
+            <a href="theloai.html?theloai=Drama">Drama</a>
+            <a href="theloai.html?theloai=Fantasy">Fantasy</a>
+            <a href="theloai.html?theloai=Horror">Horror</a>
+            <a href="theloai.html?theloai=LiveAction">Live Action</a>
+            <a href="theloai.html?theloai=Manga">Manga</a>
+            <a href="theloai.html?theloai=Manhua">Manhua</a>
+            <a href="theloai.html?theloai=Manhwa">Manhwa</a>
+            <a href="theloai.html?theloai=Mecha">Mecha</a>
+            <a href="theloai.html?theloai=NgonTinh">Ngôn Tình</a>
+            <a href="theloai.html?theloai=Romance">Romance</a>
+            <a href="theloai.html?theloai=Shounen">Shounen</a>
+            <a href="theloai.html?theloai=Sports">Sports</a>
+            <a href="theloai.html?theloai=TrinhTham">Trinh Thám</a>
+            <a href="theloai.html?theloai=TruyenMau">Truyện Màu</a>
+            <a href="theloai.html?theloai=XuyenKhong">Xuyên Không</a>
+            <a href="theloai.html?theloai=SchoolLife">School Life</a>
+          </div>
+        </div>
+        <a href="xephang.html">XẾP HẠNG</a>
+        <a href="theodoi.html">THEO DÕI</a>
       </nav>
+      <div class="search">
+        <input type="text" id="inputsearch" placeholder="Tìm truyện...." />
+      </div>
+      <nav>
+        <!-- Hiện khi chưa đăng nhập -->
+        <nav id="khuChuaDangNhap">
+          <a href="login.html">Đăng Nhập</a>
+          <a href="register.html">Đăng Ký</a>
+        </nav>
 
-      <!-- Hiện khi đã đăng nhập -->
-      <div id="khuDaDangNhap" class="tai-khoan tai-khoan-an">
-        <button id="nutTaiKhoan" class="nut-tai-khoan" type="button">
-          <i class="bi bi-person-circle"></i>
-          <span id="tenTaiKhoan"></span>
-          <i class="bi bi-caret-down-fill"></i>
-        </button>
-
-        <div id="bangTaiKhoan" class="bang-tai-khoan tai-khoan-an">
-          <h3>Thông tin tài khoản</h3>
-          <hr />
-
-          <p>
-            <strong>Họ tên:</strong>
-            <span id="hoTenTaiKhoan"></span>
-          </p>
-
-          <p>
-            <strong>Email:</strong>
-            <span id="emailTaiKhoan"></span>
-          </p>
-
-          <p>
-            <strong>Ngày tham gia:</strong>
-            <span id="ngayTaoTaiKhoan"></span>
-          </p>
-
-          <hr />
-
-          <button id="nutDangXuat" class="nut-dang-xuat" type="button">
-            <i class="bi bi-box-arrow-right"></i>
-            Đăng xuất
+        <!-- Hiện khi đã đăng nhập -->
+        <div id="khuDaDangNhap" class="tai-khoan tai-khoan-an">
+          <button id="nutTaiKhoan" class="nut-tai-khoan" type="button">
+            <i class="bi bi-person-circle"></i>
+            <span id="tenTaiKhoan"></span>
+            <i class="bi bi-caret-down-fill"></i>
           </button>
+
+          <div id="bangTaiKhoan" class="bang-tai-khoan tai-khoan-an">
+            <h3>Thông tin tài khoản</h3>
+            <hr />
+
+            <p>
+              <strong>Họ tên:</strong>
+              <span id="hoTenTaiKhoan"></span>
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              <span id="emailTaiKhoan"></span>
+            </p>
+
+            <p>
+              <strong>Ngày tham gia:</strong>
+              <span id="ngayTaoTaiKhoan"></span>
+            </p>
+
+            <hr />
+
+            <button id="nutDangXuat" class="nut-dang-xuat" type="button">
+              <i class="bi bi-box-arrow-right"></i>
+              Đăng xuất
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
+    </header>
+
+    <nav class="breadcrumb section">
+      <a href="trangchu.html">Trang Chủ</a>
+      <span>&gt;</span>
+      <span class="breadcrumb-current">Theo Dõi</span>
     </nav>
-  </header>
 
-  <nav class="breadcrumb section">
-    <a href="trangchu.html">Trang Chủ</a>
-    <span>&gt;</span>
-    <span class="breadcrumb-current">Theo Dõi</span>
-  </nav>
+    <section class="section">
+      <h2>🔔 Truyện Đang Theo Dõi</h2>
 
-  <section class="section">
-    <h2>🔔 Truyện Đang Theo Dõi</h2>
+      <p id="tdRong" class="td-rong" style="display: none">
+        Bạn chưa theo dõi truyện nào. Hãy vào 1 truyện và bấm nút "🔔 Theo Dõi"
+        nhé!
+      </p>
 
-    <p id="tdRong" class="td-rong" style="display: none">
-      Bạn chưa theo dõi truyện nào. Hãy vào 1 truyện và bấm nút "🔔 Theo Dõi"
-      nhé!
-    </p>
+      <div class="khungtruyen" id="tdDanhSach"></div>
+    </section>
 
-    <div class="khungtruyen" id="tdDanhSach"></div>
-  </section>
-
-  <footer>
-    <div class="footer">
-      <div class="footer_content">
-        <h3>Comic_Web</h3>
-        <p>
-          Website đọc truyện tranh trực tuyến với hàng nghìn bộ truyện tranh
-          hấp dẫn và hoàn toàn miễn phí
-        </p>
-      </div>
-      <div class="footer_content">
-        <h3>Hỗ trợ</h3>
-        <a href="dieukhoan.html">Điều khoản sử dụng</a>
-        <a href="chinhsach.html">Chính sách bảo mật</a>
-      </div>
-      <div class="footer_content">
-        <h3>Liên hệ</h3>
-        <p>📞 Hotline: <a href="tel:0123456789"> 0123456789</a></p>
-        <p>
-          ✉ Email:
-          <a href="mailto:chamsockh@comicweb.com"> chamsockh@comicweb.com</a>
-        </p>
-        <p>📍 Địa chỉ: Cần Thơ, Việt Nam</p>
-        <div class="social">
-          <a href="..."><i class="bi bi-facebook"></i></a>
-          <a href="..."><i class="bi bi-youtube"></i></a>
-          <a href="..."><i class="bi bi-tiktok"></i></a>
+    <footer>
+      <div class="footer">
+        <div class="footer_content">
+          <h3>Comic_Web</h3>
+          <p>
+            Website đọc truyện tranh trực tuyến với hàng nghìn bộ truyện tranh
+            hấp dẫn và hoàn toàn miễn phí
+          </p>
+        </div>
+        <div class="footer_content">
+          <h3>Hỗ trợ</h3>
+          <a href="dieukhoan.html">Điều khoản sử dụng</a>
+          <a href="chinhsach.html">Chính sách bảo mật</a>
+        </div>
+        <div class="footer_content">
+          <h3>Liên hệ</h3>
+          <p>📞 Hotline: <a href="tel:0123456789"> 0123456789</a></p>
+          <p>
+            ✉ Email:
+            <a href="mailto:chamsockh@comicweb.com"> chamsockh@comicweb.com</a>
+          </p>
+          <p>📍 Địa chỉ: Cần Thơ, Việt Nam</p>
+          <div class="social">
+            <a href="..."><i class="bi bi-facebook"></i></a>
+            <a href="..."><i class="bi bi-youtube"></i></a>
+            <a href="..."><i class="bi bi-tiktok"></i></a>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-  <button class="quaylai" id="quaylai">⬆</button>
+    </footer>
+    <button class="quaylai" id="quaylai">⬆</button>
 
-  <script src="js/datachitiet.js"></script>
-  <script src="js/luutru.js"></script>
-  <script src="js/theodoi.js"></script>
-  <script src="js/taikhoan.js"></script>
-</body>
-
+    <script src="js/datachitiet.js"></script>
+    <script src="js/luutru.js"></script>
+    <script src="js/theodoi.js"></script>
+    <script src="js/taikhoan.js"></script>
+  </body>
 </html>

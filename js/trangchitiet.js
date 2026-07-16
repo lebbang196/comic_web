@@ -469,7 +469,11 @@ function thietLapFormBinhLuan() {
     });
 
     luuBinhLuanCuaTruyen(dsMoi);
+    const tong = dsMoi.reduce((s, x) => s + x.saoDanhGia, 0);
 
+    const diem = tong / dsMoi.length;
+
+    truyen.diemDanhGia = diem;
     if (txtBinhLuan) txtBinhLuan.value = "";
     saoDangChon = 0;
     document

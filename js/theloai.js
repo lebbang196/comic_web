@@ -24,47 +24,93 @@ document.addEventListener("DOMContentLoaded", function () {
   title.textContent = tieuDe;
 
   // Nếu không có truyện, hiển thị thông báo
+  // Nếu không có truyện
   if (danhSachHienThi.length === 0) {
-    khung.innerHTML = "";
+    khung.replaceChildren();
     emptyMsg.style.display = "block";
     return;
-  } else {
-    emptyMsg.style.display = "none";
   }
 
-  // Render danh sách truyện (giống giao diện index)
-  khung.innerHTML = danhSachHienThi
-    .map(
-      (truyen) => `
-    <div class="khungtruyenrieng">
-      <a href="trangchitiet.html?id=${truyen.id}">
-        <img src="${truyen.anhBia}" alt="${truyen.ten}" />
-        <h3>${truyen.ten}</h3>
-      </a>
-      <span>${truyen.theLoai.join(" - ")}</span>
-    </div>
-  `,
-    )
-    .join("");
-});
+  emptyMsg.style.display = "none";
 
-//Tìm Kiếm Truyện
+  khung.replaceChildren();
+
+  danhSachHienThi.forEach(function (truyen) {
+    const div = document.createElement("div");
+    div.className = "khungtruyenrieng";
+
+    const a = document.createElement("a");
+    a.href = "trangchitiet.html?id=" + truyen.id;
+
+    const img = document.createElement("img");
+    img.src = truyen.anhBia;
+    img.alt = truyen.ten;
+
+    const h3 = document.createElement("h3");
+    h3.textContent = truyen.ten;
+
+    const span = document.createElement("span");
+    span.textContent = truyen.theLoai.join(" - ");
+
+    a.appendChild(img);
+    a.appendChild(h3);
+
+    div.appendChild(a);
+    div.appendChild(span);
+
+    khung.appendChild(div);
+  });
+  ganTimKiem();
+  ganMenu();
+  ganNutQuayLai();
+});
 function hienThiTruyen(idKhung, danhSach) {
   const khung = document.getElementById(idKhung);
-  khung.innerHTML = "";
+
+  khung.replaceChildren();
+
   danhSach.forEach(function (truyen) {
-    khung.innerHTML += `
-      <div class="khungtruyenrieng">
-        <a href="trangchitiet.html?id=${truyen.id}">
-          <img src="${truyen.anhBia}" alt="${truyen.ten}">
-          <h3>${truyen.ten}</h3>
-        </a>
-        <span>${truyen.theLoai.join(" • ")}</span>
-      </div>
-    `;
+    const div = document.createElement("div");
+    div.className = "khungtruyenrieng";
+
+    const a = document.createElement("a");
+    a.href = "trangchitiet.html?id=" + truyen.id;
+
+    const img = document.createElement("img");
+    img.src = truyen.anhBia;
+    img.alt = truyen.ten;
+
+    const h3 = document.createElement("h3");
+    h3.textContent = truyen.ten;
+
+    const span = document.createElement("span");
+    span.textContent = truyen.theLoai.join(" • ");
+
+    a.appendChild(img);
+    a.appendChild(h3);
+
+    div.appendChild(a);
+    div.appendChild(span);
+
+    khung.appendChild(div);
   });
 }
+function ganNutQuayLai() {
+  const nut = document.getElementById("quaylai");
 
+  if (!nut) return;
+
+  window.addEventListener("scroll", function () {
+    nut.style.display = window.scrollY > 300 ? "block" : "none";
+  });
+
+  nut.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+}
 function ganTimKiem() {
   const search = document.getElementById("inputsearch");
   const khungKetQua = document.getElementById("khungKetQua");
@@ -75,6 +121,7 @@ function ganTimKiem() {
     if (tuKhoa === "") {
       ketquatimkiem.style.display = "none";
       theloai.style.display = "block";
+      khungKetQua.replaceChildren();
       return;
     }
     ketquatimkiem.style.display = "block";
@@ -88,16 +135,19 @@ function ganTimKiem() {
     });
     if (ketQua.length === 0) {
       khungKetQua.style.display = "block";
-      khungKetQua.innerHTML = `
-      <p style="
-        color:white;
-        font-size:20px;
-        text-align:center;
-        padding:40px;
-        ">
-        🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác
-      </p>
-    `;
+      khungKetQua.replaceChildren();
+
+      const p = document.createElement("p");
+
+      p.textContent =
+        "🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác";
+
+      p.style.color = "white";
+      p.style.fontSize = "20px";
+      p.style.textAlign = "center";
+      p.style.padding = "40px";
+
+      khungKetQua.appendChild(p);
       return;
     }
     hienThiTruyen("khungKetQua", ketQua);
@@ -108,18 +158,19 @@ function ganTimKiem() {
 function ganMenu() {
   const menuToggle = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".menu");
+
+  if (!menuToggle || !menu) return;
+
   menuToggle.addEventListener("click", function (e) {
     e.stopPropagation();
     menu.classList.toggle("active");
   });
+
   menu.addEventListener("click", function (e) {
     e.stopPropagation();
   });
+
   document.addEventListener("click", function () {
     menu.classList.remove("active");
   });
 }
-document.addEventListener("DOMContentLoaded", function () {
-  ganTimKiem();
-  ganMenu();
-});
