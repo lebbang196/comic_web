@@ -90,16 +90,19 @@ function ganNutXemThem() {
 //Hiệu Ứng Khi Cuộn Xuống
 function ganHieuUngCuon() {
   const sections = document.querySelectorAll(".hidden");
-  function hienNoiDung() {
-    sections.forEach(function (section) {
-      const vitri = section.getBoundingClientRect().top;
-      if (vitri < window.innerHeight - 100) {
-        section.classList.add("show");
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
       }
     });
-  }
-  window.addEventListener("scroll", hienNoiDung);
-  hienNoiDung();
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
 }
 //Nút Khám Phá
 function ganNutKhamPha() {
