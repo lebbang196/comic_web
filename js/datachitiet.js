@@ -555,7 +555,7 @@ const danhSachTruyen = [
   },
   {
     id: 23,
-    ten: "Chiện Lược Chinh Phục Tòa Tháp Của Gã Hanam",
+    ten: "Chiến Lược Chinh Phục Tòa Tháp Của Gã Hanam",
     tenKhac: [],
     tacGia: "Đang cập nhật",
     tinhTrang: "Sắp Ra Mắt",

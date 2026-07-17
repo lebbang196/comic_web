@@ -14,8 +14,11 @@
   </head>
 
   <body>
+    <!-- Header -->
     <header>
+      <!-- Nút menu dành cho điện thoại -->
       <button class="menu-toggle" type="button">☰</button>
+
       <div class="logo">
         <a href="trangchu.html"><img src="img/logo.png" alt="logo" /></a>
       </div>
@@ -56,13 +59,12 @@
       <div class="search">
         <input type="text" id="inputsearch" placeholder="Tìm truyện...." />
       </div>
-      <!-- Hiện khi chưa đăng nhập -->
+      <!-- Hiển thị khi người dùng chưa đăng nhập -->
       <nav id="khuChuaDangNhap">
         <a href="login.html">Đăng Nhập</a>
         <a href="register.html">Đăng Ký</a>
       </nav>
-
-      <!-- Hiện khi đã đăng nhập -->
+      <!-- Hiển thị khi người dùng đã đăng nhập -->
       <div id="khuDaDangNhap" class="tai-khoan tai-khoan-an">
         <button id="nutTaiKhoan" class="nut-tai-khoan" type="button">
           <i class="bi bi-person-circle"></i>
@@ -88,7 +90,6 @@
             <strong>Ngày tham gia:</strong>
             <span id="ngayTaoTaiKhoan"></span>
           </p>
-
           <hr />
 
           <button id="nutDangXuat" class="nut-dang-xuat" type="button">
@@ -99,6 +100,7 @@
       </div>
     </header>
 
+    <!-- Main -->
     <main>
       <section class="background section hidden" id="background">
         <div class="content_background">
@@ -121,45 +123,484 @@
         </div>
       </section>
 
+      <!-- Danh sách truyện phổ biến -->
       <section class="section hidden" id="phobien">
         <div>
           <h2>🔥Truyện Phổ Biến</h2>
         </div>
-        <div class="khungtruyen" id="dsPhoBien"></div>
+        <div class="khungtruyen" id="dsPhoBien">
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=2">
+              <img
+                src="https://t.ctcdn.com.br/BgnIXmwrGYCtXF919pg8qHMgTfo=/600x600/smart/i975461.jpeg"
+                alt="Chú Thuật Hồi Chiến"
+              />
+              <h3>Chú Thuật Hồi Chiến</h3>
+            </a>
+            <span>Action • Fantasy • Shounen • Horror</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=1">
+              <img
+                src="https://phongvu.vn/cong-nghe/wp-content/uploads/2025/08/hinh-nen-thanh-guom-diet-quy-55-576x1024.jpg"
+                alt="tgdq"
+              />
+              <h3>Thanh Gươm Diệt Quỷ</h3>
+            </a>
+            <span>Drama • Fantasy • Manga • Shounen</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=3">
+              <img
+                src="https://i.pinimg.com/736x/af/f1/a3/aff1a34e425f8c69447c0cfda16d1753.jpg"
+                alt="conan"
+              />
+              <h3>Thám Tử Conan</h3>
+            </a>
+            <span
+              >Comedy • Drama • Manga • Romance • School Life • Trinh Thám</span
+            >
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=6">
+              <img
+                src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx182300-IYkq5KrkQq1V.jpg"
+                alt="Wistoria Bản Hùng Ca Kiếm Và Pháp Trượng"
+              />
+              <h3>Wistoria Bản Hùng Ca Kiếm Và Pháp Trượng</h3>
+            </a>
+            <span>Action • Adventure • Fantasy Comedy Manga School Life</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=4">
+              <img
+                src="https://dicasgeeks.com.br/wp-content/uploads/2019/11/capa.jpg"
+                alt="black"
+              />
+              <h3>Black Clover - Thế Giới Phép Thuật</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=5">
+              <img
+                src="https://img10.hotstar.com/image/upload/f_auto,q_auto/sources/r1/cms/prod/9439/1734434359439-i"
+                alt="Mairimashita! Iruma-kun"
+              />
+              <h3>Mairimashita! Iruma-kun</h3>
+            </a>
+            <span
+              >Comedy • Drama • Fantasy • Manga • School Life • Shounen</span
+            >
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=7">
+              <img
+                src="https://sm.ign.com/t/ign_pk/cover/b/blue-lock-/blue-lock-the-movie-episode-nagi_qgvd.600.jpg"
+                alt="Blue Lock"
+              />
+              <h3>Blue Lock</h3>
+            </a>
+            <span>Action • Sport</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=8">
+              <img
+                src="https://play-lh.googleusercontent.com/h9W8nSt2ZbzlmihOsqneMa7BWKVcIq7oRvUH3xq1GMgV4tSLOapAJzL6hgE0gEhVtdlTKiTbh9gGNo6W44Gh"
+                alt="Captain Tsubasa: Rising Sun"
+              />
+              <h3>Captain Tsubasa: Rising Sun</h3>
+            </a>
+            <span>Manga • Sport</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=9">
+              <img
+                src="https://soaicacomic2.top/wp-content/uploads/2023/05/toi-mong-giua-ban-ngay-720x970.jpg"
+                alt="Tôi Mộng Giữa Ban Ngày"
+              />
+              <h3>Tôi Mộng Giữa Ban Ngày</h3>
+            </a>
+            <span>Manhua • Ngôn Tình • School Life • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=10">
+              <img
+                src="https://static2.vieon.vn/vieplay-image/poster_v4/2026/02/09/ehwpq0wc_660x946-conrathethongginua.png"
+                alt="Còn Ra Thể Thống Gì Nữa"
+              />
+              <h3>Còn Ra Thể Thống Gì Nữa</h3>
+            </a>
+            <span>Action</span>
+          </div>
+        </div>
       </section>
 
+      <!-- Danh sách truyện mới ra mắt -->
       <section class="section hidden" id="moiramat">
         <div>
           <h2>✨Truyện Mới Ra Mắt</h2>
         </div>
-        <div class="khungtruyen" id="dsMoiRa"></div>
+        <div class="khungtruyen" id="dsMoiRa">
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=11">
+              <img
+                src="https://i.redd.it/ws2ml66sx55h1.jpeg"
+                alt="Thế Giới Sau Tận Thế"
+              />
+              <h3>Thế Giới Sau Tận Thế</h3>
+            </a>
+            <span>Action • Comedy • Manhwa • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=12">
+              <img
+                src="img/tt6.jpg"
+                alt="Ma Vương Tái Sinh Trở Thành Pháp Sư Mạnh Nhất"
+              />
+              <h3>Ma Vương Tái Sinh Trở Thành Pháp Sư Mạnh Nhất</h3>
+            </a>
+            <span>Action • Adventure • Fantasy • Manga • Romance</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=13">
+              <img
+                src="https://truyenqq.com.vn/media/book/bao-thuc-gia.png"
+                alt="Bạo Thực Giả"
+              />
+              <h3>Bạo Thực Giả</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=14">
+              <img src="img/tt1.png" alt="Bá Vương Sủng Ái Cô Vợ Mù" />
+              <h3>Bá Vương Sủng Ái Cô Vợ Mù</h3>
+            </a>
+            <span>Chuyển Sinh • Manhwa • Ngôn Tình • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=15">
+              <img src="img/tt14.jpg" alt="Ác Chi Hoàn" />
+              <h3>Ác Chi Hoàn</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=16">
+              <img src="img/tt2.png" alt="Thế Giới Này Không Tồn Tại Ma Quỷ" />
+              <h3>Thế Giới Này Không Tồn Tại Ma Quỷ</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=17">
+              <img src="img/tt3.png" alt="Phát Sóng Của Siêu Việt Giả" />
+              <h3>Phát Sóng Của Siêu Việt Giả</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=18">
+              <img src="img/tt4.png" alt="Tỏ Tình" />
+              <h3>Tỏ Tình</h3>
+            </a>
+            <span>Manhua • Ngôn Tình • Romance • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=19">
+              <img
+                src="img/tt5.png"
+                alt="Sức Mạnh Tối Đa? Ta Lại Là Vong Linh Sư"
+              />
+              <h3>Sức Mạnh Tối Đa? Ta Lại Là Vong Linh Sư</h3>
+            </a>
+            <span>Action • Manhua • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=24">
+              <img
+                src="img/tt12.png"
+                alt="Sinh Tồn Với Tư Cách Là Một Huyết Vương"
+              />
+              <h3>Sinh Tồn Với Tư Cách Là Một Huyết Vương</h3>
+            </a>
+            <span>Action</span>
+          </div>
+        </div>
       </section>
 
+      <!-- Danh sách truyện sắp ra mắt -->
       <section class="section hidden" id="sapramat">
         <div>
           <h2>⌛Truyện Sắp Ra Mắt</h2>
         </div>
-        <div class="khungtruyen" id="dsSapRa"></div>
+        <div class="khungtruyen" id="dsSapRa">
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=21">
+              <img
+                src="img/tt7.jpg"
+                alt="Cuộc Sống Hiện Đại Của Đấng Tối Cao"
+              />
+              <h3>Cuộc Sống Hiện Đại Của Đấng Tối Cao</h3>
+            </a>
+            <span>Action • Fantasy • Manhwa</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=20">
+              <img src="img/tt8.png" alt="Kiếm Thực" />
+              <h3>Kiếm Thực</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=23">
+              <img
+                src="img/tt10.png"
+                alt="Chiến Lược Chinh Phục Tòa Tháp Của Gã Hanam"
+              />
+              <h3>Chiến Lược Chinh Phục Tòa Tháp Của Gã Hanam</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=22">
+              <img src="img/tt9.png" alt="Top Ranker" />
+              <h3>Top Ranker</h3>
+            </a>
+            <span>Action</span>
+          </div>
+        </div>
       </section>
 
+      <!-- Danh sách truyện đề cử -->
       <section class="section hidden" id="decu">
         <div>
           <h2>⭐Truyện Đề Cử</h2>
         </div>
-        <div class="khungtruyen khungtruyen_decu" id="dsDeCu"></div>
+        <div class="khungtruyen khungtruyen_decu" id="dsDeCu">
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=25">
+              <img
+                src="img/tt13.png"
+                alt="Cách Thức Sinh Tồn Của Pháo Hôi Khuê Nữ"
+              />
+              <h3>Cách Thức Sinh Tồn Của Pháo Hôi Khuê Nữ</h3>
+            </a>
+            <span>Cổ Đại • Manhua • Ngôn Tình • Truyện Màu • Xuyên Không</span>
+          </div>
 
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=26">
+              <img
+                src="img/tt11.png"
+                alt="Toàn Dân Chuyển Chức Duy Ta Vô Chức Tàn Nhẫn"
+              />
+              <h3>Toàn Dân Chuyển Chức Duy Ta Vô Chức Tàn Nhẫn</h3>
+            </a>
+            <span
+              >Action • Chuyển Sinh • Manhua • Truyện Màu • Xuyên Không</span
+            >
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=27">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgdHCv00x-sIEPnpm6NvBW6FO4QwM_o72ZHA&s"
+                alt="Phối Sắc Giã"
+              />
+              <h3>Phối Sắc Giã</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=14">
+              <img src="img/tt1.png" alt="Bá Vương Sủng Ái Cô Vợ Mù" />
+              <h3>Bá Vương Sủng Ái Cô Vợ Mù</h3>
+            </a>
+            <span>Chuyển Sinh • Manhwa • Ngôn Tình • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=15">
+              <img src="img/tt14.jpg" alt="Ác Chi Hoàn" />
+              <h3>Ác Chi Hoàn</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=16">
+              <img src="img/tt2.png" alt="Thế Giới Này Không Tồn Tại Ma Quỷ" />
+              <h3>Thế Giới Này Không Tồn Tại Ma Quỷ</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=17">
+              <img src="img/tt3.png" alt="Phát Sóng Của Siêu Việt Giả" />
+              <h3>Phát Sóng Của Siêu Việt Giả</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=6">
+              <img
+                src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx182300-IYkq5KrkQq1V.jpg"
+                alt="Wistoria Bản Hùng Ca Kiếm Và Pháp Trượng"
+              />
+              <h3>Wistoria Bản Hùng Ca Kiếm Và Pháp Trượng</h3>
+            </a>
+            <span>Action • Adventure • Fantasy Comedy Manga School Life</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=4">
+              <img
+                src="https://dicasgeeks.com.br/wp-content/uploads/2019/11/capa.jpg"
+                alt="black"
+              />
+              <h3>Black Clover - Thế Giới Phép Thuật</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=5">
+              <img
+                src="https://img10.hotstar.com/image/upload/f_auto,q_auto/sources/r1/cms/prod/9439/1734434359439-i"
+                alt="Mairimashita! Iruma-kun"
+              />
+              <h3>Mairimashita! Iruma-kun</h3>
+            </a>
+            <span
+              >Comedy • Drama • Fantasy • Manga • School Life • Shounen</span
+            >
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=7">
+              <img
+                src="https://sm.ign.com/t/ign_pk/cover/b/blue-lock-/blue-lock-the-movie-episode-nagi_qgvd.600.jpg"
+                alt="Blue Lock"
+              />
+              <h3>Blue Lock</h3>
+            </a>
+            <span>Action • Sport</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=8">
+              <img
+                src="https://play-lh.googleusercontent.com/h9W8nSt2ZbzlmihOsqneMa7BWKVcIq7oRvUH3xq1GMgV4tSLOapAJzL6hgE0gEhVtdlTKiTbh9gGNo6W44Gh"
+                alt="Captain Tsubasa: Rising Sun"
+              />
+              <h3>Captain Tsubasa: Rising Sun</h3>
+            </a>
+            <span>Manga • Sport</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=9">
+              <img
+                src="https://soaicacomic2.top/wp-content/uploads/2023/05/toi-mong-giua-ban-ngay-720x970.jpg"
+                alt="Tôi Mộng Giữa Ban Ngày"
+              />
+              <h3>Tôi Mộng Giữa Ban Ngày</h3>
+            </a>
+            <span>Manhua • Ngôn Tình • School Life • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=11">
+              <img
+                src="https://i.redd.it/ws2ml66sx55h1.jpeg"
+                alt="Thế Giới Sau Tận Thế"
+              />
+              <h3>Thế Giới Sau Tận Thế</h3>
+            </a>
+            <span>Action • Comedy • Manhwa • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=12">
+              <img
+                src="img/tt6.jpg"
+                alt="Ma Vương Tái Sinh Trở Thành Pháp Sư Mạnh Nhất"
+              />
+              <h3>Ma Vương Tái Sinh Trở Thành Pháp Sư Mạnh Nhất</h3>
+            </a>
+            <span>Action • Adventure • Fantasy • Manga • Romance</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=13">
+              <img
+                src="https://truyenqq.com.vn/media/book/bao-thuc-gia.png"
+                alt="Bạo Thực Giả"
+              />
+              <h3>Bạo Thực Giả</h3>
+            </a>
+            <span>Action</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=14">
+              <img src="img/tt1.png" alt="Bá Vương Sủng Ái Cô Vợ Mù" />
+              <h3>Bá Vương Sủng Ái Cô Vợ Mù</h3>
+            </a>
+            <span>Chuyển Sinh • Manhwa • Ngôn Tình • Truyện Màu</span>
+          </div>
+
+          <div class="khungtruyenrieng">
+            <a href="trangchitiet.html?id=15">
+              <img src="img/tt14.jpg" alt="Ác Chi Hoàn" />
+              <h3>Ác Chi Hoàn</h3>
+            </a>
+            <span>Action</span>
+          </div>
+        </div>
+        <!-- Nút xem thêm phần truyện đề cử -->
         <div class="xemthem">
           <button id="btnXemThem" type="button">Xem Thêm</button>
         </div>
       </section>
 
+      <!-- Nút quay lại đầu trang -->
       <button class="quaylai" type="button">⬆</button>
+
+      <!-- Khung kết quả tìm kiếm -->
       <section class="section" id="ketquatimkiem" style="display: none">
         <h2>🔍 Kết Quả Tìm Kiếm</h2>
         <div class="khungtruyen" id="khungKetQua"></div>
       </section>
     </main>
 
+    <!-- Footer -->
     <footer>
       <div class="footer">
         <div class="footer_content">
