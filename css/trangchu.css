@@ -59,14 +59,14 @@ header {
   position: relative;
 }
 
-.theloai>a {
+.theloai > a {
   font-weight: 500;
   color: white;
   text-decoration: none;
   transition: 0.3s;
 }
 
-.theloai>a:hover {
+.theloai > a:hover {
   color: #93c5fd;
 }
 
@@ -222,7 +222,7 @@ nav a:hover {
 }
 
 .khungtruyen_decu {
-  max-height: 920px;
+  max-height: 950px;
   overflow: hidden;
   transition: 0.5s;
 }
@@ -426,7 +426,7 @@ footer {
     margin-top: 10px;
   }
 
-  .theloai>a {
+  .theloai > a {
     font-size: 15px;
   }
 

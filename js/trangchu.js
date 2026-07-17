@@ -3,71 +3,77 @@ function ganNutQuayLai() {
   const nutQuayLai = document.querySelector(".quaylai");
   window.addEventListener("scroll", function () {
     if (window.scrollY > 300) {
-      nutQuayLai.style.display = "block";
+      //Nếu khoảng cách đã cuộn trên 300
+      nutQuayLai.style.display = "block"; //Hiển thị nút quay lại
     } else {
-      nutQuayLai.style.display = "none";
+      nutQuayLai.style.display = "none"; //Ẩn nút
     }
   });
   nutQuayLai.addEventListener("click", function () {
+    //Khi người dùng nhấn vào nút quay lại
     window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+      top: 0, //Cuộn về vị trí 0px
+      behavior: "smooth", // Hiệu ứng mượt
     });
   });
 }
 //Tìm Kiếm Truyện
 function ganTimKiem() {
-  const search = document.getElementById("inputsearch");
-  const khungKetQua = document.getElementById("khungKetQua");
-  const ketquatimkiem = document.getElementById("ketquatimkiem");
-  const phobien = document.getElementById("phobien");
-  const moiramat = document.getElementById("moiramat");
-  const sapramat = document.getElementById("sapramat");
-  const decu = document.getElementById("decu");
-  const theloai = document.getElementById("theloai");
-  search.addEventListener("input", function () {
-    const tuKhoa = search.value.trim().toLowerCase();
-    if (tuKhoa === "") {
-      ketquatimkiem.style.display = "none";
-      phobien.style.display = "block";
-      moiramat.style.display = "block";
-      sapramat.style.display = "block";
-      decu.style.display = "block";
-      theloai.style.display = "block";
+  const input = document.getElementById("inputsearch"); //Lấy ô tìm kiếm
+  const ketQua = document.getElementById("khungKetQua"); //Lấy nơi chứa kết quả
+  const khungKetQua = document.getElementById("ketquatimkiem"); //Lấy cả section
+  //Danh sách các khung cần ẩn
+  const cacMuc = [
+    document.getElementById("theloai"),
+    document.getElementById("phobien"),
+    document.getElementById("moiramat"),
+    document.getElementById("sapramat"),
+    document.getElementById("decu"),
+  ];
+  input.addEventListener("input", function () {
+    const tukhoa = input.value.trim().toLowerCase();
+    ketQua.replaceChildren(); //Xóa kết quả cũ
+    //Nếu ko nhập gì thì ẩn khung kết quả
+    if (tukhoa === "") {
+      khungKetQua.style.display = "none";
+      cacMuc.forEach((muc) => (muc.style.display = "block"));
       return;
     }
-    ketquatimkiem.style.display = "block";
-    phobien.style.display = "none";
-    moiramat.style.display = "none";
-    sapramat.style.display = "none";
-    decu.style.display = "none";
-    theloai.style.display = "none";
-    const ketQua = danhSachTruyen.filter(function (truyen) {
-      return (
-        truyen.ten.toLowerCase().includes(tuKhoa) ||
-        truyen.tacGia.toLowerCase().includes(tuKhoa) ||
-        truyen.theLoai.join(" ").toLowerCase().includes(tuKhoa)
-      );
+    //Nếu có nhập thì hiển thị khung kết quả ẩn các khung khác
+    khungKetQua.style.display = "block";
+    cacMuc.forEach((muc) => (muc.style.display = "none"));
+    const tatCaTruyen = document.querySelectorAll(".khungtruyenrieng"); //Lấy toàn bộ truyện
+    const daThem = new Set(); //Dùng Set() để tránh tìm truyện bị trùng
+    let dem = 0;
+    tatCaTruyen.forEach(function (truyen) {
+      const ten = truyen.querySelector("h3").textContent.trim(); //Lấy tên truyện
+      const theLoai = truyen.querySelector("span").textContent.trim(); //Lấy thể loại
+      //Nếu đã thêm rồi thì bỏ qua
+      if (daThem.has(ten.toLowerCase())) {
+        return;
+      }
+      //Kiểm tra chứa từ khóa
+      if (
+        ten.toLowerCase().includes(tukhoa) ||
+        theLoai.toLowerCase().includes(tukhoa)
+      ) {
+        daThem.add(ten.toLowerCase()); //Thêm vào Set()
+        //cloneNode(true) dùng để tạo một bản sao hoàn chỉnh của .khungtruyenrieng
+        //appendChild() dùng để thêm bản sao này vào #khungKetQua
+        ketQua.appendChild(truyen.cloneNode(true));
+        dem++;
+      }
     });
-    if (ketQua.length === 0) {
-      khungKetQua.style.display = "block";
-      khungKetQua.textContent = "";
-
-      const thongBao = document.createElement("p");
-
-      thongBao.textContent =
-        "🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác";
-
-      thongBao.style.color = "white";
-      thongBao.style.fontSize = "20px";
-      thongBao.style.textAlign = "center";
-      thongBao.style.padding = "40px";
-
-      khungKetQua.appendChild(thongBao);
-      return;
+    //Nếu ko có kết quả thì báo ko tìm thấy truyện
+    if (dem === 0) {
+      const p = document.createElement("p");
+      p.textContent = "Không tìm thấy truyện.";
+      p.style.color = "#fff";
+      p.style.fontSize = "22px";
+      p.style.textAlign = "center";
+      p.style.padding = "40px";
+      ketQua.appendChild(p);
     }
-    hienThiTruyen("khungKetQua", ketQua);
-    khungKetQua.style.display = "grid";
   });
 }
 //Nút Xem Thêm
@@ -77,11 +83,11 @@ function ganNutXemThem() {
   let moRong = false;
   btnXemThem.addEventListener("click", function () {
     if (moRong === false) {
-      khungDeCu.style.maxHeight = khungDeCu.scrollHeight + "px";
+      khungDeCu.style.maxHeight = khungDeCu.scrollHeight + "px"; //Mở rộng khung
       btnXemThem.textContent = "Thu Gọn";
       moRong = true;
     } else {
-      khungDeCu.style.maxHeight = "920px";
+      khungDeCu.style.maxHeight = "950px";
       btnXemThem.textContent = "Xem Thêm";
       moRong = false;
     }
@@ -90,16 +96,17 @@ function ganNutXemThem() {
 //Hiệu Ứng Khi Cuộn Xuống
 function ganHieuUngCuon() {
   const sections = document.querySelectorAll(".hidden");
-
+  //IntersectionObserver: theo dõi một phần tử đã xuất hiện trên màn hình hay chưa
+  //entries: danh sách những phần tử đang được theo dõi
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        observer.unobserve(entry.target);
+        entry.target.classList.add("show"); //Thêm class show
+        observer.unobserve(entry.target); //Sau khi hiện nội dung thì ngừng theo dõi
       }
     });
   });
-
+  //Cho observer theo dõi từng section
   sections.forEach(function (section) {
     observer.observe(section);
   });
@@ -117,15 +124,16 @@ function ganNutKhamPha() {
 //Hiệu Ứng Chuyển Đổi Nền
 function ganChuyenNen() {
   const background = document.getElementById("background");
-  const images = ["img/bg1.png", "img/bg2.jpg", "img/bg3.jpg"];
+  const images = ["img/bg1.png", "img/bg2.jpg", "img/bg3.jpg"]; //Tạo danh sách ảnh
   let index = 0;
+  //Sau 5s sẽ chạy đoạn code bên trong
   setInterval(function () {
     index++;
     if (index >= images.length) {
       index = 0;
     }
-    background.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-     url('${images[index]}')`;
+
+    background.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${images[index]}')`;
   }, 5000);
 }
 
@@ -133,69 +141,19 @@ function ganChuyenNen() {
 function ganMenu() {
   const menuToggle = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".menu");
+  //e: Event Object
   menuToggle.addEventListener("click", function (e) {
+    //stopPropagation: ngăn sự kiện click lan trên các phần tử cha
     e.stopPropagation();
     menu.classList.toggle("active");
   });
   menu.addEventListener("click", function (e) {
     e.stopPropagation();
   });
+  //Khi click bên ngoài thì xóa luôn class active
   document.addEventListener("click", function () {
     menu.classList.remove("active");
   });
-}
-
-//Hiển Thị Truyện Thông Qua datachitiet.js
-function hienThiTruyen(idKhung, danhSach) {
-  const khung = document.getElementById(idKhung);
-
-  khung.textContent = "";
-
-  danhSach.forEach(function (truyen) {
-    const khungTruyen = document.createElement("div");
-    khungTruyen.className = "khungtruyenrieng";
-
-    const link = document.createElement("a");
-    link.href = `trangchitiet.html?id=${truyen.id}`;
-
-    const img = document.createElement("img");
-    img.src = truyen.anhBia;
-    img.alt = truyen.ten;
-
-    const ten = document.createElement("h3");
-    ten.textContent = truyen.ten;
-
-    const theLoai = document.createElement("span");
-    theLoai.textContent = truyen.theLoai.join(" • ");
-
-    link.appendChild(img);
-    link.appendChild(ten);
-
-    khungTruyen.appendChild(link);
-    khungTruyen.appendChild(theLoai);
-
-    khung.appendChild(khungTruyen);
-  });
-}
-function hienThiDuLieu() {
-  //Hiển Thị Truyện Cho Truyện Phổ Biến
-  const dsPhoBien = danhSachTruyen.filter(function (truyen) {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 11, 14].includes(truyen.id);
-  });
-  hienThiTruyen("dsPhoBien", dsPhoBien);
-  //Hiển Thị Truyện Cho Truyện Mới Ra Mắt
-  const dsMoiRa = danhSachTruyen.filter(function (truyen) {
-    return [9, 11, 12, 13, 14, 15, 16, 10, 17, 19].includes(truyen.id);
-  });
-  hienThiTruyen("dsMoiRa", dsMoiRa);
-  //Hiển Thị Truyện Cho Truyện Sắp Ra Mắt
-  const dsSapRa = danhSachTruyen.filter(function (truyen) {
-    return truyen.tinhTrang === "Sắp Ra Mắt";
-  });
-  hienThiTruyen("dsSapRa", dsSapRa);
-  //Hiển Thị Truyện Cho Truyện Đề Cử
-  const dsDeCu = danhSachTruyen;
-  hienThiTruyen("dsDeCu", dsDeCu);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -206,5 +164,4 @@ document.addEventListener("DOMContentLoaded", function () {
   ganNutKhamPha();
   ganChuyenNen();
   ganMenu();
-  hienThiDuLieu();
 });
