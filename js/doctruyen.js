@@ -66,7 +66,9 @@ function laySoNguyenDuong(value, giaTriMacDinh, giaTriToiDa) {
 }
 
 function gioiHanChuoi(value, soKyTuToiDa) {
-  return String(value ?? "").trim().slice(0, soKyTuToiDa);
+  return String(value ?? "")
+    .trim()
+    .slice(0, soKyTuToiDa);
 }
 
 function xoaNoiDungPhanTu(phanTu) {
@@ -281,7 +283,9 @@ function khoiTaoBinhLuan() {
       input.value = "";
       renderBinhLuanChapter(list);
     } else {
-      alert("Không thể lưu bình luận. Vui lòng kiểm tra dung lượng trình duyệt.");
+      alert(
+        "Không thể lưu bình luận. Vui lòng kiểm tra dung lượng trình duyệt.",
+      );
     }
   });
 }
@@ -333,9 +337,7 @@ function capNhatNutYeuThich(nut, dangTheoDoi) {
     nut.prepend(icon);
   }
 
-  icon.className = dangTheoDoi
-    ? "fa-solid fa-heart"
-    : "fa-regular fa-heart";
+  icon.className = dangTheoDoi ? "fa-solid fa-heart" : "fa-regular fa-heart";
 
   let nhan = nut.querySelector(".love-label");
   if (!nhan) {
@@ -551,14 +553,18 @@ function khoiTaoTimKiem() {
     ).toLocaleLowerCase("vi");
 
     if (!tuKhoa) {
-      khuVucKetQua.hidden = true;
-      noiDungChinh.hidden = false;
+      khuVucKetQua.style.display = "none";
+      if (noiDungChinh) {
+        noiDungChinh.style.display = "block";
+      }
       xoaNoiDungPhanTu(khungKetQua);
       return;
     }
 
-    khuVucKetQua.hidden = false;
-    noiDungChinh.hidden = true;
+    khuVucKetQua.style.display = "block";
+    if (noiDungChinh) {
+      noiDungChinh.style.display = "none";
+    }
 
     const ketQua = duLieuTruyen.filter((item) => {
       const ten = String(item.ten ?? "").toLocaleLowerCase("vi");
@@ -566,7 +572,11 @@ function khoiTaoTimKiem() {
       const theLoai = Array.isArray(item.theLoai)
         ? item.theLoai.join(" ").toLocaleLowerCase("vi")
         : "";
-      return ten.includes(tuKhoa) || tacGia.includes(tuKhoa) || theLoai.includes(tuKhoa);
+      return (
+        ten.includes(tuKhoa) ||
+        tacGia.includes(tuKhoa) ||
+        theLoai.includes(tuKhoa)
+      );
     });
 
     if (ketQua.length === 0) {
@@ -615,7 +625,7 @@ function khoiTaoDanhSachChapterNoi() {
         } else if (
           viTri.bottom >
           document.documentElement.clientHeight -
-          CAU_HINH_DOC_TRUYEN.khoangCachMepMenu
+            CAU_HINH_DOC_TRUYEN.khoangCachMepMenu
         ) {
           nut.classList.add("open-up");
         }
@@ -665,10 +675,7 @@ function khoiTaoStickyFooterDieuHuong() {
         viTriMoi <= CAU_HINH_DOC_TRUYEN.viTriHienNutLenDauTrang;
     }
 
-    if (
-      viTriMoi <= CAU_HINH_DOC_TRUYEN.viTriBatDauSticky ||
-      daChamFooter
-    ) {
+    if (viTriMoi <= CAU_HINH_DOC_TRUYEN.viTriBatDauSticky || daChamFooter) {
       thanhDieuHuong.classList.remove("fixed-top", "fixed-bottom");
       viTriCu = viTriMoi;
       return;
