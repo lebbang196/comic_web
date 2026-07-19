@@ -1,167 +1,173 @@
-//Nút Cuộn Lên Đầu Trang
-function ganNutQuayLai() {
-  const nutQuayLai = document.querySelector(".quaylai");
-  window.addEventListener("scroll", function () {
-    if (window.scrollY > 300) {
-      //Nếu khoảng cách đã cuộn trên 300
-      nutQuayLai.style.display = "block"; //Hiển thị nút quay lại
-    } else {
-      nutQuayLai.style.display = "none"; //Ẩn nút
-    }
-  });
-  nutQuayLai.addEventListener("click", function () {
-    //Khi người dùng nhấn vào nút quay lại
-    window.scrollTo({
-      top: 0, //Cuộn về vị trí 0px
-      behavior: "smooth", // Hiệu ứng mượt
-    });
-  });
+// ==================================================
+// 1. CẤU HÌNH ĐẶC THÙ TRANG CHỦ
+// ==================================================
+const CAU_HINH_TRANG_CHU = Object.freeze({
+  anhNenSlide: ["img/bg1.png", "img/bg2.jpg", "img/bg3.jpg"],
+  thoiGianChuyenNenMs: 5000,
+  chieuCaoThuGonDeCu: "950px",
+});
+
+// ==================================================
+// 2. LOGIC TÌM KIẾM TRÊN TRANG CHỦ (LỌC DATA GỐC)
+// ==================================================
+function taoTheTruyenTimKiem(item) {
+  const khung = document.createElement("div");
+  khung.classList.add("khungtruyenrieng");
+
+  const link = document.createElement("a");
+  // Hàm taoDuongDan lấy từ common.js
+  link.href = taoDuongDan(CAU_HINH_HETHONG.trangChiTiet, { id: item.id });
+
+  const anh = document.createElement("img");
+  anh.src = String(item.anhBia ?? "");
+  anh.alt = gioiHanChuoi(item.ten, 120);
+  anh.loading = "lazy";
+
+  const ten = document.createElement("h3");
+  ten.textContent = gioiHanChuoi(item.ten, 120);
+
+  const theLoai = document.createElement("span");
+  theLoai.textContent = Array.isArray(item.theLoai) ? item.theLoai.slice(0, 10).join(" • ") : "";
+
+  link.append(anh, ten);
+  khung.append(link, theLoai);
+  return khung;
 }
-//Tìm Kiếm Truyện
-function ganTimKiem() {
-  const input = document.getElementById("inputsearch"); //Lấy ô tìm kiếm
-  const ketQua = document.getElementById("khungKetQua"); //Lấy nơi chứa kết quả
-  const khungKetQua = document.getElementById("ketquatimkiem"); //Lấy cả section
-  //Danh sách các khung cần ẩn
-  const cacMuc = [
+
+function ganTimKiemTrangChu() {
+  const input = document.getElementById("inputsearch");
+  const ketQua = document.getElementById("khungKetQua");
+  const khungKetQua = document.getElementById("ketquatimkiem");
+
+  // Các danh mục nội dung cần ẩn đi khi người dùng đang tìm kiếm
+  const cacMucNoiDung = [
     document.getElementById("theloai"),
     document.getElementById("phobien"),
     document.getElementById("moiramat"),
     document.getElementById("sapramat"),
     document.getElementById("decu"),
-  ];
+  ].filter(Boolean); // Lọc bỏ các phần tử bị null nếu lỡ sai ID trong HTML
+
+  if (!input || !ketQua || !khungKetQua) return;
+
+  input.maxLength = CAU_HINH_HETHONG.tuKhoaToiDaKyTu;
+
   input.addEventListener("input", function () {
-    const tukhoa = input.value.trim().toLowerCase();
-    ketQua.replaceChildren(); //Xóa kết quả cũ
-    //Nếu ko nhập gì thì ẩn khung kết quả
-    if (tukhoa === "") {
+    const tuKhoa = gioiHanChuoi(input.value, CAU_HINH_HETHONG.tuKhoaToiDaKyTu).toLowerCase();
+    
+    // Hàm xoaNoiDungPhanTu/replaceChildren dọn sạch kết quả cũ
+    if (typeof ketQua.replaceChildren === "function") {
+      ketQua.replaceChildren();
+    } else {
+      while (ketQua.firstChild) ketQua.removeChild(ketQua.firstChild);
+    }
+
+    // Nếu để trống ô tìm kiếm: Hiện lại toàn bộ danh mục trang chủ, ẩn khung tìm kiếm
+    if (tuKhoa === "") {
       khungKetQua.style.display = "none";
-      cacMuc.forEach((muc) => (muc.style.display = "block"));
+      cacMucNoiDung.forEach((muc) => (muc.style.display = "block"));
       return;
     }
-    //Nếu có nhập thì hiển thị khung kết quả ẩn các khung khác
+
+    // Nếu bắt đầu gõ: Ẩn các khối nội dung tĩnh, hiện khối tìm kiếm
     khungKetQua.style.display = "block";
-    cacMuc.forEach((muc) => (muc.style.display = "none"));
-    const tatCaTruyen = document.querySelectorAll(".khungtruyenrieng"); //Lấy toàn bộ truyện
-    const daThem = new Set(); //Dùng Set() để tránh tìm truyện bị trùng
-    let dem = 0;
-    tatCaTruyen.forEach(function (truyen) {
-      const ten = truyen.querySelector("h3").textContent.trim(); //Lấy tên truyện
-      const theLoai = truyen.querySelector("span").textContent.trim(); //Lấy thể loại
-      //Nếu đã thêm rồi thì bỏ qua
-      if (daThem.has(ten.toLowerCase())) {
-        return;
-      }
-      //Kiểm tra chứa từ khóa
-      if (
-        ten.toLowerCase().includes(tukhoa) ||
-        theLoai.toLowerCase().includes(tukhoa)
-      ) {
-        daThem.add(ten.toLowerCase()); //Thêm vào Set()
-        //cloneNode(true) dùng để tạo một bản sao hoàn chỉnh của .khungtruyenrieng
-        //appendChild() dùng để thêm bản sao này vào #khungKetQua
-        ketQua.appendChild(truyen.cloneNode(true));
-        dem++;
-      }
-    });
-    //Nếu ko có kết quả thì báo ko tìm thấy truyện
-    if (dem === 0) {
-      const p = document.createElement("p");
-      p.textContent = "Không tìm thấy truyện.";
-      p.style.color = "#fff";
-      p.style.fontSize = "22px";
-      p.style.textAlign = "center";
-      p.style.padding = "40px";
-      ketQua.appendChild(p);
+    cacMucNoiDung.forEach((muc) => (muc.style.display = "none"));
+
+    // Lọc dữ liệu từ mảng danhSachTruyen (Data gốc của hệ thống)
+    if (typeof danhSachTruyen === "undefined" || !Array.isArray(danhSachTruyen)) {
+      console.warn("Không tìm thấy mảng danhSachTruyen.");
+      return;
     }
+
+    const danhSachLoc = danhSachTruyen.filter((item) => {
+      const ten = String(item?.ten ?? "").toLowerCase();
+      const theLoai = Array.isArray(item?.theLoai) ? item.theLoai.join(" ").toLowerCase() : "";
+      return ten.includes(tuKhoa) || theLoai.includes(tuKhoa);
+    });
+
+    if (danhSachLoc.length === 0) {
+      const thongBao = document.createElement("p");
+      thongBao.textContent = "Không tìm thấy truyện.";
+      thongBao.style.cssText = "color: #fff; font-size: 22px; text-align: center; padding: 40px; width: 100%;";
+      ketQua.appendChild(thongBao);
+      return;
+    }
+
+    // Tạo Fragment render danh sách truyện tìm thấy tối đa theo cấu hình hệ thống
+    const fragment = document.createDocumentFragment();
+    danhSachLoc.slice(0, CAU_HINH_HETHONG.ketQuaTimKiemToiDa).forEach((item) => {
+      fragment.appendChild(taoTheTruyenTimKiem(item));
+    });
+    ketQua.appendChild(fragment);
   });
 }
-//Nút Xem Thêm
+
+// ==================================================
+// 3. CÁC HIỆU ỨNG TƯƠNG TÁC GIAO DIỆN (UI EFFECTS)
+// ==================================================
 function ganNutXemThem() {
   const btnXemThem = document.getElementById("btnXemThem");
   const khungDeCu = document.querySelector(".khungtruyen_decu");
+  if (!btnXemThem || !khungDeCu) return;
+
   let moRong = false;
   btnXemThem.addEventListener("click", function () {
-    if (moRong === false) {
-      khungDeCu.style.maxHeight = khungDeCu.scrollHeight + "px"; //Mở rộng khung
+    if (!moRong) {
+      khungDeCu.style.maxHeight = khungDeCu.scrollHeight + "px";
       btnXemThem.textContent = "Thu Gọn";
-      moRong = true;
     } else {
-      khungDeCu.style.maxHeight = "950px";
+      khungDeCu.style.maxHeight = CAU_HINH_TRANG_CHU.chieuCaoThuGonDeCu;
       btnXemThem.textContent = "Xem Thêm";
-      moRong = false;
     }
+    moRong = !moRong;
   });
 }
-//Hiệu Ứng Khi Cuộn Xuống
+
 function ganHieuUngCuon() {
   const sections = document.querySelectorAll(".hidden");
-  //IntersectionObserver: theo dõi một phần tử đã xuất hiện trên màn hình hay chưa
-  //entries: danh sách những phần tử đang được theo dõi
+  if (sections.length === 0) return;
+
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        entry.target.classList.add("show"); //Thêm class show
-        observer.unobserve(entry.target); //Sau khi hiện nội dung thì ngừng theo dõi
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
       }
     });
   });
-  //Cho observer theo dõi từng section
-  sections.forEach(function (section) {
-    observer.observe(section);
-  });
+
+  sections.forEach((section) => observer.observe(section));
 }
-//Nút Khám Phá
+
 function ganNutKhamPha() {
   const btnKhamPha = document.querySelector(".content_background button");
   const mucTheLoai = document.getElementById("theloai");
+  if (!btnKhamPha || !mucTheLoai) return;
+
   btnKhamPha.addEventListener("click", function () {
-    mucTheLoai.scrollIntoView({
-      behavior: "smooth",
-    });
+    mucTheLoai.scrollIntoView({ behavior: "smooth" });
   });
 }
-//Hiệu Ứng Chuyển Đổi Nền
+
 function ganChuyenNen() {
   const background = document.getElementById("background");
-  const images = ["img/bg1.png", "img/bg2.jpg", "img/bg3.jpg"]; //Tạo danh sách ảnh
+  const anhNen = CAU_HINH_TRANG_CHU.anhNenSlide;
+  if (!background || anhNen.length === 0) return;
+
   let index = 0;
-  //Sau 5s sẽ chạy đoạn code bên trong
   setInterval(function () {
-    index++;
-    if (index >= images.length) {
-      index = 0;
-    }
-
-    background.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${images[index]}')`;
-  }, 5000);
+    index = (index + 1) % anhNen.length;
+    background.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${anhNen[index]}')`;
+  }, CAU_HINH_TRANG_CHU.thoiGianChuyenNenMs);
 }
 
-//Nút Menu
-function ganMenu() {
-  const menuToggle = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu");
-  //e: Event Object
-  menuToggle.addEventListener("click", function (e) {
-    //stopPropagation: ngăn sự kiện click lan trên các phần tử cha
-    e.stopPropagation();
-    menu.classList.toggle("active");
-  });
-  menu.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
-  //Khi click bên ngoài thì xóa luôn class active
-  document.addEventListener("click", function () {
-    menu.classList.remove("active");
-  });
-}
-
+// ==================================================
+// KHỞI CHẠY KHÔNG GIAN TRANG CHỦ
+// ==================================================
 document.addEventListener("DOMContentLoaded", function () {
-  ganNutQuayLai();
-  ganTimKiem();
+  ganTimKiemTrangChu();
   ganNutXemThem();
   ganHieuUngCuon();
   ganNutKhamPha();
   ganChuyenNen();
-  ganMenu();
 });

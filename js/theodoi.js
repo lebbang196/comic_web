@@ -1,184 +1,131 @@
+// --- 1. CẤU HÌNH HỆ THỐNG ---
+const CAU_HINH_THEO_DOI = Object.freeze({
+  viTriHienNutQuayLai: 300,
+  trangDangNhap: "login.html",
+});
+
+const duLieuGocTruyen = typeof danhSachTruyen !== "undefined" && Array.isArray(danhSachTruyen) ? danhSachTruyen : [];
+
+// --- 2. CÁC HÀM TIỆN ÍCH CORE ---
 function layTaiKhoanHienTai() {
   try {
-    const chuoi = localStorage.getItem("currentUser");
-
-    return chuoi ? JSON.parse(chuoi) : null;
+    const user = localStorage.getItem("currentUser");
+    return user ? JSON.parse(user) : null;
   } catch (error) {
     return null;
   }
 }
 
-function renderDanhSachTheoDoi(tuKhoa = "") {
-  const grid = document.getElementById("tdDanhSach");
+function xoaTrangPhanTu(phanTu) {
+  if (!phanTu) return;
+  while (phanTu.firstChild) phanTu.removeChild(phanTu.firstChild);
+}
 
+// --- 3. ĐIỀU KHIỂN RENDER DANH SÁCH THEO DÕI ---
+function renderDanhSachTheoDoi() {
+  const grid = document.getElementById("tdDanhSach");
   const thongBaoRong = document.getElementById("tdRong");
+  if (!grid || !thongBaoRong) return;
+
+  xoaTrangPhanTu(grid);
+  xoaTrangPhanTu(thongBaoRong);
 
   const taiKhoan = layTaiKhoanHienTai();
 
-  // Chưa đăng nhập
+  // THỨ 1: Trường hợp chưa đăng nhập tài khoản
   if (!taiKhoan) {
-    grid.replaceChildren();
-
     thongBaoRong.style.display = "block";
-    thongBaoRong.replaceChildren();
+    thongBaoRong.appendChild(document.createTextNode("Bạn cần "));
 
-    thongBaoRong.append("Bạn cần ");
+    const linkDangNhap = document.createElement("a");
+    const trangHienTai = `${window.location.pathname}${window.location.search}`;
+    linkDangNhap.href = `${CAU_HINH_THEO_DOI.trangDangNhap}?quaylai=${encodeURIComponent(trangHienTai)}`;
+    linkDangNhap.style.color = "#ff4757";
+    linkDangNhap.style.textDecoration = "underline";
+    linkDangNhap.textContent = "đăng nhập";
 
-    const link = document.createElement("a");
-    link.href = "login.html";
-    link.textContent = "đăng nhập";
-
-    thongBaoRong.append(link);
-    thongBaoRong.append(" để xem danh sách truyện đang theo dõi.");
-
+    thongBaoRong.append(linkDangNhap, " để xem danh sách truyện đang theo dõi.");
     return;
   }
 
-  // Hàm trong luutru.js
-  // Tự lấy danh sách của tài khoản hiện tại
-  const dsId = layDanhSachTheoDoi();
+  // Lấy danh sách ID đã theo dõi từ bộ nhớ luutru.js
+  const dsIdTheoDoi = typeof layDanhSachTheoDoi === "function" ? layDanhSachTheoDoi() : [];
 
-  const tuKhoaThuong = tuKhoa.trim().toLowerCase();
+  // THỨ 2: Tài khoản đã đăng nhập nhưng chưa theo dõi bất kỳ truyện nào
+  if (dsIdTheoDoi.length === 0) {
+    thongBaoRong.style.display = "block";
+    thongBaoRong.textContent = 'Bạn chưa theo dõi truyện nào. Hãy vào một truyện và bấm nút "❤ Theo Dõi" nhé!';
+    return;
+  }
 
-  const dsTruyen = danhSachTruyen.filter(function (truyen) {
-    const daTheoDoi = dsId.includes(Number(truyen.id));
-
-    const dungTuKhoa =
-      tuKhoaThuong === "" ||
-      truyen.ten.toLowerCase().includes(tuKhoaThuong) ||
-      truyen.tacGia.toLowerCase().includes(tuKhoaThuong) ||
-      truyen.theLoai.join(" ").toLowerCase().includes(tuKhoaThuong);
-
-    return daTheoDoi && dungTuKhoa;
+  // Lọc truyện nguyên bản theo danh sách ID (Không lọc theo từ khóa nữa)
+  const dsTruyenTheoDoi = duLieuGocTruyen.filter((truyen) => {
+    if (!truyen) return false;
+    return dsIdTheoDoi.includes(Number(truyen.id));
   });
 
-  // Tài khoản chưa theo dõi truyện nào
-  if (dsId.length === 0) {
-    thongBaoRong.style.display = "block";
-
-    thongBaoRong.textContent =
-      'Bạn chưa theo dõi truyện nào. Hãy vào một truyện và bấm nút "🔔 Theo Dõi" nhé!';
-
-    grid.replaceChildren();
-    return;
-  }
-
+  // Hiển thị danh sách truyện hợp lệ
   thongBaoRong.style.display = "none";
+  const fragment = document.createDocumentFragment();
 
-  // Có truyện theo dõi nhưng không khớp từ khóa
-  if (dsTruyen.length === 0) {
-    grid.replaceChildren();
+  dsTruyenTheoDoi.forEach((truyen) => {
+    const theKhung = document.createElement("div");
+    theKhung.className = "khungtruyenrieng td-the";
 
-    const p = document.createElement("p");
+    // Nút gỡ nhanh truyện khỏi danh sách theo dõi
+    const nutBoTheoDoi = document.createElement("button");
+    nutBoTheoDoi.type = "button";
+    nutBoTheoDoi.className = "td-nut-bo";
+    nutBoTheoDoi.dataset.id = truyen.id;
+    nutBoTheoDoi.title = "Bỏ theo dõi";
+    nutBoTheoDoi.textContent = "✕";
 
-    p.textContent = "Không tìm thấy truyện phù hợp.";
+    const theLink = document.createElement("a");
+    theLink.href = `trangchitiet.html?id=${truyen.id}`;
 
-    p.style.color = "white";
-    p.style.textAlign = "center";
-    p.style.gridColumn = "1 / -1";
-    p.style.padding = "40px";
+    const anhBia = document.createElement("img");
+    anhBia.src = truyen.anhBia || "img/logo.png";
+    anhBia.alt = truyen.ten || "Truyện";
+    anhBia.loading = "lazy";
 
-    grid.append(p);
-    return;
-  }
+    const tieuDeH3 = document.createElement("h3");
+    tieuDeH3.textContent = truyen.ten;
 
-  grid.replaceChildren();
+    theLink.append(anhBia, tieuDeH3);
 
-  dsTruyen.forEach(function (truyen) {
-    const khung = document.createElement("div");
-    khung.className = "khungtruyenrieng td-the";
+    const dongTheLoai = document.createElement("span");
+    dongTheLoai.textContent = Array.isArray(truyen.theLoai) ? truyen.theLoai.join(" - ") : "Đang cập nhật";
 
-    const nut = document.createElement("button");
-    nut.type = "button";
-    nut.className = "td-nut-bo";
-    nut.dataset.id = truyen.id;
-    nut.title = "Bỏ theo dõi";
-    nut.textContent = "✕";
-
-    const link = document.createElement("a");
-    link.href = "trangchitiet.html?id=" + truyen.id;
-
-    const img = document.createElement("img");
-    img.src = truyen.anhBia;
-    img.alt = truyen.ten;
-
-    const h3 = document.createElement("h3");
-    h3.textContent = truyen.ten;
-
-    const span = document.createElement("span");
-    span.textContent = truyen.theLoai.join(" - ");
-
-    link.append(img);
-    link.append(h3);
-
-    khung.append(nut);
-    khung.append(link);
-    khung.append(span);
-
-    grid.append(khung);
+    theKhung.append(nutBoTheoDoi, theLink, dongTheLoai);
+    fragment.appendChild(theKhung);
   });
+
+  grid.appendChild(fragment);
 }
 
-function ganSuKienDanhSachTheoDoi() {
+// --- 4. KHỞI TẠO CÁC SỰ KIỆN GIAO DIỆN CHUYÊN BIỆT ---
+function khoiTaoSuKienTrangTheoDoi() {
   const grid = document.getElementById("tdDanhSach");
 
-  const inputTimKiem = document.getElementById("inputsearch");
+  if (grid) {
+    // Sử dụng Event Delegation để gỡ nhanh truyện
+    grid.addEventListener("click", (event) => {
+      const nutBamXoa = event.target.closest(".td-nut-bo");
+      if (!nutBamXoa) return;
 
-  // Sử dụng event delegation nên không cần
-  // gắn lại sự kiện sau mỗi lần render
-  grid.addEventListener("click", function (event) {
-    const nut = event.target.closest(".td-nut-bo");
+      const idTruyen = Number(nutBamXoa.dataset.id);
+      if (typeof toggleTheoDoiId === "function") {
+        toggleTheoDoiId(idTruyen);
+      }
 
-    if (!nut) return;
-
-    const idTruyen = Number(nut.dataset.id);
-
-    // Hàm trong luutru.js
-    toggleTheoDoiId(idTruyen);
-
-    renderDanhSachTheoDoi(inputTimKiem.value);
-  });
-
-  inputTimKiem.addEventListener("input", function () {
-    renderDanhSachTheoDoi(inputTimKiem.value);
-  });
-}
-
-function ganNutQuayLai() {
-  const nut = document.getElementById("quaylai");
-
-  if (!nut) return;
-
-  window.addEventListener("scroll", function () {
-    nut.style.display = window.scrollY > 300 ? "block" : "none";
-  });
-
-  nut.addEventListener("click", function () {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+      // Render lại danh sách sạch sau khi bỏ theo dõi
+      renderDanhSachTheoDoi();
     });
-  });
+  }
 }
 
-//Nút Menu
-function ganMenu() {
-  const menuToggle = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu");
-  menuToggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    menu.classList.toggle("active");
-  });
-  menu.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
-  document.addEventListener("click", function () {
-    menu.classList.remove("active");
-  });
-}
-document.addEventListener("DOMContentLoaded", function () {
+// --- 5. LẮP RÁP HOÀN CHỈNH ---
+document.addEventListener("DOMContentLoaded", () => {
   renderDanhSachTheoDoi();
-  ganSuKienDanhSachTheoDoi();
-  ganNutQuayLai();
-  ganMenu();
+  khoiTaoSuKienTrangTheoDoi();
 });

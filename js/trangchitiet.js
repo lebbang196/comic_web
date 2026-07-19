@@ -6,14 +6,6 @@ function layThamSoURL(tenThamSo) {
   return cap ? decodeURIComponent(cap.split("=")[1]) : null;
 }
 
-// Hỗ trợ xóa con nhanh và an toàn
-function xoaHetCon(element) {
-  if (element) {
-    element.textContent = "";
-  }
-}
-
-// 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - ĐỌC LOCALSTORAGE AN TOÀN]
 function safeParseJSON(key, fallback = null) {
   try {
     const item = localStorage.getItem(key);
@@ -23,7 +15,6 @@ function safeParseJSON(key, fallback = null) {
     return fallback;
   }
 }
-// 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - ĐỌC LOCALSTORAGE AN TOÀN]
 
 // --- 2. KIỂM TRA TRUYỆN & XỬ LÝ LỖI 404 ---
 const idThamSo = layThamSoURL("id");
@@ -59,28 +50,7 @@ let thuTuChapter = "desc";
 let chapterMoRong = false;
 let saoDangChon = 0;
 
-// --- 4. ĐIỀU CHỈNH MENU THEO TRẠNG THÁI ĐĂNG NHẬP ---
-function thietLapMenu() {
-  const khuChuaDangNhap = document.getElementById("khuChuaDangNhap");
-  const khuDaDangNhap = document.getElementById("khuDaDangNhap");
-  const tenTaiKhoan = document.getElementById("tenTaiKhoan");
-
-  if (currentUser) {
-    if (khuChuaDangNhap) khuChuaDangNhap.classList.add("tai-khoan-an");
-    if (khuDaDangNhap) {
-      khuDaDangNhap.classList.remove("tai-khoan-an");
-      if (tenTaiKhoan) {
-        tenTaiKhoan.textContent =
-          currentUser.fullname || currentUser.email || "Độc giả";
-      }
-    }
-  } else {
-    if (khuChuaDangNhap) khuChuaDangNhap.classList.remove("tai-khoan-an");
-    if (khuDaDangNhap) khuDaDangNhap.classList.add("tai-khoan-an");
-  }
-}
-
-// --- 5. HIỂN THỊ CHI TIẾT THÔNG TIN TRUYỆN ---
+// --- 4. HIỂN THỊ CHI TIẾT THÔNG TIN TRUYỆN ---
 function hienThiChiTietTruyen() {
   document.title = `${truyen.ten} - Comic Web`;
   const brTenTruyen = document.getElementById("breadcrumbTenTruyen");
@@ -194,7 +164,7 @@ function hienThiChiTietTruyen() {
       });
     }
   }
-  // 🔐 [BẮT ĐẦU VÙNG TÀI KHOẢN - TƯƠNG TÁC THEO DÕI TRUYỆN]
+
   const btnTheoDoi = document.getElementById("btnTheoDoi");
   if (btnTheoDoi) {
     const iconHeart = btnTheoDoi.querySelector("i");
@@ -216,13 +186,13 @@ function hienThiChiTietTruyen() {
       }
 
       const textNodes = Array.from(btnTheoDoi.childNodes).filter(
-        (node) => node.nodeType === Node.TEXT_NODE,
+        (node) => node.nodeType === Node.TEXT_NODE
       );
       textNodes.forEach((node) => node.remove());
       btnTheoDoi.appendChild(
         document.createTextNode(
-          hienTaiDangTheoDoi ? " Bỏ theo dõi" : " Theo dõi",
-        ),
+          hienTaiDangTheoDoi ? " Bỏ theo dõi" : " Theo dõi"
+        )
       );
 
       if (lblLuotTheoDoi) {
@@ -245,10 +215,9 @@ function hienThiChiTietTruyen() {
       }
     });
   }
-  // 🔐 [KẾT THÚC VÙNG TÀI KHOẢN - TƯƠNG TÁC THEO DÕI TRUYỆN]
 }
 
-// --- 6. XỬ LÝ HIỂN THỊ CHƯƠNG TRUYỆN ---
+// --- 5. XỬ LÝ HIỂN THỊ CHƯƠNG TRUYỆN ---
 function renderDanhSachChapter() {
   const listEl = document.getElementById("danhSachChapter");
   const btnXemThem = document.getElementById("btnXemThemChapter");
@@ -263,7 +232,7 @@ function renderDanhSachChapter() {
   if (chapterDem) chapterDem.textContent = `(${mangChapter.length})`;
 
   mangChapter.sort((a, b) =>
-    thuTuChapter === "desc" ? b.so - a.so : a.so - b.so,
+    thuTuChapter === "desc" ? b.so - a.so : a.so - b.so
   );
 
   if (mangChapter.length > 0) {
@@ -338,7 +307,7 @@ function thietLapTuongTacChapter() {
   }
 }
 
-// --- 7. ĐÁNH GIÁ SAO VÀ BÌNH LUẬN ---
+// --- 6. ĐÁNH GIÁ SAO VÀ BÌNH LUẬN ---
 function thietLapDanhGiaSao() {
   const stars = document.querySelectorAll("#starsGroup .star-pick");
   const lblDiem = document.getElementById("lblDiemDanhGia");
@@ -356,13 +325,24 @@ function thietLapDanhGiaSao() {
 }
 
 function layKhoBinhLuan() {
-  return safeParseJSON("app_comments", {})[idTruyen] || [];
+  try {
+    const kho = JSON.parse(localStorage.getItem("app_comments")) || {};
+    return Array.isArray(kho[String(idTruyen)]) ? kho[String(idTruyen)] : [];
+  } catch (e) {
+    return [];
+  }
 }
 
+// Hàm lưu trữ bình luận đồng bộ cục bộ
 function luuBinhLuanCuaTruyen(dsBinhLuan) {
-  const toanBoBinhLuan = safeParseJSON("app_comments", {});
-  toanBoBinhLuan[idTruyen] = dsBinhLuan.slice(-40);
-  localStorage.setItem("app_comments", JSON.stringify(toanBoBinhLuan));
+  try {
+    const kho = JSON.parse(localStorage.getItem("app_comments")) || {};
+    kho[String(idTruyen)] = dsBinhLuan;
+    localStorage.setItem("app_comments", JSON.stringify(kho));
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 function renderDanhSachBinhLuan() {
@@ -424,7 +404,6 @@ function renderDanhSachBinhLuan() {
   });
 }
 
-// 🔐 [DETAIL-07 - TẠO LINK LOGIN KÈM QUAYLAI]
 function thietLapFormBinhLuan() {
   const formBinhLuan = document.getElementById("formBinhLuan");
   const txtBinhLuan = document.getElementById("txtBinhLuan");
@@ -432,12 +411,11 @@ function thietLapFormBinhLuan() {
 
   if (!formBinhLuan) return;
 
-  // Xử lý đính kèm tham số quaylai cho đường dẫn Đăng nhập ở thông báo bình luận
   if (thongBaoDangNhapBL) {
     const linkLogin = thongBaoDangNhapBL.querySelector("a");
     if (linkLogin) {
       const duongDanHienTai = encodeURIComponent(
-        window.location.pathname + window.location.search,
+        window.location.pathname + window.location.search
       );
       linkLogin.href = `login.html?quaylai=${duongDanHienTai}`;
     }
@@ -446,6 +424,7 @@ function thietLapFormBinhLuan() {
   formBinhLuan.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    currentUser = safeParseJSON("currentUser", null); // Đọc lại phiên user mới nhất trước khi submit
     if (!currentUser) {
       alert("Vui lòng đăng nhập để thực hiện chức năng này!");
       return;
@@ -461,7 +440,7 @@ function thietLapFormBinhLuan() {
 
     dsMoi.push({
       id: Date.now(),
-      fullname: currentUser.fullname || null,
+      fullname: currentUser.fullname || currentUser.username || "Người dùng",
       email: currentUser.email || "Ẩn danh",
       noiDung: noiDung,
       ngayDang: new Date().toLocaleString("vi-VN"),
@@ -469,11 +448,27 @@ function thietLapFormBinhLuan() {
     });
 
     luuBinhLuanCuaTruyen(dsMoi);
-    const tong = dsMoi.reduce((s, x) => s + x.saoDanhGia, 0);
 
-    const diem = tong / dsMoi.length;
+    const danhSachCoSao = dsMoi.filter((bl) => bl.saoDanhGia > 0);
+    let diemTrungBinh = 0;
+    if (danhSachCoSao.length > 0) {
+      const tongSao = danhSachCoSao.reduce(
+        (tong, bl) => tong + bl.saoDanhGia,
+        0
+      );
+      diemTrungBinh = parseFloat((tongSao / danhSachCoSao.length).toFixed(1));
+    }
 
-    truyen.diemDanhGia = diem;
+    if (typeof truyen !== "undefined" && truyen) {
+      truyen.diemDanhGia = diemTrungBinh;
+    }
+
+    const lblDiemTb = document.getElementById("lblDiemTb");
+    if (lblDiemTb) {
+      lblDiemTb.textContent =
+        diemTrungBinh > 0 ? `${diemTrungBinh} / 5` : "Chưa có đánh giá";
+    }
+
     if (txtBinhLuan) txtBinhLuan.value = "";
     saoDangChon = 0;
     document
@@ -492,7 +487,7 @@ function thietLapFormBinhLuan() {
   }
 }
 
-// --- 8. RENDER TRUYỆN LIÊN QUAN ---
+// --- 7. RENDER TRUYỆN LIÊN QUAN ---
 function renderTruyenLQuan() {
   const khuTruyenLQuan = document.getElementById("khuTruyenLQuan");
   if (!khuTruyenLQuan) return;
@@ -534,126 +529,8 @@ function renderTruyenLQuan() {
   });
 }
 
-// --- 9. NÚT QUAY LẠI ĐẦU TRANG ---
-const btnQuayLai = document.getElementById("quaylai");
-if (btnQuayLai) {
-  window.addEventListener("scroll", () => {
-    btnQuayLai.style.display = window.scrollY > 300 ? "block" : "none";
-  });
-
-  btnQuayLai.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-function hienThiTruyen(idKhung, danhSach) {
-  const khung = document.getElementById(idKhung);
-  xoaHetCon(khung);
-
-  danhSach.forEach((truyenItem) => {
-    const div = document.createElement("div");
-    div.className = "khungtruyenrieng";
-
-    const a = document.createElement("a");
-    a.href = `trangchitiet.html?id=${truyenItem.id}`;
-
-    const img = document.createElement("img");
-    img.src = truyenItem.anhBia;
-    img.alt = truyenItem.ten;
-
-    const h3 = document.createElement("h3");
-    h3.textContent = truyenItem.ten;
-
-    a.append(img, h3);
-
-    const span = document.createElement("span");
-    span.textContent = truyenItem.theLoai ? truyenItem.theLoai.join(" • ") : "";
-
-    div.append(a, span);
-    khung.appendChild(div);
-  });
-}
-
-function ganTimKiem() {
-  const search = document.getElementById("inputsearch");
-  const khungKetQua = document.getElementById("khungKetQua");
-  const ketquatimkiem = document.getElementById("ketquatimkiem");
-  const breadcrumb = document.querySelector(".breadcrumb");
-  const containerTruyen = document.getElementById("container-truyen");
-
-  if (!search || !khungKetQua || !ketquatimkiem || !containerTruyen) return;
-
-  search.addEventListener("input", function () {
-    const tuKhoa = search.value.trim().toLowerCase();
-
-    if (tuKhoa === "") {
-      ketquatimkiem.style.display = "none";
-      if (breadcrumb) breadcrumb.style.display = "block";
-      containerTruyen.style.display = "block";
-      return;
-    }
-
-    ketquatimkiem.style.display = "block";
-    if (breadcrumb) breadcrumb.style.display = "none";
-    containerTruyen.style.display = "none";
-
-    if (typeof danhSachTruyen === "undefined") return;
-
-    const ketQua = danhSachTruyen.filter(function (t) {
-      const ten = (t.ten || "").toLowerCase();
-      const tacGia = (t.tacGia || "").toLowerCase();
-      const theLoai = (t.theLoai || []).join(" ").toLowerCase();
-      return (
-        ten.includes(tuKhoa) ||
-        tacGia.includes(tuKhoa) ||
-        theLoai.includes(tuKhoa)
-      );
-    });
-
-    if (ketQua.length === 0) {
-      xoaHetCon(khungKetQua);
-      const p = document.createElement("p");
-      p.textContent =
-        "🔍 Không tìm thấy truyện phù hợp vui lòng nhập từ khóa khác";
-      p.style.color = "white";
-      p.style.fontSize = "20px";
-      p.style.textAlign = "center";
-      p.style.padding = "40px";
-      khungKetQua.style.display = "block";
-      khungKetQua.appendChild(p);
-      return;
-    }
-
-    hienThiTruyen("khungKetQua", ketQua);
-    khungKetQua.style.display = "grid";
-  });
-}
-
-function ganMenu() {
-  const menuToggle = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu");
-
-  if (!menuToggle || !menu) return;
-
-  menuToggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    menu.classList.toggle("active");
-  });
-
-  menu.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
-
-  document.addEventListener("click", function () {
-    menu.classList.remove("active");
-  });
-}
-
-// --- 10. KHỞI CHẠY TRANG KHI SẴN SÀNG ---
+// --- 8. KHỞI CHẠY TRANG CHI TIẾT ---
 document.addEventListener("DOMContentLoaded", () => {
-  ganMenu();
-  ganTimKiem();
-  thietLapMenu();
   hienThiChiTietTruyen();
   renderDanhSachChapter();
   thietLapTuongTacChapter();

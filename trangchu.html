@@ -102,6 +102,12 @@
 
     <!-- Main -->
     <main>
+        <!-- Khung kết quả tìm kiếm -->
+      <section class="section" id="ketquatimkiem" style="display: none">
+        <h2>🔍 Kết Quả Tìm Kiếm</h2>
+        <div class="khungtruyen" id="khungKetQua"></div>
+      </section>
+
       <section class="background section hidden" id="background">
         <div class="content_background">
           <h1>CÙNG NHAU KHÁM PHÁ THẾ GIỚI TRUYỆN TRANH</h1>
@@ -651,13 +657,9 @@
       </section>
 
       <!-- Nút quay lại đầu trang -->
-      <button class="quaylai" type="button">⬆</button>
+      <button id ="quaylai" type="button">⬆</button>
 
-      <!-- Khung kết quả tìm kiếm -->
-      <section class="section" id="ketquatimkiem" style="display: none">
-        <h2>🔍 Kết Quả Tìm Kiếm</h2>
-        <div class="khungtruyen" id="khungKetQua"></div>
-      </section>
+  
     </main>
 
     <!-- Footer -->
@@ -693,7 +695,7 @@
     </footer>
 
     <script src="js/datachitiet.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/trangchu.js"></script>
-    <script src="js/taikhoan.js"></script>
   </body>
 </html>

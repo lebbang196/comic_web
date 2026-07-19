@@ -58,10 +58,10 @@
         <input type="text" id="inputsearch" placeholder="Tìm truyện...." />
       </div>
       <nav>
-        <nav id="khuChuaDangNhap">
+        <div id="khuChuaDangNhap">
           <a href="login.html">Đăng Nhập</a>
           <a href="register.html">Đăng Ký</a>
-        </nav>
+        </div>
 
         <div id="khuDaDangNhap" class="tai-khoan tai-khoan-an">
           <button id="nutTaiKhoan" class="nut-tai-khoan" type="button">
@@ -73,27 +73,12 @@
           <div id="bangTaiKhoan" class="bang-tai-khoan tai-khoan-an">
             <h3>Thông tin tài khoản</h3>
             <hr />
-
-            <p>
-              <strong>Họ tên:</strong>
-              <span id="hoTenTaiKhoan"></span>
-            </p>
-
-            <p>
-              <strong>Email:</strong>
-              <span id="emailTaiKhoan"></span>
-            </p>
-
-            <p>
-              <strong>Ngày tham gia:</strong>
-              <span id="ngayTaoTaiKhoan"></span>
-            </p>
-
+            <p><strong>Họ tên:</strong> <span id="hoTenTaiKhoan"></span></p>
+            <p><strong>Email:</strong> <span id="emailTaiKhoan"></span></p>
+            <p><strong>Ngày tham gia:</strong> <span id="ngayTaoTaiKhoan"></span></p>
             <hr />
-
             <button id="nutDangXuat" class="nut-dang-xuat" type="button">
-              <i class="bi bi-box-arrow-right"></i>
-              Đăng xuất
+              <i class="bi bi-box-arrow-right"></i> Đăng xuất
             </button>
           </div>
         </div>
@@ -101,21 +86,20 @@
     </header>
 
     <main class="main-content">
-      <!-- 🔍 KẾT QUẢ TÌM KIẾM (Đặt lên đầu main để hiển thị ngay khi gõ tìm kiếm) -->
+      <!-- 🔍 KẾT QUẢ TÌM KIẾM (Đã đồng bộ với common.js) -->
       <section class="section" id="ketquatimkiem" style="display: none">
         <h2>🔍 Kết Quả Tìm Kiếm</h2>
         <div class="khungtruyen" id="khungKetQua"></div>
       </section>
 
+      <!-- KHUNG BÁO LỖI 404 -->
       <section id="khung-loi" class="error-container error-hidden">
         <div class="error-box">
           <h1 class="error-title">404</h1>
           <h2 id="lblNoiDungLoi" class="error-message">
             Không tìm thấy truyện hoặc liên kết không hợp lệ!
           </h2>
-          <p class="error-desc">
-            Vui lòng kiểm tra lại đường dẫn URL hoặc quay về trang chủ.
-          </p>
+          <p class="error-desc">Vui lòng kiểm tra lại đường dẫn URL hoặc quay về trang chủ.</p>
           <a href="trangchu.html" class="btn-back-home">Quay về trang chủ</a>
         </div>
       </section>
@@ -124,15 +108,13 @@
       <nav class="breadcrumb">
         <a href="trangchu.html" class="breadcrumb-link">Trang chủ</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current" id="breadcrumbTenTruyen"
-          >Đang tải ...</span
-        >
+        <span class="breadcrumb-current" id="breadcrumbTenTruyen">Đang tải ...</span>
       </nav>
 
       <!-- CONTAINER CHÍNH CỦA TRUYỆN -->
       <article id="container-truyen" class="chitiet-hero section">
         <div class="chitiet-container">
-          <!-- Khu vực cột 1-->
+          <!-- Khu vực cột 1: Ảnh bìa và nút bấm -->
           <section class="chitiet-cover-col">
             <div class="chitiet-cover">
               <img id="imgAnhBia" src="" alt="Ảnh bìa truyện" />
@@ -143,7 +125,6 @@
               <span id="lblTenKhac">Đang cập nhật</span>
             </div>
 
-            <!-- Nhóm nút hành động -->
             <div class="chitiet-btns">
               <a href="#" id="btnDocTuDau" class="btn-doc btn-doc-primary">
                 <i class="bi bi-book-half"></i> Đọc Từ Đầu
@@ -151,11 +132,7 @@
               <a href="#" id="btnDocMoiNhat" class="btn-doc btn-doc-secondary">
                 <i class="bi bi-play-fill"></i> Đọc Mới Nhất
               </a>
-              <button
-                id="btnTheoDoi"
-                class="btn-doc btn-doc-outline"
-                type="button"
-              >
+              <button id="btnTheoDoi" class="btn-doc btn-doc-outline" type="button">
                 <i class="bi bi-heart"></i> Theo dõi
               </button>
             </div>
@@ -163,9 +140,7 @@
 
           <!-- Khu vực cột 2: Thông tin chi tiết truyện -->
           <section class="chitiet-info-col">
-            <h1 id="lblTenTruyen" class="chitiet-title">
-              Đang tải tên truyện...
-            </h1>
+            <h1 id="lblTenTruyen" class="chitiet-title">Đang tải tên truyện...</h1>
             <div class="rating-container">
               <span id="lblDiemTb" class="rating-number">0.0</span>
               <span id="dungTichSao" class="rating-stars"></span>
@@ -173,23 +148,14 @@
 
             <div class="chitiet-meta">
               <div class="chitiet-meta-dong">
-                <span class="meta-label"
-                  ><i class="bi bi-pencil-square"></i> Tác giả:</span
-                >
-                <span id="lblTacGia" class="meta-value bold-text"
-                  >Đang cập nhật</span
-                >
+                <span class="meta-label"><i class="bi bi-pencil-square"></i> Tác giả:</span>
+                <span id="lblTacGia" class="meta-value bold-text">Đang cập nhật</span>
               </div>
               <div class="chitiet-meta-dong">
-                <span class="meta-label"
-                  ><i class="bi bi-info-circle"></i> Tình trạng:</span
-                >
-                <span id="lblTrangThai" class="tinh-trang-badge dang-ra"
-                  >Đang cập nhật</span
-                >
+                <span class="meta-label"><i class="bi bi-info-circle"></i> Tình trạng:</span>
+                <span id="lblTrangThai" class="tinh-trang-badge dang-ra">Đang cập nhật</span>
               </div>
 
-              <!-- Khu vực hiển thị lượt xem và lượt theo dõi -->
               <div class="chitiet-meta-dong meta-stats-row">
                 <div class="chitiet-stats">
                   <span class="stat-item">
@@ -203,17 +169,13 @@
                 </div>
               </div>
             </div>
-            <!-- Danh sách Thể loại truyện -->
+
             <div class="tag-list" id="boxTheLoai"></div>
-            <!-- Nội dung tóm tắt truyện -->
+
             <div class="chitiet-mota">
               <h3><i class="bi bi-file-text"></i> Tóm tắt nội dung</h3>
               <p id="lblSynopsis" class="synopsis-hidden"></p>
-              <button
-                id="btnDocThemSynopsis"
-                type="button"
-                class="tag btn-synopsis-toggle"
-              >
+              <button id="btnDocThemSynopsis" type="button" class="tag btn-synopsis-toggle">
                 Đọc thêm
               </button>
             </div>
@@ -228,12 +190,7 @@
               <span id="chapterDem" class="chapter-dem"></span>
             </h2>
             <div class="chapter-sort">
-              <button
-                id="btnDaoNguoc"
-                class="chapter-sort-btn"
-                data-order="desc"
-                type="button"
-              >
+              <button id="btnDaoNguoc" class="chapter-sort-btn" data-order="desc" type="button">
                 <i class="bi bi-sort-down status-desc"></i>
                 <i class="bi bi-sort-up status-asc"></i>
                 <span class="sort-text">Mới nhất trước</span>
@@ -244,9 +201,7 @@
           <div id="danhSachChapter" class="chapter-grid"></div>
 
           <div id="chapterXemThem">
-            <button id="btnXemThemChapter" type="button">
-              Xem thêm chương
-            </button>
+            <button id="btnXemThemChapter" type="button">Xem thêm chương</button>
           </div>
         </section>
 
@@ -260,12 +215,8 @@
         <section id="sectionBLuan" class="story-comments">
           <h2><i class="bi bi-chat-left-text"></i> Bình luận & Đánh giá</h2>
 
-          <div
-            id="thongBaoDangNhapBL"
-            class="bl-thongbao-dangnhap bl-login-hidden"
-          >
-            Vui lòng <a href="login.html">Đăng nhập</a> để bình luận và đánh giá
-            truyện này.
+          <div id="thongBaoDangNhapBL" class="bl-thongbao-dangnhap bl-login-hidden">
+            Vui lòng <a href="login.html">Đăng nhập</a> để bình luận và đánh giá truyện này.
           </div>
 
           <form id="formBinhLuan" class="bl-form">
@@ -276,50 +227,13 @@
               required
             ></textarea>
             <div class="danh-gia-box">
-              <span class="danh-gia-label"
-                ><i class="bi bi-star-half"></i> Chấm điểm truyện này:</span
-              >
+              <span class="danh-gia-label"><i class="bi bi-star-half"></i> Chấm điểm truyện này:</span>
               <div class="chitiet-stars" id="starsGroup">
-                <button
-                  type="button"
-                  class="star-pick"
-                  data-value="1"
-                  aria-label="1 sao"
-                >
-                  ★
-                </button>
-                <button
-                  type="button"
-                  class="star-pick"
-                  data-value="2"
-                  aria-label="2 sao"
-                >
-                  ★
-                </button>
-                <button
-                  type="button"
-                  class="star-pick"
-                  data-value="3"
-                  aria-label="3 sao"
-                >
-                  ★
-                </button>
-                <button
-                  type="button"
-                  class="star-pick"
-                  data-value="4"
-                  aria-label="4 sao"
-                >
-                  ★
-                </button>
-                <button
-                  type="button"
-                  class="star-pick"
-                  data-value="5"
-                  aria-label="5 sao"
-                >
-                  ★
-                </button>
+                <button type="button" class="star-pick" data-value="1" aria-label="1 sao">★</button>
+                <button type="button" class="star-pick" data-value="2" aria-label="2 sao">★</button>
+                <button type="button" class="star-pick" data-value="3" aria-label="3 sao">★</button>
+                <button type="button" class="star-pick" data-value="4" aria-label="4 sao">★</button>
+                <button type="button" class="star-pick" data-value="5" aria-label="5 sao">★</button>
               </div>
               <span id="lblDiemDanhGia" class="chitiet-diem">0/5</span>
             </div>
@@ -341,10 +255,7 @@
       <div class="footer">
         <div class="footer_content">
           <h3>Comic_Web</h3>
-          <p>
-            Website đọc truyện tranh trực tuyến với hàng nghìn bộ truyện tranh
-            hấp dẫn và hoàn toàn miễn phí
-          </p>
+          <p>Website đọc truyện tranh trực tuyến với hàng nghìn bộ truyện tranh hấp dẫn và hoàn toàn miễn phí</p>
         </div>
         <div class="footer_content">
           <h3>Hỗ trợ</h3>
@@ -354,39 +265,24 @@
         <div class="footer_content">
           <h3>Liên hệ</h3>
           <p>📞 Hotline: <a href="tel:0123456789"> 0123456789</a></p>
-          <p>
-            ✉ Email:
-            <a href="mailto:chamsockh@comicweb.com"> chamsockh@comicweb.com</a>
-          </p>
+          <p>✉ Email: <a href="mailto:chamsockh@comicweb.com"> chamsockh@comicweb.com</a></p>
           <p>📍 Địa chỉ: Cần Thơ, Việt Nam</p>
           <div class="social">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="bi bi-facebook"></i
-            ></a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="bi bi-youtube"></i
-            ></a>
-            <a
-              href="https://tiktok.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="bi bi-tiktok"></i
-            ></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a>
           </div>
         </div>
       </div>
     </footer>
-    <button class="quaylai" id="quaylai" type="button">⬆</button>
-    <script src="js/datadoctruyen.js"></script>
+
+    <button id="quaylai" type="button">⬆</button>
+
+    <!-- HỆ THỐNG SCRIPT LIÊN KẾT CHUẨN MỚI -->
+     <script src="js/datadoctruyen.js"></script>
     <script src="js/datachitiet.js"></script>
     <script src="js/luutru.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/trangchitiet.js"></script>
-    <script src="js/taikhoan.js"></script>
   </body>
 </html>
