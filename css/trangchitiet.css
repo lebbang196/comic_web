@@ -751,19 +751,6 @@ body {
   text-align: center;
 }
 
-.section-hidden {
-  opacity: 0;
-  transform: translateY(40px);
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
-}
-
-.section-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 @media (max-width: 1024px) {
   .chitiet-container {
     grid-template-columns: 220px 1fr;
